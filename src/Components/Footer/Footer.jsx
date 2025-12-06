@@ -1,9 +1,166 @@
 import React from 'react';
+import { Link } from 'react-router';
+import logo from '../../assets/logo.png'
+import { FaFacebookSquare, FaInstagramSquare, FaLinkedin } from 'react-icons/fa';
+import { FaSquareXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
     return (
-        <div>
-            Footer
+        <div className="relative mt-16 bg-black">
+            <svg
+                className="absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 text-black"
+                preserveAspectRatio="none"
+                viewBox="0 0 1440 54"
+            >
+                <path
+                    fill="currentColor"
+                    d="M0 22L120 16.7C240 11 480 1.00001 720 0.700012C960 1.00001 1200 11 1320 16.7L1440 22V54H1320C1200 54 960 54 720 54C480 54 240 54 120 54H0V22Z"
+                />
+            </svg>
+            <div className="px-4 pt-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+                <div className="grid gap-16 row-gap-10 mb-8 lg:grid-cols-6 lg:pl-[90px]">
+                    <div className="md:max-w-md lg:col-span-2">
+                        <Link
+                            to="/"
+                            aria-label="Go home"
+                            title="Company"
+                            className="inline-flex items-center"
+                        >
+                            <img src={logo} alt="ThreadFlow" className='w-full max-w-[250px] h-auto cursor-pointer' />
+                        </Link>
+                        <div className="mt-4 lg:max-w-sm">
+                            <p className="text-[16px] text-[#666666] text-justify">
+                                Your trusted partner in garment production management. Streamlining workflows and ensuring quality delivery since 2025.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-4 md:grid-cols-3">
+                        <div>
+                            <p className="font-playfair font-semibold tracking-wide text-white text-[19px]">
+                                Quick Links
+                            </p>
+                            <ul className="mt-2 space-y-2">
+                                <li>
+                                    <Link
+                                        href="/"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/product"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        All Products
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/about"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        About Us
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/contact"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        Contact
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="font-playfair font-semibold tracking-wide text-white text-[19px]">
+                                Support
+                            </p>
+                            <ul className="mt-2 space-y-2">
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        FAQ
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        Help Center
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        Terms of Service
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="text-[#666666] text-[16px]"
+                                    >
+                                        Privacy Policy
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="font-playfair font-semibold tracking-wide text-white text-[19px]">
+                                Connect
+                            </p>
+                            <ul className="mt-2 space-y-2">
+                                <li className='w-full'>
+                                    <Link
+                                        href="https://www.linkedin.com/in/a-k-m-samioul-islam/"
+                                        className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
+                                        target='_blank'
+                                    >
+                                        <FaLinkedin /> LinkedIn
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
+                                    >
+                                        <FaSquareXTwitter /> X
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
+                                    >
+                                        <FaFacebookSquare /> Facebook
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#"
+                                        className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
+                                    >
+                                        <FaInstagramSquare /> Instagram
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col justify-center pt-5 pb-10 border-t border-deep-purple-accent-200 sm:flex-row">
+                    <p className="text-center text-sm text-gray-100">
+                        © 2025 ThreadFlow. All rights reserved.
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };
