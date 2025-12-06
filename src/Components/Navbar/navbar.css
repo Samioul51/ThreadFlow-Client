@@ -1,0 +1,33 @@
+nav div a {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+nav div a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: white;
+  border-radius: 4px;
+  transform: scaleX(1);
+  transition: transform 0.3s ease;
+}
+
+nav div a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: white;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+nav div a:hover::after {
+  transform: scaleX(1);
+}
