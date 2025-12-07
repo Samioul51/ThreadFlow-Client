@@ -12,7 +12,7 @@ import banner3 from '../../assets/banner3.jpg';
 const Hero = () => {
 
     return (
-        <div className='w-full max-w-[1440px] mx-auto h-auto px-4'>
+        <div className='w-full max-w-[1440px] mx-auto h-auto px-4 mb-10'>
             <Swiper
                 style={{
                     '--swiper-navigation-color': '#fff',
