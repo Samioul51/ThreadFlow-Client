@@ -17,7 +17,7 @@ const Footer = () => {
                     d="M0 22L120 16.7C240 11 480 1.00001 720 0.700012C960 1.00001 1200 11 1320 16.7L1440 22V54H1320C1200 54 960 54 720 54C480 54 240 54 120 54H0V22Z"
                 />
             </svg>
-            <div className="px-4 pt-12 mx-auto max-w-lg lg:max-w-[1440px] px-24 lg:px-8">
+            <div className="px-4 pt-12 mx-auto max-w-lg lg:max-w-[1440px] lg:px-8">
                 <div className="w-full max-w-full flex flex-col lg:flex-row lg:justify-between gap-5 mb-8 items-start">
                     <div className="max-w-md lg:col-span-2">
                         <Link
@@ -41,7 +41,7 @@ const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li>
                                 <Link
-                                    href="/"
+                                    to="/"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     Home
@@ -49,7 +49,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="/product"
+                                    to="/product"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     All Products
@@ -57,7 +57,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="/about"
+                                    to="/about"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     About Us
@@ -65,7 +65,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="/contact"
+                                    to="/contact"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     Contact
@@ -80,7 +80,7 @@ const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     FAQ
@@ -88,7 +88,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     Help Center
@@ -96,7 +96,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     Terms of Service
@@ -104,7 +104,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     Privacy Policy
@@ -119,7 +119,7 @@ const Footer = () => {
                         <ul className="mt-2 space-y-2">
                             <li className='w-full'>
                                 <Link
-                                    href="https://www.linkedin.com/in/a-k-m-samioul-islam/"
+                                    to="https://www.linkedin.com/in/a-k-m-samioul-islam/"
                                     className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
                                     target='_blank'
                                 >
@@ -128,7 +128,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
                                 >
                                     <FaSquareXTwitter /> X
@@ -136,7 +136,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
                                 >
                                     <FaFacebookSquare /> Facebook
@@ -144,7 +144,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    to="#"
                                     className="flex  items-center gap-[10px] text-[#666666] text-[16px]"
                                 >
                                     <FaInstagramSquare /> Instagram
