@@ -37,7 +37,7 @@ const Reviews = () => {
     <StyledWrapper 
       style={{
         '--width': '400px',
-        '--height': '300px',
+        '--height': '200px',
         '--quantity': reviews.length
       }}
     >
@@ -79,9 +79,9 @@ const StyledWrapper = styled.div`
     height: var(--height);
     position: absolute;
     left: 100%;
-    animation: autoRun 10s linear infinite;
+    animation: autoRun 20s linear infinite;
     transition: filter 0.5s;
-    animation-delay: calc((10s / var(--quantity)) * (var(--position) - 1) - 10s) !important;
+    animation-delay: calc((20s / var(--quantity)) * (var(--position) - 1) - 10s) !important;
   }
 
   @keyframes autoRun {

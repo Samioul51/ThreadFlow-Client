@@ -12,7 +12,8 @@ const Partners = () => {
             <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Our Partners</p>
             <Marquee 
                 pauseOnHover={true}
-                pauseOnHover={true}>
+                pauseOnClick={true}
+                speed={130}>
                 <img src={brand1} className='w-[300px] h-[300px]'/>
                 <img src={brand2} className='w-[300px] h-[300px]'/>
                 <img src={brand3} className='w-[300px] h-[300px]'/>
