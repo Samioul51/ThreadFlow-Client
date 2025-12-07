@@ -32,7 +32,8 @@ const reviews = [
 
 const Reviews = () => {
   return (
-    <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'><p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Our Customers</p>
+    <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'>
+      <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Our Customers</p>
     <StyledWrapper 
       style={{
         '--width': '400px',
