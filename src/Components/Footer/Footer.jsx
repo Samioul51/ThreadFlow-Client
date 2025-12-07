@@ -26,7 +26,7 @@ const Footer = () => {
                             title="Company"
                             className="inline-flex items-center"
                         >
-                            <img src={logo} alt="ThreadFlow" className='w-full max-w-[250px] h-auto cursor-pointer' />
+                            <img src={logo} alt="ThreadFlow" className='w-full max-w-[200px] h-auto cursor-pointer' />
                         </Link>
                         <div className="mt-4 lg:max-w-sm">
                             <p className="text-[16px] text-[#666666] text-justify">

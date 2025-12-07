@@ -20,7 +20,7 @@ const Navbar = () => {
     return (
         <div className='w-full bg-[#000000] min-h-[100px] h-auto flex justify-center items-center'>
             <nav className='w-full max-w-[1440px] flex justify-between items-center px-[24px] box-border'>
-                <Link to="/"><img src={logo} alt="ThreadFlow" className='w-full max-w-[250px] h-auto cursor-pointer' /></Link>
+                <Link to="/"><img src={logo} alt="ThreadFlow" className='w-full max-w-[200px] h-auto cursor-pointer' /></Link>
 
                 {/* Desktop */}
                 <div className='hidden lg:flex items-center gap-[40px]'>
