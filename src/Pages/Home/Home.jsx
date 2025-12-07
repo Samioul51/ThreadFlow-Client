@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '../../Components/Hero/Hero';
 import OurProducts from '../../Components/OurProducts/OurProducts';
 import HowItWorks from '../../Components/HowItWorks/HowItWorks';
+import Reviews from '../../Components/Reviews/Reviews';
 
 const productPromise=fetch("https://jsonplaceholder.typicode.com/users").then(res=>res.json());
 
@@ -11,6 +12,7 @@ const Home = () => {
             <Hero></Hero>
             <OurProducts productPromise={productPromise}></OurProducts>
             <HowItWorks></HowItWorks>
+            <Reviews></Reviews>
         </div>
     );
 };
