@@ -6,7 +6,7 @@ import Reviews from '../../Components/Reviews/Reviews';
 import Stats from '../../Components/Stats/Stats';
 import Partners from '../../Components/Partners/Partners';
 
-const productPromise=fetch("https://jsonplaceholder.typicode.com/users").then(res=>res.json());
+const productPromise=fetch("http://localhost:3000/products").then(res=>res.json());
 
 const Home = () => {
     return (
