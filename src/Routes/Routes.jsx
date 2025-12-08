@@ -49,6 +49,12 @@ const router = createBrowserRouter([
           path:"/products/:id",
           Component:Product,
           loader: ()=>fetch("https://jsonplaceholder.typicode.com/users")
+        },
+        {
+          path:"/dashboard",
+          element:<PrivateRoute>
+            
+          </PrivateRoute>
         }
     ]
   },
