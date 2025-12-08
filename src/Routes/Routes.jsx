@@ -9,6 +9,7 @@ import Contact from "../Pages/Contact/Contact";
 import Product from "../Components/ProductCard/ProductCard";
 import PrivateRoute from "../Providers/PrivateRoute";
 import PublicRoute from "../Providers/PublicRoute";
+import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +22,7 @@ const router = createBrowserRouter([
         },
         {
           path:"/products",
-          element:<PrivateRoute>
-            <Products></Products>
-          </PrivateRoute>
+          Component:Products
         },
         {
           path:"/login",
@@ -47,8 +46,10 @@ const router = createBrowserRouter([
         },
         {
           path:"/products/:id",
-          Component:Product,
-          loader: ()=>fetch("https://jsonplaceholder.typicode.com/users")
+          element:<PrivateRoute>
+            <ProductDetails></ProductDetails>
+          </PrivateRoute>,
+          loader: ({params})=>fetch(`http://localhost:3000/products/${params.id}`)
         },
         {
           path:"/dashboard",

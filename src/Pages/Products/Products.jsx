@@ -50,13 +50,7 @@ const Products = () => {
                         </div>
                         
                     )
-
             }
-            <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
-                {
-                    data.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
-                }
-            </div>
         </div>
     );
 };

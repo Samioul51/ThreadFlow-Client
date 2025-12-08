@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 
 const ProductCard = ({ product }) => {
-    const {images,productName,category,price,availableQuantity} = product;
-    
+    const { _id, images, productName, category, price, availableQuantity } = product;
+    console.log(_id);
     return (
         <div>
             <div className="w-full bg-white shadow-lg rounded-lg overflow-hidden mx-auto font-inter">
@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
 
                     {/* Button */}
                     <Link
-                        to="#"
+                        to={`/products/${_id}`}
                         className="mt-2 bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500"
                     >
                         View Details
