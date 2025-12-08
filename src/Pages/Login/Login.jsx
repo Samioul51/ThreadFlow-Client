@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
@@ -7,7 +7,6 @@ const Login = () => {
     const { signIn, signInWithGoogle } = use(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
-
 
     const handleLogin = (e) => {
         e.preventDefault();

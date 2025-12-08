@@ -1,11 +1,12 @@
 import React, { use, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 
 const Register = () => {
     const { createUser, setUser, updateUser, signInWithGoogle } = use(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
     const [error, setError] = useState("");
 
     const handleRegister = async (e) => {
@@ -50,10 +51,7 @@ const Register = () => {
             });
             setUser({ ...user, displayName: name, photoURL });
             toast.success("Registered Successfully!");
-            setTimeout(() => {
-                navigate("/");
-            }, 100);
-
+            navigate(`${location.state ? location.state : "/"}`);
         }
         catch (error) {
             toast.success(error.message);
