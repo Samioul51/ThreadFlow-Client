@@ -38,7 +38,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className='w-full bg-[#000000] min-h-[100px] h-auto flex justify-center items-center sticky top-0 z-50'>
+        <div className='w-full bg-[#000000] min-h-[100px] h-auto flex justify-center items-center sticky top-0 z-999'>
             <nav className='w-full max-w-[1440px] flex justify-between items-center px-[24px] box-border'>
                 <Link to="/"><img src={logo} alt="ThreadFlow" className='w-full max-w-[200px] h-auto cursor-pointer' /></Link>
 

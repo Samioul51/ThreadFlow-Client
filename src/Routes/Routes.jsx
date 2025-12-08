@@ -10,6 +10,8 @@ import Product from "../Components/ProductCard/ProductCard";
 import PrivateRoute from "../Providers/PrivateRoute";
 import PublicRoute from "../Providers/PublicRoute";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +56,12 @@ const router = createBrowserRouter([
         {
           path:"/dashboard",
           element:<PrivateRoute>
-            
+            <Dashboard></Dashboard>
           </PrivateRoute>
+        },
+        {
+          path:"*",
+          Component:ErrorPage
         }
     ]
   },
