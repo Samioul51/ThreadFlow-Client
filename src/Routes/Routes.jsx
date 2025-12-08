@@ -8,6 +8,7 @@ import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
 import Product from "../Components/ProductCard/ProductCard";
 import PrivateRoute from "../Providers/PrivateRoute";
+import PublicRoute from "../Providers/PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -26,11 +27,15 @@ const router = createBrowserRouter([
         },
         {
           path:"/login",
-          Component:Login
+          element:<PublicRoute>
+            <Login></Login>
+          </PublicRoute>
         },
         {
           path:"/register",
-          Component:Register
+          element:<PublicRoute>
+            <Register></Register>
+          </PublicRoute>
         },
         {
           path:"/about",

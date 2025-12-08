@@ -1,7 +1,16 @@
 import React, { use } from 'react';
+import { AuthContext } from './AuthProvider/AuthProvider';
+import Loading from '../Components/Loading/Loading';
+import { Navigate } from 'react-router';
 
 const PublicRoute = () => {
-    const {user,loading}=use()
+    const {user,loading}=use(AuthContext);
+    if(loading)
+        return <Loading></Loading>;
+
+    if(user && user.email)
+        return <Navigate to="/"></Navigate>;
+    return children;
 };
 
 export default PublicRoute;
