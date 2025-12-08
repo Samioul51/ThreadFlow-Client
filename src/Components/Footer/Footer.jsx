@@ -49,7 +49,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    to="/product"
+                                    to="/products"
                                     className="text-[#666666] text-[16px]"
                                 >
                                     All Products

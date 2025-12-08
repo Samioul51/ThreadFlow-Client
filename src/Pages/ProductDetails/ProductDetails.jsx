@@ -2,8 +2,7 @@ import React from 'react';
 
 const ProductDetails = () => {
     return (
-        <div>
-            ProductDetails
+        <div className='w-full max-w-[1440px] mx-auto h-auto px-4 font-inter'>
         </div>
     );
 };
