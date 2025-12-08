@@ -35,6 +35,23 @@ const Products = () => {
                 </div>
                 <input type="text" placeholder="Search by Title" className="input input-primary" onChange={(e) => setSearchTitle(e.target.value)} />
             </div>
+            {
+                data.length > 0 ? (
+                    <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
+                        {
+                            data.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
+                        }
+                    </div>
+                )
+                    :
+                    (
+                        <div className='w-full max-w-[1440px] flex justify-center items-center h-[50vh]'>
+                            <p className='font-playfair text-2xl text-center font-bold text-black'>NO PRODUCT FOUND!</p>
+                        </div>
+                        
+                    )
+
+            }
             <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
                 {
                     data.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
