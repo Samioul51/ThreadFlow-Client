@@ -12,6 +12,7 @@ import PublicRoute from "../Providers/PublicRoute";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import Stripe from "../Pages/Stripe/Stripe";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,12 @@ const router = createBrowserRouter([
           path:"/dashboard",
           element:<PrivateRoute>
             <Dashboard></Dashboard>
+          </PrivateRoute>
+        },
+        {
+          path:"/payment",
+          element:<PrivateRoute>
+            <Stripe></Stripe>
           </PrivateRoute>
         },
         {

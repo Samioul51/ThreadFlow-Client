@@ -1,14 +1,75 @@
-import React from 'react';
+import React, { use, useRef, useState } from 'react';
 import ReactImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider'
+import toast from 'react-hot-toast';
 
 const ProductDetails = () => {
     const product = useLoaderData().data;
+
+    const user = use(AuthContext);
+    const navigate = useNavigate();
+
     // console.log(product);
     const { productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
 
-    const handleOrder=()=>{
+    const [totalPrice, setTotalPrice] = useState(minimumOrderQuantity * price)
+
+    const orderModalRef = useRef(null);
+    const handleModalOpen = () => {
+        orderModalRef.current.showModal();
+    }
+
+    const handlePrice = (e) => {
+        setTotalPrice(e.target.value * price);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const firstName = form.firstName.value;
+        const lastName = form.lastName.value;
+        const quantity = form.quantity.value;
+        const phone = form.phone.value;
+        const address = form.address.value;
+        const additionalNotes = form.additionalNotes.value;
+
+        const newOrder = {
+            email: email,
+            productName: productName,
+            firstName: firstName,
+            lastName: lastName,
+            quantity: quantity,
+            totalPrice: totalPrice,
+            phone: phone,
+            address: address,
+            additionalNotes: additionalNotes,
+            paymentOption: paymentOptions[0],
+            createdAt: new Date()
+        }
+
+        if (paymentOptions.includes("Stripe")) {
+            console.log("stripe");
+            navigate("/payment", {
+                state: { newOrder: newOrder }
+            })
+        }
+        else {
+            const order = { ...newOrder, paymentStatus: "pending" };
+            fetch("http://localhost:3000/orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(order)
+            }).then(res => res.json().then(data => {
+                orderModalRef.current.close();
+                navigate("/");
+                toast.success("Order completed successfully!");
+            }))
+        }
 
     }
 
@@ -52,13 +113,176 @@ const ProductDetails = () => {
                         <p className='font-playfair text-black font-bold text-[20px]'>Payment Options</p>
                         <div className='flex gap-5'>
                             {
-                                paymentOptions.map(option => <span key={option} class="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default text-heading text-sm font-medium rounded bg-neutral-primary-soft">{option}</span>)
+                                paymentOptions.map(option => <span key={option} className="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default text-heading text-sm font-medium rounded bg-neutral-primary-soft">{option}</span>)
                             }
                         </div>
                     </div>
-                    <button onClick={handleOrder} className='w-full bg-[#000000] text-[#ffffff] border-none text-[1.1rem] p-[1.2rem] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500'>PLACE ORDER</button>
+                    {
+                        user ?
+                            <button onClick={handleModalOpen} className='w-full bg-[#000000] text-[#ffffff] border-none text-[1.1rem] p-[1.2rem] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500'>PLACE ORDER</button>
+                            :
+                            <div className='w-full p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>Login to order</div>
+                    }
+
                 </div>
             </div>
+
+            <dialog ref={orderModalRef} className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg mb-4">Place Your Order</h3>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <input
+                                type="email"
+                                value={user.user.email}
+                                name="email"
+                                readOnly
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Product Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                value={productName}
+                                name="productTitle"
+                                readOnly
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Price</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="price"
+                                value={price}
+                                readOnly
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">First Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="firstName"
+                                placeholder="Your first name"
+                                required
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Last Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                placeholder="Your last name"
+                                required
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Quantity</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="quantity"
+                                defaultValue={minimumOrderQuantity}
+                                min={minimumOrderQuantity}
+                                max={availableQuantity}
+                                className="input input-bordered w-full"
+                                onChange={handlePrice}
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Total Price</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="quantity"
+                                value={totalPrice}
+                                readOnly
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Contact Number</span>
+                            </label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                placeholder="Your contact number"
+                                required
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-2">
+                            <label className="label">
+                                <span className="label-text">Delivery Address</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="address"
+                                placeholder="Your address"
+                                required
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Additional Notes</span>
+                            </label>
+                            <textarea
+                                name="additionalNotes"
+                                placeholder="Any additional info"
+                                className="textarea textarea-bordered w-full resize-none"
+                            />
+                        </div>
+
+                        {
+                            minimumOrderQuantity > availableQuantity && <div className='w-full p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>Not enough stock</div>
+                        }
+
+                        <div className="modal-action justify-between">
+                            <button
+                                type="button" className="btn btn-neutral mt-4 border-none bg-[#000000] text-[#ffffff] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500"
+                                onClick={() => orderModalRef.current.close()}
+                            >
+                                Cancel
+                            </button>
+                            {
+                                minimumOrderQuantity <= availableQuantity &&
+                                <button type="submit" className="btn btn-neutral mt-4 border-none bg-[#000000] text-[#ffffff] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500">
+                                    Place Order
+                                </button>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+            </dialog>
         </div>
     );
 };
