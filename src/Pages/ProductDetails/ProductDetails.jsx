@@ -12,9 +12,9 @@ const ProductDetails = () => {
     const navigate = useNavigate();
 
     // console.log(product);
-    const { productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
+    const { _id,productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
 
-    const [totalPrice, setTotalPrice] = useState(minimumOrderQuantity * price)
+    const [totalPrice, setTotalPrice] = useState(minimumOrderQuantity * price);
 
     const orderModalRef = useRef(null);
     const handleModalOpen = () => {
@@ -37,6 +37,7 @@ const ProductDetails = () => {
         const additionalNotes = form.additionalNotes.value;
 
         const newOrder = {
+            _id:_id,
             email: email,
             productName: productName,
             firstName: firstName,
@@ -53,7 +54,7 @@ const ProductDetails = () => {
         if (paymentOptions.includes("Stripe")) {
             console.log("stripe");
             navigate("/payment", {
-                state: { newOrder: newOrder }
+                state: { newOrder: newOrder,availableQuantity:availableQuantity }
             })
         }
         else {
@@ -65,6 +66,18 @@ const ProductDetails = () => {
                 },
                 body: JSON.stringify(order)
             }).then(res => res.json().then(data => {
+
+                const newStock=availableQuantity-quantity;
+                fetch(`http://localhost:3000/products/${product._id}`,{
+                    method:"PATCH",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        newQuantity:newStock
+                    })
+                });
+
                 orderModalRef.current.close();
                 navigate("/");
                 toast.success("Order completed successfully!");

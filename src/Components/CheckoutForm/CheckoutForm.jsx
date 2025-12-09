@@ -1,14 +1,14 @@
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import toast from "react-hot-toast";
 
-const CheckoutForm = ({ newOrder, navigate }) => {
+const CheckoutForm = ({ newOrder,availableQuantity,navigate }) => {
     const stripe = useStripe();
     const elements = useElements();
-
+    console.log(newOrder);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!stripe || !elements) 
+        if (!stripe || !elements)
             return;
 
         const { error, paymentIntent } = await stripe.confirmPayment({
@@ -25,14 +25,24 @@ const CheckoutForm = ({ newOrder, navigate }) => {
         }
 
         if (paymentIntent && paymentIntent.status === "succeeded") {
-            const order = { ...newOrder, paymentStatus: "paid",transactionID:paymentIntent.id,paidAmount:paymentIntent.amount/100 };
+            const order = { ...newOrder, paymentStatus: "paid", transactionID: paymentIntent.id, paidAmount: paymentIntent.amount / 100 };
 
-            // Save Paid Order to DB
             fetch("http://localhost:3000/orders", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(order)
             }).then(() => {
+                const newStock = availableQuantity - newOrder.quantity;
+                
+                fetch(`http://localhost:3000/products/${newOrder._id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        newQuantity: newStock
+                    })
+                });
                 toast.success("Payment successful! Order placed.");
                 navigate("/");
             });

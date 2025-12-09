@@ -9,6 +9,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUB_KEY);
 const Stripe = () => {
     const { state } = useLocation();
     const newOrder = state?.newOrder;
+    const availableQuantity=state?.availableQuantity;
     const navigate = useNavigate();
 
     const [clientSecret, setClientSecret] = useState("");
@@ -41,7 +42,7 @@ const Stripe = () => {
             <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Stripe Payment</p>
             {clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm newOrder={newOrder} navigate={navigate} />
+                    <CheckoutForm newOrder={newOrder} availableQuantity={availableQuantity} navigate={navigate} />
                 </Elements>
             )}
         </div>
