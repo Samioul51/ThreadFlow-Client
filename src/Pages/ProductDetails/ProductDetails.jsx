@@ -217,7 +217,7 @@ const ProductDetails = () => {
                             </label>
                             <input
                                 type="number"
-                                name="quantity"
+                                name="totalPrice"
                                 value={totalPrice}
                                 readOnly
                                 className="input input-bordered w-full"

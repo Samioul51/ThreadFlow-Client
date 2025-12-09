@@ -25,7 +25,7 @@ const CheckoutForm = ({ newOrder, navigate }) => {
         }
 
         if (paymentIntent && paymentIntent.status === "succeeded") {
-            const order = { ...newOrder, paymentStatus: "paid" };
+            const order = { ...newOrder, paymentStatus: "paid",transactionID:paymentIntent.id,paidAmount:paymentIntent.amount/100 };
 
             // Save Paid Order to DB
             fetch("http://localhost:3000/orders", {
@@ -43,7 +43,7 @@ const CheckoutForm = ({ newOrder, navigate }) => {
         <form onSubmit={handleSubmit}>
             <PaymentElement></PaymentElement>
 
-            <button disabled={!stripe} className='w-full bg-[#000000] text-[#ffffff] border-none text-[1.1rem] p-[1.2rem] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500'>
+            <button disabled={!stripe} className='w-full bg-[#000000] text-[#ffffff] border-none text-[1.1rem] mt-5 p-[1.2rem] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500'>
                 Pay Now
             </button>
         </form>
