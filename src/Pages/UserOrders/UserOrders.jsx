@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Dashboard = () => {
+const UserOrders = () => {
     return (
         <div>
-            Dashboard
+            My orders
         </div>
     );
 };
 
-export default Dashboard;
+export default UserOrders;
