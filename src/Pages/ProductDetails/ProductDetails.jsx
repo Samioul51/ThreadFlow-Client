@@ -65,7 +65,9 @@ const ProductDetails = () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(order)
-            }).then(res => res.json().then(data => {
+            })
+            .then(res => res.json())
+            .then(data => {
 
                 const newStock=availableQuantity-quantity;
                 fetch(`http://localhost:3000/products/${product._id}`,{
@@ -81,7 +83,7 @@ const ProductDetails = () => {
                 orderModalRef.current.close();
                 navigate("/");
                 toast.success("Order completed successfully!");
-            }))
+            })
         }
 
     }

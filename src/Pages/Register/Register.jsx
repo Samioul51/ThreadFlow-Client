@@ -9,6 +9,7 @@ const Register = () => {
     const location = useLocation();
     const [error, setError] = useState("");
 
+
     const handleRegister = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -17,6 +18,13 @@ const Register = () => {
         const password = form.password.value;
         const role = form.role.value;
         const photoFile = form.photo.files[0];
+
+        const newUser = {
+            name: name,
+            email: email,
+            role: role,
+            roleStatus: "pending"
+        }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
@@ -49,19 +57,47 @@ const Register = () => {
                 displayName: name,
                 photoURL: photoURL
             });
+            
             setUser({ ...user, displayName: name, photoURL });
+            
+            await fetch("http://localhost:3000/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newUser)
+            });
+
             toast.success("Registered Successfully!");
             navigate(`${location.state ? location.state : "/"}`);
         }
         catch (error) {
-            toast.success(error.message);
+            toast.error(error.message);
         }
     }
 
     const handleGoogleRegister = () => {
-        signInWithGoogle().then((res) => {
+        signInWithGoogle().then(async (res) => {
             if (!res)
                 return;
+
+            const loggedUser = res.user;
+            const newUser2 = {
+                name: loggedUser.displayName,
+                email: loggedUser.email,
+                role: "buyer",
+                roleStatus: "approved",
+
+            }
+
+            await fetch("http://localhost:3000/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newUser2)
+            });
+
             toast.success("Signed up with Google!");
             navigate(`${location.state ? location.state : "/"}`);
         }).catch((error) => {
@@ -86,7 +122,7 @@ const Register = () => {
                     </div>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Photo</label>
-                        <input type="file" className="file-input bg-[#fafafa]   w-full" name="photo" />
+                        <input type="file" className="file-input bg-[#fafafa] w-full" name="photo" required />
                     </div>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Select Role</label>
