@@ -8,6 +8,7 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [userData,setUserData]=useState(null);
 
     // Registration
 
@@ -43,6 +44,7 @@ const AuthProvider = ({ children }) => {
     // Logout 
 
     const logout = () => {
+        setUserData(null);
         return signOut(auth);
     }
 
@@ -52,9 +54,62 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, updatedData);
     }
 
+    // User Data from backend
+
+    const fetchUserData=async (email)=>{
+        try{
+            const res=await fetch(`http://localhost:3000/users/${email}`);
+            if(res.ok){
+                const result=await res.json();
+                if(result.success){
+                    setUserData(result.data);
+                    return result.data;
+                }
+            }
+            return null;
+        }catch(error){
+            return null;
+        }
+    }
+
+    // User existance check
+
+    const checkUserExists=async(email)=>{
+        try{
+            const res=await fetch(`http://localhost:3000/users/${email}`);
+            const result=await res.json();
+            return result.success && result.data;
+        }catch(error){
+            return false;
+        }
+    }
+
+    const createUserInDb=async (userData)=>{
+        const res=await fetch("http://localhost:3000/users",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(userData)
+        });
+
+        const result=await res.json();
+
+        if(result.success){
+            setUserData(result.data);
+            return result.data;
+        }
+
+        throw new Error(result.message);
+    }
+
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
+            if(currentUser)
+                await fetchUserData(currentUser.email);
+            else
+                setUserData(null);
             setLoading(false);
         });
         return () => unsubscribe();
@@ -64,12 +119,16 @@ const AuthProvider = ({ children }) => {
         user,
         setUser,
         createUser,
+        userData,
         loading,
         setLoading,
         logout,
         signIn,
         signInWithGoogle,
-        updateUser
+        updateUser,
+        fetchUserData,
+        checkUserExists,
+        createUserInDb
     };
 
     return <AuthContext value={authData}>{children}</AuthContext>

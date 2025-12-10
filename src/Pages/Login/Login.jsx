@@ -4,7 +4,7 @@ import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-    const { signIn, signInWithGoogle } = use(AuthContext);
+    const { signIn, signInWithGoogle,createUserInDb } = use(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -19,16 +19,24 @@ const Login = () => {
             toast.success("Logged In Successfully!");
             navigate(`${location.state ? location.state : "/"}`);
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            toast.error(errorCode, errorMessage);
+            toast.error(error.message);
         });
     }
 
     const handleGoogleLogin = () => {
-        signInWithGoogle().then((res) => {
+        signInWithGoogle().then(async (res) => {
             if (!res)
                 return;
+
+            const loggedUser=res.user;
+
+            await createUserInDb({
+                name: loggedUser.displayName,
+                email: loggedUser.email,
+                role: "buyer",
+                roleStatus: "pending"
+            });
+
             toast.success("Logged in with Google!");
             navigate(`${location.state ? location.state : "/"}`);
         }).catch((error) => {

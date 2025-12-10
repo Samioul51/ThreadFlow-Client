@@ -4,7 +4,7 @@ import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 
 const Register = () => {
-    const { createUser, setUser, updateUser, signInWithGoogle } = use(AuthContext);
+    const { createUser, setUser, updateUser, signInWithGoogle,createUserInDb } = use(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const [error, setError] = useState("");
@@ -60,12 +60,8 @@ const Register = () => {
             
             setUser({ ...user, displayName: name, photoURL });
             
-            await fetch("http://localhost:3000/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newUser)
+            await createUserInDb({
+                ...newUser
             });
 
             toast.success("Registered Successfully!");
@@ -82,28 +78,19 @@ const Register = () => {
                 return;
 
             const loggedUser = res.user;
-            const newUser2 = {
+            
+            await createUserInDb({
                 name: loggedUser.displayName,
                 email: loggedUser.email,
                 role: "buyer",
-                roleStatus: "approved",
-
-            }
-
-            await fetch("http://localhost:3000/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newUser2)
+                roleStatus: "pending",
             });
 
             toast.success("Signed up with Google!");
+            
             navigate(`${location.state ? location.state : "/"}`);
         }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            toast.error(errorCode, errorMessage);
+            toast.error(error.message);
         });
     }
 
