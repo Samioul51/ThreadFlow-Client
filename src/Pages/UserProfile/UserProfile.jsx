@@ -1,9 +1,93 @@
-import React from 'react';
+import React, { use } from 'react';
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import { useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
 
 const UserProfile = () => {
+    const { user, userData, logout } = use(AuthContext);
+    const navigate = useNavigate();
+    // console.log(user);
+    // console.log(userData);
+    const handleOpenModal = () => document.getElementById("my_modal_5").showModal();
+    const handleCloseModal = () => document.getElementById("my_modal_5").close();
+
+    const handleLogout = () => {
+        handleCloseModal();
+        navigate("/", { replace: true });
+        logout().then(() => {
+            toast.success("Logged out successfully!");
+        }).catch((error) => {
+            toast.error(error.message);
+            handleCloseModal();
+        })
+    }
+
     return (
-        <div>
-            My Profile
+        <div className='py-5 mx-10 mt-10 flex flex-col items-center bg-white'>
+            <img src={user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10' />
+            <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{user.displayName}</p>
+            <div className="w-full max-w-[600px] self-center divider divider-neutral"></div>
+            <div className='w-full max-w-[600px]'>
+                <div className='flex justify-between mb-5'>
+                    <p className='font-inter font-bold text-black'>Full Name</p>
+                    <p className='font-medium font-inter text-[#666]'>{user.displayName}</p>
+                </div>
+                <div className="divider divider-neutral mb-5"></div>
+            </div>
+            <div className='w-full max-w-[600px]'>
+                <div className='flex justify-between mb-5'>
+                    <p className='font-inter font-bold text-black'>Email</p>
+                    <p className='font-medium font-inter text-[#666]'>{user.email}</p>
+                </div>
+                <div className="divider divider-neutral mb-5"></div>
+            </div>
+            <div className='w-full max-w-[600px]'>
+                <div className='flex justify-between mb-5'>
+                    <p className='font-inter font-bold text-black'>Account Status</p>
+                    {
+                        userData?.roleStatus === "pending" ?
+                            <p className='font-medium font-inter text-red-500'>Pending</p>
+                            :
+                            <p className='font-medium font-inter text-blue-500'>Approved</p>
+                    }
+                </div>
+                <div className="divider divider-neutral mb-5"></div>
+            </div>
+            <div className='w-full max-w-[600px]'>
+                <div className='flex justify-between mb-5'>
+                    <p className='font-inter font-bold text-black'>User Type</p>
+                    <p className='font-medium font-inter text-[#666]'>{userData?.role}</p>
+                </div>
+                <div className="divider divider-neutral mb-5"></div>
+            </div>
+            <div className='w-full max-w-[600px]'>
+                <div className='flex justify-between mb-5'>
+                    <p className='font-inter font-bold text-black'>Member Since</p>
+                    <p className='font-medium font-inter text-[#666]'></p>
+                </div>
+                <div className="divider divider-neutral mb-5"></div>
+            </div>
+            <div className='w-full max-w-[600px] mb-10'>
+                <div className='flex justify-between mb-5'>
+                    <p className='font-inter font-bold text-black'>Total Orders</p>
+                    <p className='font-medium font-inter text-[#666]'></p>
+                </div>
+                <div className="divider divider-neutral mb-5"></div>
+            </div>
+            <button className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500' onClick={handleOpenModal}>Logout</button>
+            {/* Modal for logout */}
+
+            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <p className="py-4">Are you sure you want to logout?</p>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button onClick={handleLogout} className="btn">Yes</button>
+                            <button onClick={handleCloseModal} className="btn">No</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };

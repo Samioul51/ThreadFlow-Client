@@ -3,11 +3,9 @@ import { NavLink, Outlet } from 'react-router';
 import { CgProfile } from "react-icons/cg";
 import { TbShoppingBagCheck } from "react-icons/tb";
 import { IoReturnUpBackOutline } from "react-icons/io5";
-import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 
 const UserDashboard = () => {
-    const data = use(AuthContext);
-    console.log(data);
+    
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -23,7 +21,7 @@ const UserDashboard = () => {
                     <div className="px-4 font-playfair font-bold">My Dashboard</div>
                 </nav>
 
-                <div className="p-4">
+                <div className="p-4 bg-[#fafafa]">
                     <Outlet />
                 </div>
             </div>
