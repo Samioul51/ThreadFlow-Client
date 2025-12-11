@@ -3,11 +3,16 @@ import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 
+const orderPromise = fetch("http://localhost:3000/orders").then(res => res.json());
+
 const UserProfile = () => {
     const { user, userData, logout } = use(AuthContext);
     const navigate = useNavigate();
-    // console.log(user);
+    console.log(user);
     // console.log(userData);
+    const allOrders = use(orderPromise).data;
+    // console.log(allOrders);
+    const myOrders = allOrders.filter(order => order.email === user.email);
     const handleOpenModal = () => document.getElementById("my_modal_5").showModal();
     const handleCloseModal = () => document.getElementById("my_modal_5").close();
 
@@ -22,55 +27,57 @@ const UserProfile = () => {
         })
     }
 
+    console.log(userData);
+
     return (
-        <div className='py-5 mx-10 mt-10 flex flex-col items-center bg-white'>
+        <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white font-inter'>
             <img src={user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10' />
             <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{user.displayName}</p>
             <div className="w-full max-w-[600px] self-center divider divider-neutral"></div>
             <div className='w-full max-w-[600px]'>
                 <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>Full Name</p>
-                    <p className='font-medium font-inter text-[#666]'>{user.displayName}</p>
+                    <p className='font-inter font-bold text-black'>FULL NAME</p>
+                    <p className='font-medium font-inter text-[#666]'>{user.displayName.toUpperCase()}</p>
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>
             <div className='w-full max-w-[600px]'>
                 <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>Email</p>
+                    <p className='font-inter font-bold text-black'>EMAIL</p>
                     <p className='font-medium font-inter text-[#666]'>{user.email}</p>
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>
             <div className='w-full max-w-[600px]'>
                 <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>Account Status</p>
+                    <p className='font-inter font-bold text-black'>ACCOUNT STATUS</p>
                     {
                         userData?.roleStatus === "pending" ?
-                            <p className='font-medium font-inter text-red-500'>Pending</p>
+                            <p className='font-medium font-inter text-red-500'>PENDING</p>
                             :
-                            <p className='font-medium font-inter text-blue-500'>Approved</p>
+                            <p className='font-medium font-inter text-blue-500'>APPROVED</p>
                     }
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>
             <div className='w-full max-w-[600px]'>
                 <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>User Type</p>
-                    <p className='font-medium font-inter text-[#666]'>{userData?.role}</p>
+                    <p className='font-inter font-bold text-black'>USER TYPE</p>
+                    <p className='font-medium font-inter text-[#666]'>{userData?.role.toUpperCase()}</p>
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>
             <div className='w-full max-w-[600px]'>
                 <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>Member Since</p>
+                    <p className='font-inter font-bold text-black'>MEMBER SINCE</p>
                     <p className='font-medium font-inter text-[#666]'></p>
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>
             <div className='w-full max-w-[600px] mb-10'>
                 <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>Total Orders</p>
-                    <p className='font-medium font-inter text-[#666]'></p>
+                    <p className='font-inter font-bold text-black'>TOTAL ORDERS</p>
+                    <p className='font-medium font-inter text-[#666]'>{myOrders.length}</p>
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>

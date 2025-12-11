@@ -23,7 +23,8 @@ const Register = () => {
             name: name,
             email: email,
             role: role,
-            roleStatus: "pending"
+            roleStatus: "pending",
+            createdAt: new Date()
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -84,6 +85,7 @@ const Register = () => {
                 email: loggedUser.email,
                 role: "buyer",
                 roleStatus: "pending",
+                createdAt: new Date()
             });
 
             toast.success("Signed up with Google!");

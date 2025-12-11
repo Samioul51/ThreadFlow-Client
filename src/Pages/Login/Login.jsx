@@ -34,7 +34,8 @@ const Login = () => {
                 name: loggedUser.displayName,
                 email: loggedUser.email,
                 role: "buyer",
-                roleStatus: "pending"
+                roleStatus: "pending",
+                createdAt: new Date()
             });
 
             toast.success("Logged in with Google!");
