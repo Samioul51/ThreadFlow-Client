@@ -1,16 +1,54 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
-
-const orderPromise = fetch("http://localhost:3000/orders").then(res => res.json());
-
+import toast from 'react-hot-toast';
 
 const UserOrders = () => {
     const { user } = use(AuthContext);
-    const allOrders = use(orderPromise).data;
-    // console.log(allOrders);
-    const myOrders = allOrders.filter(order => order.email === user.email);
+    const [myOrders,setMyOrders]=useState([]);
+    useEffect(()=>{
+        const fetchOrders=async()=>{
+            try{
+                const response=await fetch("http://localhost:3000/orders");
+                const data=await response.json();
+                const orders=data.data.filter(order => order.email === user.email);
+                setMyOrders(orders);
+            }catch(error){
+                toast.error("Failed to load orders!");
+            }
+        };
+
+        fetchOrders();
+    },[user.email]);
     // console.log(user);
     // console.log(myOrders);
+
+    const [id,setID]=useState("");
+    const handleOpenModal = (orderID) => {
+        setID(orderID);
+        document.getElementById("my_modal_5").showModal();
+    }
+    const handleCloseModal = () => {
+        document.getElementById("my_modal_5").close();
+        setID("");
+    }
+
+    const handleDelete=async ()=>{
+        if(!id)
+            return;
+        const response=await fetch(`http://localhost:3000/orders/${id}`,{
+            method:"DELETE"
+        });
+
+        if(!response.ok)
+            throw new Error("Failed to delete order!");
+
+        await response.json();
+        
+        const remaining=myOrders.filter(order=>order._id!==id);
+        setMyOrders(remaining);
+        toast.success("Order cancelled successfully");
+        handleCloseModal();
+    }
 
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
@@ -54,7 +92,7 @@ const UserOrders = () => {
                                                     VIEW
                                                 </button>
                                                 {
-                                                    order.paymentStatus === "pending" && <button class="w-full btn btn-error">CANCEL</button>
+                                                    order.paymentStatus === "pending" && <button onClick={()=>handleOpenModal(order._id)} class="w-full btn btn-error">CANCEL</button>
                                                 }
 
                                             </td>
@@ -69,6 +107,20 @@ const UserOrders = () => {
                         <p className='font-playfair text-2xl text-center font-bold text-black'>NO ORDERS FOUND!</p>
                     </div>
             }
+
+            {/* Modal for deletion */}
+
+            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <p className="py-4">Are you sure you want to cancel order?</p>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button onClick={handleDelete} className="btn">Yes</button>
+                            <button onClick={handleCloseModal} className="btn">No</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };

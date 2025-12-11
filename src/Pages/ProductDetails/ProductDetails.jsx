@@ -12,7 +12,7 @@ const ProductDetails = () => {
     const navigate = useNavigate();
 
     // console.log(product);
-    const { _id,productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
+    const { _id, productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
 
     const [totalPrice, setTotalPrice] = useState(minimumOrderQuantity * price);
 
@@ -25,7 +25,7 @@ const ProductDetails = () => {
         setTotalPrice(e.target.value * price);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
@@ -37,7 +37,7 @@ const ProductDetails = () => {
         const additionalNotes = form.additionalNotes.value;
 
         const newOrder = {
-            _id:_id,
+            productID: _id,
             email: email,
             productName: productName,
             firstName: firstName,
@@ -54,40 +54,59 @@ const ProductDetails = () => {
         if (paymentOptions.includes("Stripe")) {
             console.log("stripe");
             navigate("/payment", {
-                state: { newOrder: newOrder,availableQuantity:availableQuantity }
+                state: { newOrder: newOrder, availableQuantity: availableQuantity }
             })
         }
         else {
             const order = { ...newOrder, paymentStatus: "pending" };
-            fetch("http://localhost:3000/orders", {
+            const orderResponse = await fetch("http://localhost:3000/orders", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(order)
-            })
-            .then(res => res.json())
-            .then(data => {
+            });
 
-                const newStock=availableQuantity-quantity;
-                fetch(`http://localhost:3000/products/${product._id}`,{
-                    method:"PATCH",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify({
-                        newQuantity:newStock
-                    })
-                });
+            if (!orderResponse.ok)
+                throw new Error(`Order failed: ${orderResponse.status}`);
 
-                orderModalRef.current.close();
-                navigate("/");
-                toast.success("Order completed successfully!");
-            })
+            const orderData = await orderResponse.json();
+
+            const newStock = availableQuantity - quantity;
+
+            const stockResponse = await fetch(`http://localhost:3000/products/${product._id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    newQuantity: newStock
+                })
+            });
+
+            if (!stockResponse.ok)
+                throw new Error(`Stock update failed: ${stockResponse.status}`);
+
+
+            // .then(res => res.json())
+            // .then(async (data) => {
+
+            //     const newStock=availableQuantity-quantity;
+            //     await fetch(`http://localhost:3000/products/${product._id}`,{
+            //         method:"PATCH",
+            //         headers:{
+            //             "Content-Type":"application/json"
+            //         },
+            //         body:JSON.stringify({
+            //             newQuantity:newStock
+            //         })
+            //     });
+
+            orderModalRef.current.close();
+            navigate("/");
+            toast.success("Order completed successfully!");
         }
-
     }
-
     const allImages = [
         {
             original: images[0], thumbnail: images[0]
@@ -99,7 +118,6 @@ const ProductDetails = () => {
             original: images[2], thumbnail: images[2]
         }
     ];
-
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto px-4 font-inter'>
             <div className='w-full bg-[#FAFAFA] shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
@@ -300,6 +318,6 @@ const ProductDetails = () => {
             </dialog>
         </div>
     );
-};
+}
 
 export default ProductDetails;
