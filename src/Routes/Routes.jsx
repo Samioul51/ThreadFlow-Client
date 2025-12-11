@@ -91,8 +91,9 @@ const router = createBrowserRouter([
         Component:UserOrders
       },
       {
-        path:"/dashboard/track-order/:orderId",
-        Component:UserTrackOrder
+        path:"/dashboard/track-order/:id",
+        Component:UserTrackOrder,
+        loader: ({ params }) => fetch(`http://localhost:3000/orders/${params.id}`)
       }
     ]
   }

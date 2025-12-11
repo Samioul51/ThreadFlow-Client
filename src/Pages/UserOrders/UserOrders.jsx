@@ -1,10 +1,13 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 const UserOrders = () => {
     const { user } = use(AuthContext);
     const [myOrders,setMyOrders]=useState([]);
+    const navigate=useNavigate();
+
     useEffect(()=>{
         const fetchOrders=async()=>{
             try{
@@ -82,17 +85,17 @@ const UserOrders = () => {
                                                 {order.quantity}
                                             </td>
                                             <td>
-                                                {order.paymentStatus.toUpperCase()}
+                                                {order.deliveryStatus.toUpperCase()}
                                             </td>
                                             <td>
-                                                {order.paymentOption.toUpperCase()}
+                                                {order.paymentStatus.toUpperCase()}
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
-                                                <button className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                <button onClick={()=>navigate(`/dashboard/track-order/${order._id}`)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
                                                     VIEW
                                                 </button>
                                                 {
-                                                    order.paymentStatus === "pending" && <button onClick={()=>handleOpenModal(order._id)} class="w-full btn btn-error">CANCEL</button>
+                                                    order.paymentStatus === "pending" && <button onClick={()=>handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
                                                 }
 
                                             </td>

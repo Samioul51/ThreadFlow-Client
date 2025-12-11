@@ -48,6 +48,7 @@ const ProductDetails = () => {
             address: address,
             additionalNotes: additionalNotes,
             paymentOption: paymentOptions[0],
+            deliveryStatus: "Order Placed",
             createdAt: new Date()
         }
 
