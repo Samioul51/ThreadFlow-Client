@@ -12,10 +12,15 @@ import PublicRoute from "../Providers/PublicRoute";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Stripe from "../Pages/Stripe/Stripe";
-import UserDashboard from "../Layouts/UserDashboard/UserDashboard";
+import Dashboard from "../Layouts/Dashboard/Dashboard";
 import UserProfile from "../Pages/UserProfile/UserProfile";
 import UserOrders from "../Pages/UserOrders/UserOrders";
 import UserTrackOrder from "../Pages/UserTrackOrder/UserTrackOrder";
+import UserRoute from "../Providers/UserRoute/UserRoute";
+import ManagerRoute from "../Providers/ManagerRoute/ManagerRoute";
+import ManageProducts from "../Pages/ManageProducts/ManageProducts";
+import PendingOrders from "../Pages/PendingOrders/PendingOrders";
+import ApprovedOrders from "../Pages/ApprovedOrders/ApprovedOrders";
 
 const router = createBrowserRouter([
   {
@@ -75,7 +80,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <PrivateRoute>
-      <UserDashboard></UserDashboard>
+      <Dashboard></Dashboard>
     </PrivateRoute>,
     children:[
       {
@@ -84,17 +89,39 @@ const router = createBrowserRouter([
       },
       {
         path:"/dashboard/profile",
-        Component:UserProfile
+        element:<UserProfile></UserProfile>
       },
       {
         path:"/dashboard/my-orders",
-        Component:UserOrders
+        element:<UserRoute>
+          <UserOrders></UserOrders>
+        </UserRoute>
       },
       {
         path:"/dashboard/track-order/:id",
-        Component:UserTrackOrder,
+        element:<UserRoute>
+          <UserTrackOrder></UserTrackOrder>
+        </UserRoute>,
         loader: ({ params }) => fetch(`http://localhost:3000/orders/${params.id}`)
-      }
+      },
+      {
+        path:"/dashboard/manage-products",
+        element:<ManagerRoute>
+          <ManageProducts></ManageProducts>
+        </ManagerRoute>
+      },
+      {
+        path:"/dashboard/pending-orders",
+        element:<ManagerRoute>
+          <PendingOrders></PendingOrders>
+        </ManagerRoute>
+      },
+      {
+        path:"/dashboard/approved-orders",
+        element:<ManagerRoute>
+          <ApprovedOrders></ApprovedOrders>
+        </ManagerRoute>
+      },
     ]
   }
 ]);

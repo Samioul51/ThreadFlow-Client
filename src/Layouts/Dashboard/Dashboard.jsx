@@ -3,9 +3,14 @@ import { NavLink, Outlet } from 'react-router';
 import { CgProfile } from "react-icons/cg";
 import { TbShoppingBagCheck } from "react-icons/tb";
 import { IoReturnUpBackOutline } from "react-icons/io5";
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import { MdWork } from "react-icons/md";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { AiFillProduct } from "react-icons/ai";
 
-const UserDashboard = () => {
-    
+
+const Dashboard = () => {
+    const { user, userData } = use(AuthContext);
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -36,11 +41,34 @@ const UserDashboard = () => {
                             <CgProfile /> My Profile
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/dashboard/my-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
-                            <TbShoppingBagCheck /> My Orders
-                        </NavLink>
-                    </li>
+                    {
+                        userData?.role === "buyer" && <li>
+                            <NavLink to="/dashboard/my-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                <TbShoppingBagCheck /> My Orders
+                            </NavLink>
+                        </li>
+                    }
+
+                    {
+                        (userData?.role==="manager" && userData?.roleStatus!=="pending") && <>
+                        <li>
+                            <NavLink to="/dashboard/manage-products" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                <AiFillProduct />My Products
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/pending-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                <MdWork /> Pending Orders
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/approved-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                <IoCheckmarkDoneCircle /> Approved Orders
+                            </NavLink>
+                        </li>
+                        </>
+                    }
+
                     <li>
                         <NavLink to="/" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
                             <IoReturnUpBackOutline /> Back to Home
@@ -52,4 +80,4 @@ const UserDashboard = () => {
     );
 };
 
-export default UserDashboard;
+export default Dashboard;

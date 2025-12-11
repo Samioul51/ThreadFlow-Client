@@ -112,13 +112,27 @@ const UserProfile = () => {
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>
-            <div className='w-full max-w-[600px] mb-10'>
-                <div className='flex justify-between mb-5'>
-                    <p className='font-inter font-bold text-black'>TOTAL ORDERS</p>
-                    <p className='font-medium font-inter text-[#666]'>{myOrders.length}</p>
+            {
+                userData?.role === "buyer" && <div className='w-full max-w-[600px] mb-10'>
+                    <div className='flex justify-between mb-5'>
+                        <p className='font-inter font-bold text-black'>TOTAL ORDERS</p>
+                        <p className='font-medium font-inter text-[#666]'>{myOrders.length}</p>
+                    </div>
+                    <div className="divider divider-neutral mb-5"></div>
                 </div>
-                <div className="divider divider-neutral mb-5"></div>
-            </div>
+            }
+            {
+                userData?.role === "manager" && <div className='w-full max-w-[600px] mb-10'>
+                    <div className='flex justify-between mb-5'>
+                        <p className='font-inter font-bold text-black'>TOTAL PRODUCTS</p>
+                        <p className='font-medium font-inter text-[#666]'>
+
+                        </p>
+                    </div>
+                    <div className="divider divider-neutral mb-5"></div>
+                </div>
+            }
+
             <button className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500' onClick={handleOpenModal}>Logout</button>
             {/* Modal for logout */}
 

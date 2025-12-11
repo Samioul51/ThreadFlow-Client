@@ -152,20 +152,20 @@ const ProductDetails = () => {
                         </div>
                     </div>
                     {
-                        user ? (
+                        user?.userData?.role==="buyer" ? (
                             user?.userData?.roleStatus==="suspended"?
-                            <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-red-600 font-medium mb-5'>YOU ARE SUSPENDED SO CAN'T ORDER!</div>
+                            <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium mb-5'>YOU ARE SUSPENDED SO CAN'T ORDER!</div>
                             :(
                                 user?.userData?.roleStatus==="pending"?
-                                <div className='w-full p-2 border border-solid border-blue-400 bg-[#f0fff4] text-blue-600 font-medium mb-5'>YOUR REQUEST IS UNDER REVIEW SO CAN'T ORDER!</div>
+                                <div className='w-full p-2 border border-solid border-blue-400 bg-[#f0fff4] text-center text-blue-600 font-medium mb-5'>YOUR REQUEST IS UNDER REVIEW SO CAN'T ORDER!</div>
                                 :
                                 <button onClick={handleModalOpen} className='w-full bg-[#000000] text-[#ffffff] border-none text-[1.1rem] p-[1.2rem] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500'>PLACE ORDER</button>
                             )
                             
                         )
                             
-                            :
-                            <div className='w-full p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>PLEASE LOGIN TO ORDER</div>
+                        :
+                            <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium mb-5'>YOU CAN'T ORDER</div>
                     }
 
                 </div>
@@ -181,7 +181,7 @@ const ProductDetails = () => {
                             </label>
                             <input
                                 type="email"
-                                value={user.user.email}
+                                value={user?.user?.email}
                                 name="email"
                                 readOnly
                                 className="input input-bordered w-full"
