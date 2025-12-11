@@ -10,7 +10,7 @@ const ProductDetails = () => {
 
     const user = use(AuthContext);
     const navigate = useNavigate();
-
+    console.log(user);
     // console.log(product);
     const { _id, productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
 
@@ -152,8 +152,13 @@ const ProductDetails = () => {
                         </div>
                     </div>
                     {
-                        user ?
+                        user ? (
+                            user.userData.roleStatus==="suspended"?
+                            <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-red-600 font-medium mb-5'>You are suspended so can't order</div>
+                            :
                             <button onClick={handleModalOpen} className='w-full bg-[#000000] text-[#ffffff] border-none text-[1.1rem] p-[1.2rem] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500'>PLACE ORDER</button>
+                        )
+                            
                             :
                             <div className='w-full p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>Login to order</div>
                     }

@@ -18,12 +18,13 @@ const Register = () => {
         const password = form.password.value;
         const role = form.role.value;
         const photoFile = form.photo.files[0];
+        
 
         const newUser = {
             name: name,
             email: email,
             role: role,
-            roleStatus: "pending",
+            roleStatus: role==="buyer"?"approved":"pending",
             createdAt: new Date()
         }
 
@@ -84,7 +85,7 @@ const Register = () => {
                 name: loggedUser.displayName,
                 email: loggedUser.email,
                 role: "buyer",
-                roleStatus: "pending",
+                roleStatus: "approved",
                 createdAt: new Date()
             });
 
