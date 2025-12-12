@@ -47,13 +47,13 @@ const ProductDetails = () => {
             phone: phone,
             address: address,
             additionalNotes: additionalNotes,
-            paymentOption: paymentOptions[0],
+            paymentOption: paymentOptions,
             deliveryStatus: "Order Placed",
             createdAt: new Date()
         }
 
-        if (paymentOptions.includes("Stripe")) {
-            console.log("stripe");
+        if (paymentOptions==="Stripe") {
+            // console.log("stripe");
             navigate("/payment", {
                 state: { newOrder: newOrder, availableQuantity: availableQuantity }
             })
@@ -146,9 +146,8 @@ const ProductDetails = () => {
                     <div className='flex flex-col gap-5 mb-20'>
                         <p className='font-playfair text-black font-bold text-[20px]'>Payment Options</p>
                         <div className='flex gap-5'>
-                            {
-                                paymentOptions.map(option => <span key={option} className="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default text-heading text-sm font-medium rounded bg-neutral-primary-soft">{option}</span>)
-                            }
+                            <span className="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default text-heading text-sm font-medium rounded bg-neutral-primary-soft">{paymentOptions}</span>
+                            
                         </div>
                     </div>
                     {

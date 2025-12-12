@@ -11,6 +11,8 @@ const UserProfile = () => {
     console.log(user);
     // console.log(userData);
     const allOrders = use(orderPromise).data;
+
+    const totalProducts= "";
     // console.log(allOrders);
     const myOrders = allOrders.filter(order => order.email === user.email);
     const handleOpenModal = () => document.getElementById("my_modal_5").showModal();
@@ -126,7 +128,9 @@ const UserProfile = () => {
                     <div className='flex justify-between mb-5'>
                         <p className='font-inter font-bold text-black'>TOTAL PRODUCTS</p>
                         <p className='font-medium font-inter text-[#666]'>
-
+                            {
+                              totalProducts ? totalProducts.length:0
+                            }
                         </p>
                     </div>
                     <div className="divider divider-neutral mb-5"></div>

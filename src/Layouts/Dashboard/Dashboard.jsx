@@ -6,6 +6,7 @@ import { IoReturnUpBackOutline } from "react-icons/io5";
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { MdWork } from "react-icons/md";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { RiAddCircleFill } from "react-icons/ri";
 import { AiFillProduct } from "react-icons/ai";
 
 
@@ -51,6 +52,11 @@ const Dashboard = () => {
 
                     {
                         (userData?.role==="manager" && userData?.roleStatus!=="pending") && <>
+                        <li>
+                            <NavLink to="/dashboard/add-product" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                <RiAddCircleFill />Add Product
+                            </NavLink>
+                        </li>
                         <li>
                             <NavLink to="/dashboard/manage-products" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
                                 <AiFillProduct />My Products

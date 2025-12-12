@@ -21,6 +21,7 @@ import ManagerRoute from "../Providers/ManagerRoute/ManagerRoute";
 import ManageProducts from "../Pages/ManageProducts/ManageProducts";
 import PendingOrders from "../Pages/PendingOrders/PendingOrders";
 import ApprovedOrders from "../Pages/ApprovedOrders/ApprovedOrders";
+import AddProduct from "../Pages/AddProduct/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +121,12 @@ const router = createBrowserRouter([
         path:"/dashboard/approved-orders",
         element:<ManagerRoute>
           <ApprovedOrders></ApprovedOrders>
+        </ManagerRoute>
+      },
+      {
+        path:"/dashboard/add-product",
+        element:<ManagerRoute>
+          <AddProduct></AddProduct>
         </ManagerRoute>
       },
     ]
