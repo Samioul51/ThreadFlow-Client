@@ -25,7 +25,7 @@ const UserTrackOrder = () => {
         { id: 7, title: 'Shipped', statusKey: 'Shipped' }
     ];
 
-    const currentStep = order?.deliveryStatus ? statusSteps[order.deliveryStatus]+1 : 2;
+    const currentStep = order?.deliveryStatus ? statusSteps[order.deliveryStatus] : 1;
 
     const getStepClass = (index) => {
         if (index < currentStep)

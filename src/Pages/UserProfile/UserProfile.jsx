@@ -35,7 +35,7 @@ const UserProfile = () => {
 
     return (
         <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white font-inter'>
-            <img src={user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10' />
+            <img src={user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10 border border-black' />
             <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{user.displayName.toUpperCase()}</p>
             <div className="w-full max-w-[600px] self-center divider divider-neutral"></div>
             <div className='w-full max-w-[600px]'>

@@ -10,9 +10,9 @@ const ProductDetails = () => {
 
     const user = use(AuthContext);
     const navigate = useNavigate();
-    console.log(user);
+    // console.log(user);
     // console.log(product);
-    const { _id, productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions } = product;
+    const { _id, productName, category, productDescription, price, availableQuantity, minimumOrderQuantity, images, paymentOptions,email } = product;
 
     const [totalPrice, setTotalPrice] = useState(minimumOrderQuantity * price);
 
@@ -28,7 +28,6 @@ const ProductDetails = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
-        const email = form.email.value;
         const firstName = form.firstName.value;
         const lastName = form.lastName.value;
         const quantity = form.quantity.value;
@@ -38,7 +37,7 @@ const ProductDetails = () => {
 
         const newOrder = {
             productID: _id,
-            email: email,
+            email: user?.user?.email,
             productName: productName,
             firstName: firstName,
             lastName: lastName,
@@ -48,7 +47,9 @@ const ProductDetails = () => {
             address: address,
             additionalNotes: additionalNotes,
             paymentOption: paymentOptions,
-            deliveryStatus: "Order Placed",
+            sellerEmail:(email? email: ""),
+            deliveryStatus: "pending",
+
             createdAt: new Date()
         }
 
