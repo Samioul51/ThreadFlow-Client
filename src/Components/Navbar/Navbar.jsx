@@ -45,7 +45,7 @@ const Navbar = () => {
                 {/* Desktop */}
                 <div className='hidden lg:flex items-center gap-[40px]'>
                     {
-                        navOptions.slice(0, 4).map(option => (
+                        navOptions.slice(0, 2).map(option => (
                             <NavLink key={option.name} to={option.path} className='text-[#ffffff] font-medium'>{option.name}</NavLink>
                         ))
                     }
@@ -59,7 +59,7 @@ const Navbar = () => {
                         ) : (
                             <>
                                 {
-                                    navOptions.slice(4, 5).map(option => (
+                                    navOptions.slice(2, 5).map(option => (
                                         <NavLink key={option.name} to={option.path} className='text-[#ffffff] font-medium'>{option.name}</NavLink>
                                     ))}
                                 <button className='text-black bg-white rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer' onClick={() => navigate("/register")}>Register</button>
