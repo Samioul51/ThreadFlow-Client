@@ -1,26 +1,52 @@
 import React, { use, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import toast from 'react-hot-toast';
 
 const ordersPromise = fetch("http://localhost:3000/orders").then(res => res.json());
 
 
 const PendingOrders = () => {
     const { user, userData } = use(AuthContext);
-    const orders = use(ordersPromise).data;
+    const data = use(ordersPromise);
+
+    const orders = data.data;
 
     const myPendingOrders = orders.filter(order => order.sellerEmail === user.email && order.deliveryStatus === "pending");
 
     const [selectedOrder, setSelectedOrder] = useState(null);
-
+    const [actionType, setActionType] = useState("");
     // console.log(myPendingOrders);
 
-    const handleApproveModal = () => {
+    const handleConfirmAction = async () => {
+        if (!selectedOrder)
+            return;
 
+        const newStatus = actionType === "approve"
+            ?
+            "Order Confirmed" : "rejected";
+
+        const res = await fetch(`http://localhost:3000/orders/${selectedOrder._id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ deliveryStatus: newStatus,orderConfirmed:new Date() })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            toast.success(`ORDER ${newStatus.toUpperCase()}!`);
+            document.getElementById("action_modal").close();
+            setSelectedOrder(null);
+            setActionType("");
+            window.location.reload();
+        }
+        else
+            toast.error("Failed to update order!")
     }
 
-    const handleRejectModal = () => {
 
-    }
 
     const handleViewModal = (order) => {
         setSelectedOrder(order);
@@ -80,16 +106,34 @@ const PendingOrders = () => {
                                                         ?
                                                         <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium'>SUSPENDED</div>
                                                         :
-                                                        <>
-                                                            <button onClick={handleApproveModal} className='w-full btn btn-success'>
-                                                                APPROVE
-                                                            </button>
-                                                            <button onClick={handleRejectModal} className="w-full btn btn-error">REJECT</button>
-                                                        </>
+                                                        (
+                                                            order.deliveryStatus !== "pending"
+                                                                ?
+                                                                (
+                                                                    order.deliveryStatus !== "approved"
+                                                                        ?
+                                                                        <div className='w-full p-2 border border-solid border-green-400 bg-[#f0fff4] text-center text-green-600 font-medium'>APPROVED</div>
+                                                                        :
+                                                                        <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium'>REJECTED</div>
+                                                                )
+                                                                :
+                                                                <>
+                                                                    <button onClick={() => {
+                                                                        setSelectedOrder(order);
+                                                                        setActionType("approve");
+                                                                        document.getElementById("action_modal").showModal();
+                                                                    }} className='w-full btn btn-success'>
+                                                                        APPROVE
+                                                                    </button>
+                                                                    <button onClick={() => {
+                                                                        setSelectedOrder(order);
+                                                                        setActionType("reject");
+                                                                        document.getElementById("action_modal").showModal();
+                                                                    }} className="w-full btn btn-error">REJECT</button>
+                                                                </>
+                                                        )
                                                 }
                                                 <button onClick={() => handleViewModal(order)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
-
-
                                             </td>
                                         </tr>
                                     ))
@@ -102,6 +146,7 @@ const PendingOrders = () => {
                         <p className='font-playfair text-2xl text-center font-bold text-black'>NO PENDING ORDERS FOUND!</p>
                     </div>
             }
+            {/* View Modal */}
             <dialog id="view_order_modal" className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box max-w-2xl">
                     <h3 className="font-bold text-xl mb-4 pb-3 border-b">Order Details</h3>
@@ -201,6 +246,37 @@ const PendingOrders = () => {
                     </div>
                 </div>
             </dialog>
+
+            {/* Action Modal */}
+            <dialog id="action_modal" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-xl">
+                        {actionType === "approve" ? "Approve Order?" : "Reject Order?"}
+                    </h3>
+
+                    <p className="py-4 text-base">
+                        Are you sure you want to
+                        <span>
+                            {" "}{actionType}
+                        </span>
+                        {" "}this order?
+                    </p>
+
+                    <div className="modal-action flex gap-2">
+                        <button
+                            className="btn"
+                            onClick={handleConfirmAction}
+                        >
+                            Yes
+                        </button>
+                        <button className="btn"
+                            onClick={() => document.getElementById("action_modal").close()}>
+                            No
+                        </button>
+                    </div>
+                </div>
+            </dialog>
+
         </div>
     );
 };

@@ -5,27 +5,31 @@ const UserTrackOrder = () => {
     const order = useLoaderData().data;
     // console.log(order);
 
-    const statusSteps = {
-        'Order Placed':0,
-        'Cutting Completed': 1,
-        'Sewing Started': 2,
-        'Finishing': 3,
-        'QC Checked': 4,
-        'Packed': 5,
-        'Shipped': 6
-    }
+    // const statusSteps = {
+    //     'Order Confirmed': 0,
+    //     'Cutting Completed': 1,
+    //     'Sewing Started': 2,
+    //     'Finishing': 3,
+    //     'QC Checked': 4,
+    //     'Packed': 5,
+    //     'Shipped': 6
+    // }
 
     const steps = [
-        { id: 1, title: 'Order Placed', statusKey: 'Order Placed' },
-        { id: 2, title: 'Cutting Completed', statusKey: 'Cutting Completed' },
-        { id: 3, title: 'Sewing Started', statusKey: 'Sewing Started' },
-        { id: 4, title: 'Finishing', statusKey: 'Finishing' },
-        { id: 5, title: 'QC Checked', statusKey: 'QC Checked' },
-        { id: 6, title: 'Packed', statusKey: 'Packed' },
-        { id: 7, title: 'Shipped', statusKey: 'Shipped' }
+        { id: 1, title: 'Order Confirmed', statusKey: 'orderConfirmed' },
+        { id: 2, title: 'Cutting Completed', statusKey: 'cuttingCompleted' },
+        { id: 3, title: 'Sewing Started', statusKey: 'sewingStarted' },
+        { id: 4, title: 'Finishing', statusKey: 'finishing' },
+        { id: 5, title: 'QC Checked', statusKey: 'qcChecked' },
+        { id: 6, title: 'Packed', statusKey: 'packed' },
+        { id: 7, title: 'Shipped', statusKey: 'shipped' }
     ];
 
-    const currentStep = order?.deliveryStatus ? statusSteps[order.deliveryStatus] : 1;
+    const currentStep = steps.reduce((lastIndex,step,index)=>{
+        if(order[step.statusKey])
+            return index+1;
+        return lastIndex;
+    },0);
 
     const getStepClass = (index) => {
         if (index < currentStep)
@@ -73,108 +77,119 @@ const UserTrackOrder = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-full lg:max-w-[50%] h-auto flex-col px-5 py-5 box-border'>
-                    <p className="text-2xl font-bold text-gray-900 mb-6 text-center">PRODUCTION STATUS</p>
-                    <div className="flex flex-col gap-8">
-                        {steps.map((step, index) => {
-                            const stepClass = getStepClass(index);
-                            const statusLabel = getStatusLabel(stepClass);
+                {
+                    order?.deliveryStatus === "rejected" ?
+                        <div className='w-full lg:max-w-[50%] h-auto flex flex-col items-center justify-center px-5 py-5 box-border text-center my-auto'>
+                            <p className='text-4xl font-bold text-red-600 mb-4'>Order Rejected</p>
+                            <p className='text-gray-700 text-lg'>
+                                Your order has been rejected. For more details, please contact our support team.
+                            </p>
+                        </div>
+                        :
+                        <div className='w-full lg:max-w-[50%] h-auto flex-col px-5 py-5 box-border'>
+                            <p className="text-2xl font-bold text-gray-900 mb-6 text-center">PRODUCTION STATUS</p>
+                            <div className="flex flex-col gap-8">
+                                {steps.map((step, index) => {
+                                    const stepClass = getStepClass(index);
+                                    const statusLabel = getStatusLabel(stepClass);
 
-                            return (
-                                <div key={step.id} className="flex relative">
-                                    {/* Vertical Line */}
-                                    {index < steps.length - 1 && (
-                                        <div
-                                            className="absolute left-5 top-10 w-0.5"
-                                            style={{
-                                                height: '48px',
-                                                backgroundColor:
-                                                    stepClass === 'pending'
-                                                        ? '#e2e8f0'
-                                                        : '#0f172a'
-                                            }}
-                                        />
-                                    )}
+                                    return (
+                                        <div key={step.id} className="flex relative">
+                                            {/* Vertical Line */}
+                                            {index < steps.length - 1 && (
+                                                <div
+                                                    className="absolute left-5 top-10 w-0.5"
+                                                    style={{
+                                                        height: '48px',
+                                                        backgroundColor:
+                                                            stepClass === 'pending'
+                                                                ? '#e2e8f0'
+                                                                : '#0f172a'
+                                                    }}
+                                                />
+                                            )}
 
-                                    {/* Circle */}
-                                    <div
-                                        className="w-10 h-10 rounded-full flex items-center justify-center mr-4 z-10 flex-shrink-0"
-                                        style={{
-                                            backgroundColor:
-                                                stepClass === 'completed'
-                                                    ? '#0f172a'
-                                                    : 'white',
-                                            border:
-                                                stepClass === 'pending'
-                                                    ? '2px solid #e2e8f0'
-                                                    : '2px solid #0f172a',
-                                            color:
-                                                stepClass === 'completed'
-                                                    ? 'white'
-                                                    : stepClass === 'active'
-                                                        ? '#0f172a'
-                                                        : '#94a3b8'
-                                        }}
-                                    >
-                                        {stepClass === 'completed' ? (
-                                            <svg
-                                                viewBox="0 0 16 16"
-                                                fill="currentColor"
-                                                width="20"
-                                                height="20"
+                                            {/* Circle */}
+                                            <div
+                                                className="w-10 h-10 rounded-full flex items-center justify-center mr-4 z-10 flex-shrink-0"
+                                                style={{
+                                                    backgroundColor:
+                                                        stepClass === 'completed'
+                                                            ? '#0f172a'
+                                                            : 'white',
+                                                    border:
+                                                        stepClass === 'pending'
+                                                            ? '2px solid #e2e8f0'
+                                                            : '2px solid #0f172a',
+                                                    color:
+                                                        stepClass === 'completed'
+                                                            ? 'white'
+                                                            : stepClass === 'active'
+                                                                ? '#0f172a'
+                                                                : '#94a3b8'
+                                                }}
                                             >
-                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
-                                            </svg>
-                                        ) : (
-                                            <span className="font-semibold">{step.id}</span>
-                                        )}
-                                    </div>
-
-                                    {/* Content */}
-                                    <div className="flex-1 pb-2">
-                                        <div
-                                            className="font-semibold mb-1"
-                                            style={{
-                                                color:
-                                                    stepClass === 'pending'
-                                                        ? '#94a3b8'
-                                                        : '#0f172a'
-                                            }}
-                                        >
-                                            {step.title}
-                                        </div>
-
-                                        <div
-                                            className="inline-block px-2 py-1 rounded-xl text-xs font-medium"
-                                            style={{
-                                                backgroundColor:
-                                                    stepClass === 'completed'
-                                                        ? '#dcfce7'
-                                                        : stepClass === 'active'
-                                                            ? '#dbeafe'
-                                                            : '#f1f5f9',
-                                                color:
-                                                    stepClass === 'completed'
-                                                        ? '#166534'
-                                                        : stepClass === 'active'
-                                                            ? '#1d4ed8'
-                                                            : '#64748b'
-                                            }}
-                                        >
-                                            {statusLabel}
-                                        </div>
-
-                                        {stepClass !== 'pending' && (
-                                            <div className="text-xs text-gray-400 mt-1">
-                                                {step.time}
+                                                {stepClass === 'completed' ? (
+                                                    <svg
+                                                        viewBox="0 0 16 16"
+                                                        fill="currentColor"
+                                                        width="20"
+                                                        height="20"
+                                                    >
+                                                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                                                    </svg>
+                                                ) : (
+                                                    <span className="font-semibold">{step.id}</span>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+
+                                            {/* Content */}
+                                            <div className="flex-1 pb-2">
+                                                <div
+                                                    className="font-semibold mb-1"
+                                                    style={{
+                                                        color:
+                                                            stepClass === 'pending'
+                                                                ? '#94a3b8'
+                                                                : '#0f172a'
+                                                    }}
+                                                >
+                                                    {step.title}
+                                                </div>
+
+                                                <div
+                                                    className="inline-block px-2 py-1 rounded-xl text-xs font-medium"
+                                                    style={{
+                                                        backgroundColor:
+                                                            stepClass === 'completed'
+                                                                ? '#dcfce7'
+                                                                : stepClass === 'active'
+                                                                    ? '#dbeafe'
+                                                                    : '#f1f5f9',
+                                                        color:
+                                                            stepClass === 'completed'
+                                                                ? '#166534'
+                                                                : stepClass === 'active'
+                                                                    ? '#1d4ed8'
+                                                                    : '#64748b'
+                                                    }}
+                                                >
+                                                    {statusLabel}
+                                                </div>
+
+                                                {stepClass === 'completed' && order[step.statusKey] && (
+                                                    <div className="text-xs text-gray-400 mt-1">
+                                                        {new Date(order[step.statusKey]).toLocaleDateString()}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                }
+
             </div>
         </div>
     );
