@@ -2,15 +2,27 @@ import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
+import { IoIosArrowDropdown } from 'react-icons/io';
 
 
 const ManageProducts = () => {
 
-    const { user,userData } = use(AuthContext);
+    const { user, userData } = use(AuthContext);
     const [myProducts, setMyProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const [id, setID] = useState("");
+
+    const categories = ["All", "Shirt", "Pant", "Jacket", "Accessories"];
+
+    const [category, setCategory] = useState("All");
+    const [searchTitle, setSearchTitle] = useState("");
+
+    const filteredProducts = myProducts.filter(p => {
+        const matchCategory = category === "All" ? true : p.category.toLowerCase() === category.toLowerCase();
+        const matchTitle = p.productName.toLowerCase().includes(searchTitle.toLowerCase());
+        return matchCategory && matchTitle;
+    });
 
     // For deletion
 
@@ -83,7 +95,7 @@ const ManageProducts = () => {
             price: parseInt(price),
             newQuantity: selectedProduct.availableQuantity + newStock,
             minimumOrderQuantity: parseInt(minOrder),
-            paymentOptions:paymentOptions,
+            paymentOptions: paymentOptions,
             productDescription: description,
         };
 
@@ -102,7 +114,7 @@ const ManageProducts = () => {
                 ...p, price: updatedProduct.price,
                 availableQuantity: updatedProduct.newQuantity,
                 minimumOrderQuantity: updatedProduct.minimumOrderQuantity,
-                paymentOptions:updatedProduct.paymentOptions,
+                paymentOptions: updatedProduct.paymentOptions,
                 productDescription: updatedProduct.productDescription,
             }
                 : p);
@@ -132,8 +144,19 @@ const ManageProducts = () => {
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY PRODUCTS</p>
+            <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
+                <div className="dropdown dropdown-start">
+                    <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
+                    <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                        {
+                            categories.map(c => <li key={c}><a onClick={() => setCategory(c)}>{c}</a></li>)
+                        }
+                    </ul>
+                </div>
+                <input type="text" placeholder="Search by Title" className="input input-primary" onChange={(e) => setSearchTitle(e.target.value)} />
+            </div>
             {
-                myProducts.length > 0 ?
+                filteredProducts.length > 0 ?
                     <div className="w-full overflow-x-auto">
                         <table className="table">
                             {/* head */}
@@ -142,6 +165,7 @@ const ManageProducts = () => {
                                     <th className='text-black font-bold font-playfair'>PRODUCT ID</th>
                                     <th className='text-black font-bold font-playfair'>PRODUCT IMAGE</th>
                                     <th className='text-black font-bold font-playfair'>PRODUCT NAME</th>
+                                    <th className='text-black font-bold font-playfair'>CATEGORY</th>
                                     <th className='text-black font-bold font-playfair'>PRICE</th>
                                     <th className='text-black font-bold font-playfair'>AVAILABLE QUANTITY</th>
                                     <th className='text-black font-bold font-playfair'>PAYMENT MODE</th>
@@ -151,7 +175,7 @@ const ManageProducts = () => {
 
                             <tbody>
                                 {
-                                    myProducts.map(product => (
+                                    filteredProducts.map(product => (
                                         <tr key={product._id}>
                                             <td>
                                                 {product._id}
@@ -161,6 +185,9 @@ const ManageProducts = () => {
                                             </td>
                                             <td>
                                                 {product.productName.toUpperCase()}
+                                            </td>
+                                            <td>
+                                                {product.category.toUpperCase()}
                                             </td>
                                             <td>
                                                 {product.price}
@@ -173,18 +200,18 @@ const ManageProducts = () => {
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
                                                 {
-                                                    userData?.roleStatus==="suspended"
-                                                    ?
-                                                    <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium'>SUSPENDED</div>
-                                                    :
-                                                    <>
-                                                    <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
-                                                    UPDATE
-                                                </button>
-                                                <button onClick={() => handleOpenModal(product._id)} className="w-full btn btn-error">DELETE</button>
-                                                </>
+                                                    userData?.roleStatus === "suspended"
+                                                        ?
+                                                        <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium'>SUSPENDED</div>
+                                                        :
+                                                        <>
+                                                            <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                                UPDATE
+                                                            </button>
+                                                            <button onClick={() => handleOpenModal(product._id)} className="w-full btn btn-error">DELETE</button>
+                                                        </>
                                                 }
-                                                
+
 
                                             </td>
                                         </tr>
