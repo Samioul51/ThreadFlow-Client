@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
-    const {user}=use(AuthContext);
+    const {user,userData}=use(AuthContext);
     const [images,setImages]=useState([]);
     const imgBB=import.meta.env.VITE_IMG_BB_API_KEY;
 
@@ -170,10 +170,16 @@ const AddProduct = () => {
                             </div>
                         )
                     }
-
-                    <button type="submit" className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer mb-[24px]'>
+                    {
+                        userData?.roleStatus==="suspended"
+                        ?
+                        <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium mb-5'>YOU ARE SUSPENDED SO CAN'T ADD PRODUCTS!</div>
+                        :
+                        <button type="submit" className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer mb-[24px]'>
                         Add Product
                     </button>
+                    }
+                    
                 </form>
         </div>
     );
