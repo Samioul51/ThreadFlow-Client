@@ -46,8 +46,6 @@ const PendingOrders = () => {
             toast.error("Failed to update order!")
     }
 
-
-
     const handleViewModal = (order) => {
         setSelectedOrder(order);
         document.getElementById("view_order_modal").showModal();

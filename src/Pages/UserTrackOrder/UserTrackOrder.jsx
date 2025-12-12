@@ -179,7 +179,7 @@ const UserTrackOrder = () => {
 
                                                 {stepClass === 'completed' && order[step.statusKey] && (
                                                     <div className="text-xs text-gray-400 mt-1">
-                                                        {new Date(order[step.statusKey]).toLocaleDateString()}
+                                                        {order[step.statusKey].split("T")[0]}
                                                     </div>
                                                 )}
                                             </div>
