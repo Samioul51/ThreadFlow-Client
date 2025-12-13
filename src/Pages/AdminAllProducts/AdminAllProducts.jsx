@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const AdminAllProducts = () => {
@@ -21,7 +21,6 @@ const AdminAllProducts = () => {
                 toast.error("Failed to load products!");
             }
         }
-
         fetchProducts();
     }, []);
 

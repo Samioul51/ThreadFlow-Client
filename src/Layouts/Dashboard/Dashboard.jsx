@@ -9,7 +9,7 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
 import { AiFillProduct } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
-
+import logo from "../../assets/logo.png"
 
 const Dashboard = () => {
     const { user, userData } = use(AuthContext);
@@ -17,15 +17,15 @@ const Dashboard = () => {
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
-                <nav className="navbar w-full bg-base-300">
+                <nav className="navbar w-full bg-black">
                     <label htmlFor="my-drawer-4" className="btn btn-square btn-ghost lg:hidden">
                         {/* icon */}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            className="size-6">
+                            className="size-6 text-white">
                             <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" />
                         </svg>
                     </label>
-                    <div className="px-4 font-playfair font-bold">My Dashboard</div>
+                    <div className="px-4 font-playfair font-bold text-white">My Dashboard</div>
                 </nav>
 
                 <div className="p-4 bg-[#fafafa]">
@@ -37,7 +37,10 @@ const Dashboard = () => {
             <div className="drawer-side">
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
-                <ul className="bg-black menu p-4 w-64 min-h-full bg-base-200">
+                <ul className="bg-black menu p-4 w-64 min-h-full">
+                    <li>
+                        <NavLink to="/"><img src={logo} alt="ThreadFlow" className='w-full max-w-[200px] h-auto cursor-pointer' /></NavLink>
+                    </li>
                     <li>
                         <NavLink to="/dashboard/profile" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
                             <CgProfile /> My Profile
