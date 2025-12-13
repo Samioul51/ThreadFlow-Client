@@ -57,7 +57,7 @@ const UserTrackOrder = () => {
                     <hr className='border-[#666666] mb-5' />
                     <div className='flex gap-20 mb-5'>
                         <div className='flex flex-col gap-2'>
-                            <p className='text-black font-bold'>Address</p>
+                            <p className='text-black font-bold'>ADDRESS</p>
                             <p className='text-[#666666] font-medium'>{order.address}</p>
                         </div>
                         <div className='flex flex-col gap-2'>

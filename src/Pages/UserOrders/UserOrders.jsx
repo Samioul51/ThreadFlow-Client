@@ -65,7 +65,7 @@ const UserOrders = () => {
                                     <th className='text-black font-bold font-playfair'>ORDER ID</th>
                                     <th className='text-black font-bold font-playfair'>PRODUCT</th>
                                     <th className='text-black font-bold font-playfair'>QUANTITY</th>
-                                    <th className='text-black font-bold font-playfair'>STATUS</th>
+                                    <th className='text-black font-bold font-playfair'>COMPLETED STEP</th>
                                     <th className='text-black font-bold font-playfair'>PAYMENT</th>
                                     <th className='text-black font-bold font-playfair'>ACTIONS</th>
                                 </tr>

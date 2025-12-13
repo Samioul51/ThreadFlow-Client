@@ -12,10 +12,22 @@ const ApprovedOrders = () => {
 
     const myApprovedOrders = orders.filter(order => order.sellerEmail === user.email && order.deliveryStatus !== "pending" && order.deliveryStatus !== "rejected");
 
-    console.log(myApprovedOrders);
+    // console.log(myApprovedOrders);
+
+    const steps = [
+        { id: 1, title: 'Order Confirmed', statusKey: 'orderConfirmed' },
+        { id: 2, title: 'Cutting Completed', statusKey: 'cuttingCompleted' },
+        { id: 3, title: 'Sewing Started', statusKey: 'sewingStarted' },
+        { id: 4, title: 'Finishing', statusKey: 'finishing' },
+        { id: 5, title: 'QC Checked', statusKey: 'qcChecked' },
+        { id: 6, title: 'Packed', statusKey: 'packed' },
+        { id: 7, title: 'Shipped', statusKey: 'shipped' }
+    ];
 
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [statusValue, setStatusValue] = useState("orderConfirmed");
+    const [viewOrder, setViewOrder] = useState(null);
+
     // For update
 
     const handleOpenUpdateModal = (order) => {
@@ -66,6 +78,39 @@ const ApprovedOrders = () => {
 
     }
 
+    // For Timeline
+
+    const handleOpenViewModal = (order) => {
+        setViewOrder(order);
+        setStatusValue(order.deliveryStatus);
+        document.getElementById("view_order_modal").showModal();
+    }
+
+    const handleCloseViewModal = () => {
+        document.getElementById("view_order_modal").close();
+        setViewOrder(null);
+    }
+
+    const getStepClass = (order, index) => {
+        const currentStep = steps.reduce((lastIndex, step, idx) => {
+            if (order.productionStatus?.[step.statusKey]?.date) return idx + 1;
+            return lastIndex;
+        }, 0);
+
+        if (index < currentStep) return "completed";
+        if (index === currentStep) return "active";
+        return "pending";
+    }
+
+
+    const getStatusLabel = (stepClass) => {
+        if (stepClass === "completed")
+            return "completed";
+        if (stepClass === "active")
+            return "In Progress";
+        return "Pending";
+    }
+
 
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
@@ -82,7 +127,7 @@ const ApprovedOrders = () => {
                                     <th className='text-black font-bold font-playfair'>PRODUCT NAME</th>
                                     <th className='text-black font-bold font-playfair'>QUANTITY</th>
                                     <th className='text-black font-bold font-playfair'>APPROVED DATE</th>
-                                    <th className='text-black font-bold font-playfair'>STATUS</th>
+                                    <th className='text-black font-bold font-playfair'>COMPLETED STEP</th>
                                     <th className='text-black font-bold font-playfair'>ACTIONS</th>
                                 </tr>
                             </thead>
@@ -104,7 +149,7 @@ const ApprovedOrders = () => {
                                                 {order.quantity}
                                             </td>
                                             <td>
-                                                {order.productionStatus["orderConfirmed"].date.split("T")[0]}
+                                                {order?.productionStatus?.["orderConfirmed"].date.split("T")[0]}
                                             </td>
                                             <td>
                                                 {
@@ -128,21 +173,23 @@ const ApprovedOrders = () => {
                                                 {
                                                     order?.deliveryStatus === "shipped" && <span>SHIPPED</span>
                                                 }
-                                                
+
                                                 {
                                                     order?.deliveryStatus === "rejected" && <span className='text-red-600'>REJECTED</span>
                                                 }
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
                                                 {
-                                                    order.deliveryStatus !== "shipped" && <button
+                                                    order.deliveryStatus !== "shipped" &&
+                                                    <button
                                                         onClick={() => handleOpenUpdateModal(order)}
                                                         className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
                                                         UPDATE
                                                     </button>
                                                 }
 
-                                                <button className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
+                                                <button
+                                                    onClick={() => handleOpenViewModal(order)} className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
                                             </td>
                                         </tr>
                                     ))
@@ -155,6 +202,7 @@ const ApprovedOrders = () => {
                         <p className='font-playfair text-2xl text-center font-bold text-black'>NO APPROVED ORDERS FOUND!</p>
                     </div>
             }
+            {/* Update Modal */}
             <dialog id="update_order_modal" className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box max-w-xl">
                     <h3 className="font-bold text-lg">Update Order</h3>
@@ -199,6 +247,76 @@ const ApprovedOrders = () => {
                             <button className="btn" onClick={handleCloseUpdateModal}>Cancel</button>
                         </div>
                     </form>
+                </div>
+            </dialog>
+
+            {/* Timeline Modal */}
+            <dialog id="view_order_modal" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box max-w-xl">
+                    <h3 className="font-bold text-lg text-center mb-5">Order Timeline</h3>
+                    {viewOrder && (
+                        <div className="flex flex-col gap-6">
+                            {steps.map((step, index) => {
+                                const stepClass = getStepClass(viewOrder, index);
+                                const statusLabel = getStatusLabel(stepClass);
+                                const previousStepLocation = index > 0 ? viewOrder?.productionStatus?.[steps[index - 1].statusKey]?.location : null;
+
+                                return (
+                                    <div key={step.id} className="flex relative">
+                                        {index < steps.length - 1 && (
+                                            <div className="absolute left-5 top-10 bottom-0 w-0.5"
+                                                style={{ backgroundColor: stepClass === 'pending' ? '#e2e8f0' : '#0f172a' }}
+                                            />
+                                        )}
+
+                                        <div
+                                            className={`w-10 h-10 rounded-full flex items-center justify-center mr-4 z-10 flex-shrink-0`}
+                                            style={{
+                                                backgroundColor: stepClass === 'completed' ? '#0f172a' : 'white',
+                                                border: stepClass === 'pending' ? '2px solid #e2e8f0' : '2px solid #0f172a',
+                                                color: stepClass === 'completed' ? 'white' : stepClass === 'active' ? '#0f172a' : '#94a3b8'
+                                            }}
+                                        >
+                                            {stepClass === 'completed' ? (
+                                                <svg viewBox="0 0 16 16" fill="currentColor" width="20" height="20">
+                                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                                                </svg>
+                                            ) : <span className="font-semibold">{step.id}</span>}
+                                        </div>
+
+                                        <div className="flex-1 pb-2">
+                                            <div className="font-semibold mb-1" style={{ color: stepClass === 'pending' ? '#94a3b8' : '#0f172a' }}>
+                                                {step.title}
+                                            </div>
+
+                                            <div className="inline-block px-2 py-1 rounded-xl text-xs font-medium"
+                                                style={{
+                                                    backgroundColor: stepClass === 'completed' ? '#dcfce7' : stepClass === 'active' ? '#dbeafe' : '#f1f5f9',
+                                                    color: stepClass === 'completed' ? '#166534' : stepClass === 'active' ? '#1d4ed8' : '#64748b'
+                                                }}>
+                                                {statusLabel}
+                                            </div>
+
+                                            {stepClass === 'completed' && viewOrder?.productionStatus?.[step.statusKey] && (
+                                                <div className="text-xs text-gray-400 mt-1">
+                                                    <p>📅 {viewOrder?.productionStatus?.[step.statusKey].date.split("T")[0]}</p>
+                                                </div>
+                                            )}
+
+                                            {stepClass === 'active' && previousStepLocation && (
+                                                <div className="text-xs text-gray-400 mt-1">
+                                                    <p>📍 {previousStepLocation}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                    <div className="modal-action mt-4">
+                        <button className="btn" onClick={handleCloseViewModal}>Close</button>
+                    </div>
                 </div>
             </dialog>
         </div>
