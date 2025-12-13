@@ -22,6 +22,10 @@ import ManageProducts from "../Pages/ManageProducts/ManageProducts";
 import PendingOrders from "../Pages/PendingOrders/PendingOrders";
 import ApprovedOrders from "../Pages/ApprovedOrders/ApprovedOrders";
 import AddProduct from "../Pages/AddProduct/AddProduct";
+import AdminRoute from "../Providers/AdminRoute/AdminRoute";
+import ManageUsers from "../Pages/ManageUsers/ManageUsers";
+import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
+import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
 
 const router = createBrowserRouter([
   {
@@ -133,6 +137,24 @@ const router = createBrowserRouter([
           <AddProduct></AddProduct>
         </ManagerRoute>
       },
+      {
+        path:"/dashboard/manage-users",
+        element:<AdminRoute>
+          <ManageUsers></ManageUsers>
+        </AdminRoute>
+      },
+      {
+        path:"/dashboard/all-products",
+        element:<AdminRoute>
+          <AdminAllProducts></AdminAllProducts>
+        </AdminRoute>
+      },
+      {
+        path:"/dashboard/all-orders",
+        element:<AdminRoute>
+          <AdminAllOrders></AdminAllOrders>
+        </AdminRoute>
+      }
     ]
   }
 ]);
