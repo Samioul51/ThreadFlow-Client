@@ -32,16 +32,16 @@ const UserProfile = () => {
     }
 
     console.log(userData);
-
+    console.log(user);
     return (
         <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white font-inter'>
-            <img src={user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10 border border-black' />
-            <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{user.displayName.toUpperCase()}</p>
+            <img src={userData?.role==="admin"? userData?.photoURL :user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10 border border-black' />
+            <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{userData?.name?.toUpperCase()}</p>
             <div className="w-full max-w-[600px] self-center divider divider-neutral"></div>
             <div className='w-full max-w-[600px]'>
                 <div className='flex justify-between mb-5'>
                     <p className='font-inter font-bold text-black'>FULL NAME</p>
-                    <p className='font-medium font-inter text-[#666]'>{user.displayName.toUpperCase()}</p>
+                    <p className='font-medium font-inter text-[#666]'>{userData?.name?.toUpperCase()}</p>
                 </div>
                 <div className="divider divider-neutral mb-5"></div>
             </div>

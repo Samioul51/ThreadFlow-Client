@@ -8,6 +8,7 @@ import { MdWork } from "react-icons/md";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
 import { AiFillProduct } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 
 
 const Dashboard = () => {
@@ -42,36 +43,63 @@ const Dashboard = () => {
                             <CgProfile /> My Profile
                         </NavLink>
                     </li>
+
+                    {/* User Specific */}
+
                     {
-                        userData?.role === "buyer" && <li>
+                        (userData?.role === "buyer" && userData?.roleStatus !== "pending") && <li>
                             <NavLink to="/dashboard/my-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
                                 <TbShoppingBagCheck /> My Orders
                             </NavLink>
                         </li>
                     }
 
+                    {/* Manager Specific */}
+
                     {
-                        (userData?.role==="manager" && userData?.roleStatus!=="pending") && <>
-                        <li>
-                            <NavLink to="/dashboard/add-product" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
-                                <RiAddCircleFill />Add Product
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/manage-products" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
-                                <AiFillProduct />My Products
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/pending-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
-                                <MdWork /> Pending Orders
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/approved-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
-                                <IoCheckmarkDoneCircle /> Approved Orders
-                            </NavLink>
-                        </li>
+                        (userData?.role === "manager" && userData?.roleStatus !== "pending") && <>
+                            <li>
+                                <NavLink to="/dashboard/add-product" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <RiAddCircleFill />Add Product
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/manage-products" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <AiFillProduct />My Products
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/pending-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <MdWork /> Pending Orders
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/approved-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <IoCheckmarkDoneCircle /> Approved Orders
+                                </NavLink>
+                            </li>
+                        </>
+                    }
+
+                    {/* Admin Specific */}
+
+                    {
+                        (userData?.role === "admin") && <>
+                            <li>
+                                <NavLink to="/dashboard/manage-users" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <FaUser /> Manage Users
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/all-products" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <AiFillProduct /> All Products
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/all-orders" className={({ isActive }) => `font-playfair font-bold text-white text-[16px] ${isActive ? "bg-[#99a1af]" : "hover:bg-gray-400"} transition-colors ease-in-out duration-500`}>
+                                    <MdWork /> All Orders
+                                </NavLink>
+                            </li>
                         </>
                     }
 
