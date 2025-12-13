@@ -77,7 +77,7 @@ const ManageProducts = () => {
         const paymentOptions = form.paymentOptions.value;
         const description = form.productDescription.value;
 
-        console.log(price, newStock);
+        // console.log(price, newStock);
 
         const isEmpty =
             (!price || parseInt(price) === selectedProduct.price) &&

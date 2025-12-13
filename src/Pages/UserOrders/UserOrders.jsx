@@ -86,6 +86,9 @@ const UserOrders = () => {
                                             </td>
                                             <td>
                                                 {
+                                                    order?.deliveryStatus === "pending" && <span>PENDING</span>
+                                                }
+                                                {
                                                     order?.deliveryStatus === "orderConfirmed" && <span>ORDER CONFIRMED</span>
                                                 }
                                                 {
