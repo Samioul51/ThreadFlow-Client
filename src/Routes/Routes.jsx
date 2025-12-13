@@ -26,6 +26,7 @@ import AdminRoute from "../Providers/AdminRoute/AdminRoute";
 import ManageUsers from "../Pages/ManageUsers/ManageUsers";
 import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
 import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
+import AdminTrackOrder from "../Pages/AdminTrackOrder/AdminTrackOrder";
 
 const router = createBrowserRouter([
   {
@@ -91,69 +92,76 @@ const router = createBrowserRouter([
     element: <PrivateRoute>
       <Dashboard></Dashboard>
     </PrivateRoute>,
-    children:[
+    children: [
       {
-        index:true,
-         element: <Navigate to="/dashboard/profile" />
+        index: true,
+        element: <Navigate to="/dashboard/profile" />
       },
       {
-        path:"/dashboard/profile",
-        element:<UserProfile></UserProfile>
+        path: "/dashboard/profile",
+        element: <UserProfile></UserProfile>
       },
       {
-        path:"/dashboard/my-orders",
-        element:<UserRoute>
+        path: "/dashboard/my-orders",
+        element: <UserRoute>
           <UserOrders></UserOrders>
         </UserRoute>
       },
       {
-        path:"/dashboard/track-order/:id",
-        element:<UserRoute>
+        path: "/dashboard/track-order/:id",
+        element: <UserRoute>
           <UserTrackOrder></UserTrackOrder>
         </UserRoute>,
         loader: ({ params }) => fetch(`http://localhost:3000/orders/${params.id}`)
       },
       {
-        path:"/dashboard/manage-products",
-        element:<ManagerRoute>
+        path: "/dashboard/manage-products",
+        element: <ManagerRoute>
           <ManageProducts></ManageProducts>
         </ManagerRoute>
       },
       {
-        path:"/dashboard/pending-orders",
-        element:<ManagerRoute>
+        path: "/dashboard/pending-orders",
+        element: <ManagerRoute>
           <PendingOrders></PendingOrders>
         </ManagerRoute>
       },
       {
-        path:"/dashboard/approved-orders",
-        element:<ManagerRoute>
+        path: "/dashboard/approved-orders",
+        element: <ManagerRoute>
           <ApprovedOrders></ApprovedOrders>
         </ManagerRoute>
       },
       {
-        path:"/dashboard/add-product",
-        element:<ManagerRoute>
+        path: "/dashboard/add-product",
+        element: <ManagerRoute>
           <AddProduct></AddProduct>
         </ManagerRoute>
       },
       {
-        path:"/dashboard/manage-users",
-        element:<AdminRoute>
+        path: "/dashboard/manage-users",
+        element: <AdminRoute>
           <ManageUsers></ManageUsers>
         </AdminRoute>
       },
       {
-        path:"/dashboard/all-products",
-        element:<AdminRoute>
+        path: "/dashboard/all-products",
+        element: <AdminRoute>
           <AdminAllProducts></AdminAllProducts>
         </AdminRoute>
       },
       {
-        path:"/dashboard/all-orders",
-        element:<AdminRoute>
+        path: "/dashboard/all-orders",
+        element: <AdminRoute>
           <AdminAllOrders></AdminAllOrders>
         </AdminRoute>
+      },
+      {
+        path: "/dashboard/all-orders/:id",
+        element: <AdminRoute>
+          <AdminTrackOrder></AdminTrackOrder>
+        </AdminRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3000/orders/${params.id}`)
       }
     ]
   }

@@ -224,7 +224,7 @@ const PendingOrders = () => {
                                         <p className="text-xs text-base-content/60">Payment Status</p>
                                         <p className="font-medium">
                                             <span className={`badge ${selectedOrder.paymentStatus === 'paid' ? 'badge-success' : 'badge-warning'}`}>
-                                                {selectedOrder.paymentStatus}
+                                                {selectedOrder.paymentStatus.toUpperCase()}
                                             </span>
                                         </p>
                                     </div>

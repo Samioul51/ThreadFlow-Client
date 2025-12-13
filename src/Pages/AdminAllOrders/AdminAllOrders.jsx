@@ -1,5 +1,6 @@
 import React, { use, useState } from 'react';
 import { IoIosArrowDropdown } from 'react-icons/io';
+import { useNavigate } from 'react-router';
 
 const ordersPromise = fetch("http://localhost:3000/orders").then(res => res.json());
 
@@ -7,6 +8,18 @@ const AdminAllOrders = () => {
     const data = use(ordersPromise);
     const orders = data.data;
     // console.log(orders);
+
+    // const handleOpenModal = (order) => {
+    //     setSelectedOrder(order);
+    //     document.getElementById("order_modal").showModal();
+    // }
+
+    // const handleCloseModal = () => {
+    //     document.getElementById("order_modal").close();
+    //     setSelectedOrder(null);
+    // }
+
+    const navigate=useNavigate();
 
     const categories = ["All", "Pending", "Rejected", "Approved"];
 
@@ -25,7 +38,7 @@ const AdminAllOrders = () => {
 
         let matchSearch = true;
 
-        const searchText=search.trim().toLowerCase();
+        const searchText = search.trim().toLowerCase();
 
         if (searchText) {
             if ("approved".includes(searchText))
@@ -105,7 +118,7 @@ const AdminAllOrders = () => {
                                                 }
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
-                                                <button className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
+                                                <button onClick={() => navigate(`/dashboard/all-orders/${order._id}`)} className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
                                             </td>
                                         </tr>
                                     ))
@@ -118,6 +131,7 @@ const AdminAllOrders = () => {
                         <p className='font-playfair text-2xl text-center font-bold text-black'>NO ORDERS FOUND!</p>
                     </div>
             }
+
         </div>
     );
 };
