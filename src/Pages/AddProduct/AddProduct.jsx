@@ -56,7 +56,8 @@ const AddProduct = () => {
             minimumOrderQuantity:form.minimumOrderQuantity.value,
             paymentOptions:form.paymentOptions.value,
             images:imageURLs,
-            email:user.email
+            email:user.email,
+            showOnHome:form.showOnHome.value
         }
 
         const res=await fetch("http://localhost:3000/products",{
@@ -170,6 +171,12 @@ const AddProduct = () => {
                             </div>
                         )
                     }
+
+                    <div className='flex flex-col mb-[24px]'>
+                        <label className="label mb-[8px] font-medium text-black">Show On Homepage</label>
+                        <input type="text" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="showOnHome" value={"false"}  readOnly />
+                    </div>
+
                     {
                         userData?.roleStatus==="suspended"
                         ?
