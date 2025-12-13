@@ -5,27 +5,27 @@ import { useNavigate } from 'react-router';
 
 const UserOrders = () => {
     const { user } = use(AuthContext);
-    const [myOrders,setMyOrders]=useState([]);
-    const navigate=useNavigate();
+    const [myOrders, setMyOrders] = useState([]);
+    const navigate = useNavigate();
 
-    useEffect(()=>{
-        const fetchOrders=async()=>{
-            try{
-                const response=await fetch("http://localhost:3000/orders");
-                const data=await response.json();
-                const orders=data.data.filter(order => order.email === user.email);
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/orders");
+                const data = await response.json();
+                const orders = data.data.filter(order => order.email === user.email);
                 setMyOrders(orders);
-            }catch(error){
+            } catch (error) {
                 toast.error("Failed to load orders!");
             }
         };
 
         fetchOrders();
-    },[user.email]);
+    }, [user.email]);
     // console.log(user);
     // console.log(myOrders);
 
-    const [id,setID]=useState("");
+    const [id, setID] = useState("");
     const handleOpenModal = (orderID) => {
         setID(orderID);
         document.getElementById("my_modal_5").showModal();
@@ -35,19 +35,19 @@ const UserOrders = () => {
         setID("");
     }
 
-    const handleDelete=async ()=>{
-        if(!id)
+    const handleDelete = async () => {
+        if (!id)
             return;
-        const response=await fetch(`http://localhost:3000/orders/${id}`,{
-            method:"DELETE"
+        const response = await fetch(`http://localhost:3000/orders/${id}`, {
+            method: "DELETE"
         });
 
-        if(!response.ok)
+        if (!response.ok)
             throw new Error("Failed to delete order!");
 
         await response.json();
-        
-        const remaining=myOrders.filter(order=>order._id!==id);
+
+        const remaining = myOrders.filter(order => order._id !== id);
         setMyOrders(remaining);
         toast.success("Order cancelled successfully");
         handleCloseModal();
@@ -85,17 +85,40 @@ const UserOrders = () => {
                                                 {order.quantity}
                                             </td>
                                             <td>
-                                                {order.deliveryStatus.toUpperCase()}
+                                                {
+                                                    order?.deliveryStatus === "orderConfirmed" && <span>ORDER CONFIRMED</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "cuttingCompleted" && <span>CUTTING COMPLETED</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "sewingStarted" && <span>SEWING STARTED</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "finishing" && <span>FINISHING</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "qcChecked" && <span>QC CHECKED</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "packed" && <span>PACKED</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "shipped" && <span>SHIPPED</span>
+                                                }
+                                                {
+                                                    order?.deliveryStatus === "rejected" && <span className='text-red-600'>REJECTED</span>
+                                                }
                                             </td>
                                             <td>
                                                 {order.paymentStatus.toUpperCase()}
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
-                                                <button onClick={()=>navigate(`/dashboard/track-order/${order._id}`)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                <button onClick={() => navigate(`/dashboard/track-order/${order._id}`)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
                                                     VIEW
                                                 </button>
                                                 {
-                                                    order.paymentStatus === "pending" && <button onClick={()=>handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
+                                                    order.paymentStatus === "pending" && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
                                                 }
 
                                             </td>

@@ -199,20 +199,10 @@ const ManageProducts = () => {
                                                 {product.paymentOptions.toUpperCase()}
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
-                                                {
-                                                    userData?.roleStatus === "suspended"
-                                                        ?
-                                                        <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium'>SUSPENDED</div>
-                                                        :
-                                                        <>
-                                                            <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
-                                                                UPDATE
-                                                            </button>
-                                                            <button onClick={() => handleOpenModal(product._id)} className="w-full btn btn-error">DELETE</button>
-                                                        </>
-                                                }
-
-
+                                                <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                    UPDATE
+                                                </button>
+                                                <button onClick={() => handleOpenModal(product._id)} className="w-full btn btn-error">DELETE</button>
                                             </td>
                                         </tr>
                                     ))

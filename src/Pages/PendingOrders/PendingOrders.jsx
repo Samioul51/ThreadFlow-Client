@@ -23,14 +23,21 @@ const PendingOrders = () => {
 
         const newStatus = actionType === "approve"
             ?
-            "Order Confirmed" : "rejected";
+            "Order Confirmed" : "rejected"
+
+        const statusKey = actionType === "approve" ? "orderConfirmed" : undefined;
+        
+        // console.log(selectedOrder);
 
         const res = await fetch(`http://localhost:3000/orders/${selectedOrder._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ deliveryStatus: newStatus,orderConfirmed:new Date() })
+            body: JSON.stringify({ 
+                statusKey,
+                location: "Main Cutting Floor"
+            })
         });
 
         const data = await res.json();
@@ -105,7 +112,7 @@ const PendingOrders = () => {
                                                         <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium'>SUSPENDED</div>
                                                         :
                                                         (
-                                                            order.deliveryStatus !== "pending"
+                                                            order?.deliveryStatus !== "pending"
                                                                 ?
                                                                 (
                                                                     order.deliveryStatus !== "approved"
@@ -119,6 +126,7 @@ const PendingOrders = () => {
                                                                     <button onClick={() => {
                                                                         setSelectedOrder(order);
                                                                         setActionType("approve");
+                                                                        // console.log(order);
                                                                         document.getElementById("action_modal").showModal();
                                                                     }} className='w-full btn btn-success'>
                                                                         APPROVE
