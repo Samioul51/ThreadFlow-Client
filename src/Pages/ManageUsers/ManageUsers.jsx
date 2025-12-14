@@ -91,10 +91,9 @@ const ManageUsers = () => {
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <title>{`ThreadFlow | Admin - Manage Users`}</title>
-            <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
-
+            <p className='font-playfair text-black text-3xl font-bold text-center'>USERS STATUS ANALYSIS</p>
             <StatusPieChart data={chartData}></StatusPieChart>    
-        
+            <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
             <div className='w-full max-w-full p-[16px] box-border flex flex-col  md:flex-row md:justify-between md:items-center items-start md:gap-0 gap-2'>
                 <div className="dropdown dropdown-start">
                     <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
@@ -164,7 +163,7 @@ const ManageUsers = () => {
                     </div>
                     :
                     <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
-                        <p className='font-playfair text-2xl text-center font-bold text-black'>NO USERS FOUND!</p>
+                        <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO USERS FOUND!</p>
                     </div>
             }
 

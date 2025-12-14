@@ -200,7 +200,7 @@ const ApprovedOrders = () => {
                     </div>
                     :
                     <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
-                        <p className='font-playfair text-2xl text-center font-bold text-black'>NO APPROVED ORDERS FOUND!</p>
+                        <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO APPROVED ORDERS FOUND!</p>
                     </div>
             }
             {/* Update Modal */}

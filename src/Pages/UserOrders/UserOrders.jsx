@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import StatusPieChart from '../../Components/StatusPieChart/StatusPieChart';
 
 const UserOrders = () => {
     const { user } = use(AuthContext);
@@ -24,6 +25,25 @@ const UserOrders = () => {
     }, [user.email]);
     // console.log(user);
     // console.log(myOrders);
+
+    const pendingCount = myOrders.filter(o => o.deliveryStatus === "pending").length;
+    const deliveredCount = myOrders.filter(o => o.deliveryStatus === "shipped" ).length;
+    const rejectedCount = myOrders.filter(o => o.deliveryStatus === "rejected").length;
+
+    const chartData = [
+        {
+            name: "Delivered",
+            value: deliveredCount
+        },
+        {
+            name: "Pending",
+            value: pendingCount
+        },
+        {
+            name: "Suspended",
+            value: rejectedCount
+        }
+    ];
 
     const [id, setID] = useState("");
     const handleOpenModal = (orderID) => {
@@ -56,6 +76,8 @@ const UserOrders = () => {
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <title>{`ThreadFlow | My Orders`}</title>
+            <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS ANALYSIS</p>
+            <StatusPieChart data={chartData}></StatusPieChart>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS</p>
             {
                 myOrders.length > 0 ?
@@ -135,7 +157,7 @@ const UserOrders = () => {
                     </div>
                     :
                     <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
-                        <p className='font-playfair text-2xl text-center font-bold text-black'>NO ORDERS FOUND!</p>
+                        <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO ORDERS FOUND!</p>
                     </div>
             }
 
