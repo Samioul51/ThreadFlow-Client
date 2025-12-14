@@ -88,6 +88,7 @@ const AdminAllProducts = () => {
         setSelectedProduct(product);
         document.getElementById("delete_product_modal").showModal();
     }
+    
     const handleCloseDeleteModal = () => {
         document.getElementById("delete_product_modal").close();
         setSelectedProduct(null);

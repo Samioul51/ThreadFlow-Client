@@ -10,6 +10,10 @@ const ManageProducts = () => {
     const [myProducts, setMyProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
+    const [images, setImages] = useState([]);
+    const [imagesToKeep, setImagesToKeep] = useState([]);
+    const imgBB = import.meta.env.VITE_IMG_BB_API_KEY;
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -18,7 +22,7 @@ const ManageProducts = () => {
                 const products = data.data.filter(product => product.email === user.email);
                 setMyProducts(products);
             } catch (error) {
-                toast.error("Failed to load products! "+ error.message);
+                toast.error("Failed to load products! " + error.message);
             }
         }
 
@@ -68,12 +72,51 @@ const ManageProducts = () => {
 
     const handleOpenUpdateModal = (product) => {
         setSelectedProduct(product);
+        setImages([]);
+        setImagesToKeep(product.images || []);
         document.getElementById("update_product_modal").showModal();
     }
 
     const handleCloseUpdateModal = () => {
         document.getElementById("update_product_modal").close();
         setSelectedProduct(null);
+        setImages([]);
+        setImagesToKeep([]);
+    }
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        const existingCount = imagesToKeep.length;
+
+        if (files.length + existingCount > 3) {
+            toast.error("You can upload a maximum of 3 images!");
+            return;
+        }
+
+        const previews = files.map(file => ({
+            file,
+            url: URL.createObjectURL(file)
+        }));
+
+        setImages(previews);
+    };
+
+    const uploadNewImages = async () => {
+        const uploadedURLs = [];
+        for (const img of images) {
+            const formData = new FormData();
+            formData.append("image", img.file);
+
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgBB}`, {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+            if (data.success)
+                uploadedURLs.push(data.data.url);
+        }
+        return uploadedURLs;
     }
 
     const handleProductUpdate = async (e) => {
@@ -83,32 +126,71 @@ const ManageProducts = () => {
 
         const form = e.target;
 
-        const price = parseInt(form.price.value);
-        const newStock = parseInt(form.addStock.value) || 0;
-        const minOrder = form.minimumOrderQuantity.value;
+        const price = form.price.value.trim() === "" ?
+            selectedProduct.price
+            :
+            Number(form.price.value);
+        const newStock = Number(form.addStock.value) || 0;
+        const minOrder = form.minimumOrderQuantity.value.trim() === "" ?
+            selectedProduct.minimumOrderQuantity
+            :
+            Number(form.minimumOrderQuantity.value);
         const paymentOptions = form.paymentOptions.value;
         const description = form.productDescription.value;
 
+        let newImageURLs = [];
+
+        if (images.length > 0)
+            newImageURLs = await uploadNewImages();
+
         // console.log(price, newStock);
 
+        const updatedImages = [...imagesToKeep, ...newImageURLs].slice(0, 3);
+
+        const imagesChanged =
+            updatedImages.length !== selectedProduct.images.length ||
+            updatedImages.some((img, i) => img.url !== selectedProduct.images[i]);
+
         const isEmpty =
-            (!price || parseInt(price) === selectedProduct.price) &&
-            newStock === 0 &&
-            (!minOrder || parseInt(minOrder) === selectedProduct.minimumOrderQuantity) &&
-            paymentOptions === selectedProduct.paymentOptions &&
-            description === selectedProduct.productDescription;
+            (price === selectedProduct.price)
+            &&
+            (newStock === 0)
+            &&
+            (minOrder === selectedProduct.minimumOrderQuantity)
+            &&
+            (paymentOptions === selectedProduct.paymentOptions)
+            &&
+            (description === selectedProduct.productDescription)
+            &&
+            !imagesChanged;
 
         if (isEmpty) {
             toast.error("Please change at least one field to update the product.");
             return;
         }
 
+        if (Number.isNaN(price)) {
+            toast.error("Price must be a valid number!");
+            return;
+        }
+
+        if (Number.isNaN(minOrder)) {
+            toast.error("Minimum Order Quantity must be a valid number!");
+            return;
+        }
+
+        if (Number.isNaN(newStock)) {
+            toast.error("New Stock amount must be a valid number!");
+            return;
+        }
+
         const updatedProduct = {
-            price: parseInt(price),
+            price: price,
             newQuantity: selectedProduct.availableQuantity + newStock,
-            minimumOrderQuantity: parseInt(minOrder),
+            minimumOrderQuantity: minOrder,
             paymentOptions: paymentOptions,
             productDescription: description,
+            images: updatedImages
         };
 
         // console.log(updatedProduct);
@@ -121,20 +203,19 @@ const ManageProducts = () => {
         });
 
         if (res.ok) {
-            toast.success(`Product updated! Added ${newStock} items to stock.`);
             const updatedProducts = myProducts.map(p => p._id === selectedProduct._id ? {
-                ...p, price: updatedProduct.price,
-                availableQuantity: updatedProduct.newQuantity,
-                minimumOrderQuantity: updatedProduct.minimumOrderQuantity,
-                paymentOptions: updatedProduct.paymentOptions,
-                productDescription: updatedProduct.productDescription,
+                ...p,
+                ...updatedProduct
             }
                 : p);
             setMyProducts(updatedProducts);
             handleCloseUpdateModal();
+            toast.success("Product updated!");
         }
-        else
-            toast.error("Failed to update!");
+        else {
+            handleCloseUpdateModal();
+            toast.error("Product update failed!");
+        }
     }
 
     return (
@@ -320,23 +401,43 @@ const ManageProducts = () => {
                             ></textarea>
                         </div>
 
-                        {/* Image Preview (Read Only) */}
+                        {/* Existing Images Preview */}
                         <div className="mt-4">
                             <label className="font-medium">Images</label>
                             <div className="grid grid-cols-3 gap-3 mt-2">
-                                {selectedProduct?.images?.map((img, i) => (
+                                {imagesToKeep?.map((img, i) => (
                                     <div
                                         key={i}
-                                        className="w-full h-24 border rounded-lg overflow-hidden"
+                                        className="relative w-full h-24 border rounded-lg overflow-hidden"
                                     >
                                         <img
                                             src={img}
                                             className="w-full h-full object-cover"
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setImagesToKeep(prev => prev.filter((_, index) => index !== i));
+                                            }}
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                                        >
+                                            X
+                                        </button>
                                     </div>
                                 ))}
                             </div>
-                            <p className="text-sm text-gray-500 mt-1">(Images cannot be changed)</p>
+                        </div>
+
+                        {/* Upload New Images */}
+                        <div className='flex flex-col mb-3 mt-3'>
+                            <label className="label mb-1 font-medium">Upload New Photos (Max 3)</label>
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="file-input w-full bg-[#fafafa]"
+                            />
                         </div>
 
                         <div className="modal-action">
