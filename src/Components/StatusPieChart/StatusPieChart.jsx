@@ -13,7 +13,7 @@ const renderCustomizedLabel = ({
     outerRadius,
     percent,
 }) => {
-    if (cx == null || cy == null || innerRadius == null || outerRadius == null) 
+    if (cx == null || cy == null || innerRadius == null || outerRadius == null)
         return null;
 
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -35,11 +35,11 @@ const renderCustomizedLabel = ({
     );
 };
 
-const UserStatusPieChart = ({ data }) => {
+const StatusPieChart = ({ data }) => {
     return (
-        <div className='w-full flex flex-col justify-center my-6' style={{ maxWidth: 400 }}>
+        <div className='w-full flex flex-col justify-center my-10' style={{ maxWidth: 300 }}>
             <ResponsiveContainer width="100%" aspect={1}>
-                <PieChart width={320} height={320} margin={{ top: 20, right: 40, bottom: 20, left: 40 }}>
+                <PieChart width={250} height={250}>
                     <Pie
                         data={data}
                         cx="50%"
@@ -57,7 +57,7 @@ const UserStatusPieChart = ({ data }) => {
                     </Pie>
                 </PieChart>
             </ResponsiveContainer>
-            <div className="flex justify-center mt-4 gap-4">
+            <div className="flex flex-col md:flex-row md:justify-center md:items-start items-center mt-4 gap-4">
                 {data.map((entry, index) => (
                     <div key={index} className="flex items-center gap-2">
                         <div
@@ -75,4 +75,4 @@ const UserStatusPieChart = ({ data }) => {
     );
 };
 
-export default UserStatusPieChart;
+export default StatusPieChart;

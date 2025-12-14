@@ -1,7 +1,7 @@
 import React, { use, useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoIosArrowDropdown } from 'react-icons/io';
-import UserStatusPieChart from '../../Components/UserStatusPieChart/UserStatusPieChart';
+import StatusPieChart from '../../Components/StatusPieChart/StatusPieChart';
 
 const userPromise = fetch("http://localhost:3000/users").then(res => res.json());
 
@@ -93,7 +93,7 @@ const ManageUsers = () => {
             <title>{`ThreadFlow | Admin - Manage Users`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
 
-            <UserStatusPieChart data={chartData}></UserStatusPieChart>    
+            <StatusPieChart data={chartData}></StatusPieChart>    
         
             <div className='w-full max-w-full p-[16px] box-border flex flex-col  md:flex-row md:justify-between md:items-center items-start md:gap-0 gap-2'>
                 <div className="dropdown dropdown-start">

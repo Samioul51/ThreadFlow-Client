@@ -1,6 +1,7 @@
 import React, { use, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import StatusPieChart from '../../Components/StatusPieChart/StatusPieChart';
 
 const ordersPromise = fetch("http://localhost:3000/orders").then(res => res.json());
 
@@ -17,6 +18,25 @@ const PendingOrders = () => {
     const [actionType, setActionType] = useState("");
     // console.log(myPendingOrders);
 
+    const pendingCount = orders.filter(o => o.deliveryStatus === "pending").length;
+    const approvedCount = orders.filter(o => o.deliveryStatus !== "pending" && o.deliveryStatus !== "rejected").length;
+    const rejectedCount = orders.filter(o => o.deliveryStatus === "rejected").length;
+
+    const chartData = [
+        {
+            name: "Approved",
+            value: approvedCount
+        },
+        {
+            name: "Pending",
+            value: pendingCount
+        },
+        {
+            name: "Suspended",
+            value: rejectedCount
+        }
+    ];
+
     const handleConfirmAction = async () => {
         if (!selectedOrder)
             return;
@@ -26,7 +46,7 @@ const PendingOrders = () => {
             "Order Confirmed" : "rejected"
 
         const statusKey = actionType === "approve" ? "orderConfirmed" : undefined;
-        
+
         // console.log(selectedOrder);
 
         const res = await fetch(`http://localhost:3000/orders/${selectedOrder._id}`, {
@@ -34,7 +54,7 @@ const PendingOrders = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 statusKey,
                 location: "Main Cutting Floor"
             })
@@ -66,6 +86,8 @@ const PendingOrders = () => {
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <title>{`ThreadFlow | Manager - Pending Orders`}</title>
+            <p className='font-playfair text-black text-3xl font-bold text-center'>ORDER STATUS ANALYSIS</p>
+            <StatusPieChart data={chartData}></StatusPieChart>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>PENDING ORDERS</p>
             {
                 myPendingOrders.length > 0 ?
