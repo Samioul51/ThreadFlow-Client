@@ -51,23 +51,23 @@ const AdminAllProducts = () => {
         setSelectedProduct(null);
     }
 
-    const handleProductDelete =async (e) => {
+    const handleProductDelete = async (e) => {
         e.preventDefault();
         // console.log("delete triggered");
 
-        if(!selectedProduct)
+        if (!selectedProduct)
             return;
 
-        const response=await fetch(`http://localhost:3000/products/${selectedProduct._id}`,{
-            method:"DELETE"
+        const response = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
+            method: "DELETE"
         });
 
-        if(!response.ok)
+        if (!response.ok)
             throw new Error("Failed to delete product!");
 
         await response.json();
 
-        const remaining=products.filter(product=>product._id!==selectedProduct._id);
+        const remaining = products.filter(product => product._id !== selectedProduct._id);
         setProducts(remaining);
 
         toast.success("Product deleted successfully!");
@@ -86,11 +86,81 @@ const AdminAllProducts = () => {
         setSelectedProduct(null);
     }
 
-    const handleProductUpdate = (e) => {
+    const handleProductUpdate = async (e) => {
         e.preventDefault();
-        console.log("update triggered");
-        handleCloseUpdateModal();
-        setSelectedProduct(null);  
+
+        if (!selectedProduct)
+            return;
+
+        const form = e.target;
+
+        const productName = form.productName.value;
+        const productDescription = form.productDescription.value;
+
+        const price = form.price.value.trim() === "" ?
+            selectedProduct.price
+            :
+            Number(form.price.value);
+
+        const category = form.category.value;
+        const paymentOptions = form.paymentOptions.value;
+
+        const isEmpty =
+            (price === selectedProduct.price)
+            &&
+            (paymentOptions === selectedProduct.paymentOptions)
+            &&
+            (productDescription === selectedProduct.productDescription)
+            &&
+            (productName === selectedProduct.productName)
+            &&
+            (category.toLowerCase() === selectedProduct.category.toLowerCase());
+
+        if (isEmpty) {
+            toast.error("Please change at least one field to update the product.");
+            return;
+        }
+
+        if (Number.isNaN(price)) {
+            toast.error("Price must be a valid number!");
+            return;
+        }
+
+        const updatedProduct = {
+            productName: productName,
+            productDescription: productDescription,
+            price: price,
+            category: category,
+            paymentOptions: paymentOptions,
+        };
+
+        const res = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedProduct),
+        });
+
+        if (res.ok) {
+            toast.success("Product updated!");
+            const updatedProducts = products.map(p => p._id === selectedProduct._id ?
+                {
+                    ...p,
+                    productName: updatedProduct.productName,
+                    productDescription: updatedProduct.productDescription,
+                    price: updatedProduct.price,
+                    category: updatedProduct.category,
+                    paymentOptions: updatedProduct.paymentOptions,
+                }
+                : p
+            );
+            setProducts(updatedProducts);
+            handleCloseUpdateModal();
+        }
+        else
+            toast.error("Product update failed!");
+        // console.log("update triggered");
     }
 
     // console.log(products);
@@ -188,11 +258,10 @@ const AdminAllProducts = () => {
                                 type="text"
                                 name="productName"
                                 defaultValue={selectedProduct?.productName}
-                                readOnly
                                 className="input w-full bg-gray-100 cursor-not-allowed"
                             />
                         </div>
-                        
+
                         {/* Product Description */}
                         <div className="mt-3">
                             <label className="font-medium">Product Description</label>
@@ -202,7 +271,7 @@ const AdminAllProducts = () => {
                                 className="textarea textarea-lg w-full bg-[#fafafa] resize-none"
                             ></textarea>
                         </div>
-                        
+
                         {/* Price */}
                         <div className="mt-3">
                             <label className="font-medium">Price (BDT)</label>
@@ -217,13 +286,22 @@ const AdminAllProducts = () => {
                         {/* Category */}
                         <div className="mt-3">
                             <label className="font-medium">Category</label>
-                            <input
-                                type="text"
+                            <select
+                                className="bg-[#fafafa] px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300"
                                 name="category"
-                                defaultValue={selectedProduct?.category}
-                                readOnly
-                                className="input w-full bg-gray-100 cursor-not-allowed"
-                            />
+                                value={selectedProduct?.category.toLowerCase() || ""}
+                                onChange={(e) =>
+                                    setSelectedProduct({
+                                        ...selectedProduct,
+                                        category: e.target.value
+                                    })
+                                }
+                            >
+                                <option value="shirt">Shirt</option>
+                                <option value="pant">Pant</option>
+                                <option value="jacket">Jacket</option>
+                                <option value="accessories">Accessories</option>
+                            </select>
                         </div>
 
                         {/* Image Preview (Read Only) */}

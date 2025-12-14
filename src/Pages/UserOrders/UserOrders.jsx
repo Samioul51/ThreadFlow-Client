@@ -121,7 +121,7 @@ const UserOrders = () => {
                                                     VIEW
                                                 </button>
                                                 {
-                                                    order.paymentStatus === "pending" && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
+                                                    (order.deliveryStatus === "pending" && order.paymentStatus==="pending") && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
                                                 }
 
                                             </td>
