@@ -1,6 +1,7 @@
 import React, { use, useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoIosArrowDropdown } from 'react-icons/io';
+import UserStatusPieChart from '../../Components/UserStatusPieChart/UserStatusPieChart';
 
 const userPromise = fetch("http://localhost:3000/users").then(res => res.json());
 
@@ -18,6 +19,25 @@ const ManageUsers = () => {
     const [category, setCategory] = useState("All Role");
     const [status, setStatus] = useState("All Status");
     const [search, setSearch] = useState("");
+
+    const approvedCount=users.filter(u=>u.roleStatus==="approved").length;
+    const pendingCount=users.filter(u=>u.roleStatus==="pending").length;
+    const suspendedCount=users.filter(u=>u.roleStatus==="suspended").length;
+
+    const chartData=[
+        {
+            name:"Approved",
+            value:approvedCount
+        },
+        {
+            name:"Pending",
+            value:pendingCount
+        },
+        {
+            name:"Suspended",
+            value:suspendedCount
+        }
+    ];
 
     const filteredUsers = users.filter(p => {
         const matchCategory = category === "All Role" ? true : p.role.toLowerCase() === category.toLowerCase();
@@ -72,7 +92,10 @@ const ManageUsers = () => {
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <title>{`ThreadFlow | Admin - Manage Users`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
-            <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
+
+            <UserStatusPieChart data={chartData}></UserStatusPieChart>    
+        
+            <div className='w-full max-w-full p-[16px] box-border flex flex-col  md:flex-row md:justify-between md:items-center items-start md:gap-0 gap-2'>
                 <div className="dropdown dropdown-start">
                     <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
                     <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
