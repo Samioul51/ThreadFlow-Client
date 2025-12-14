@@ -88,22 +88,6 @@ const ProductDetails = () => {
 
             if (!stockResponse.ok)
                 throw new Error(`Stock update failed: ${stockResponse.status}`);
-
-
-            // .then(res => res.json())
-            // .then(async (data) => {
-
-            //     const newStock=availableQuantity-quantity;
-            //     await fetch(`http://localhost:3000/products/${product._id}`,{
-            //         method:"PATCH",
-            //         headers:{
-            //             "Content-Type":"application/json"
-            //         },
-            //         body:JSON.stringify({
-            //             newQuantity:newStock
-            //         })
-            //     });
-
             orderModalRef.current.close();
             navigate("/");
             toast.success("Order completed successfully!");
@@ -122,6 +106,7 @@ const ProductDetails = () => {
     ];
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto px-4 font-inter'>
+            <title>{`ThreadFlow | ${productName}`}</title>
             <div className='w-full bg-[#FAFAFA] shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
                 <div className='w-full lg:max-w-[50%] h-auto'>
                     <ReactImageGallery items={allImages}></ReactImageGallery>

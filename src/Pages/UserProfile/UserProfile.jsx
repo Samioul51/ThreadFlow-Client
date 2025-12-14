@@ -35,6 +35,7 @@ const UserProfile = () => {
     console.log(user);
     return (
         <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white font-inter'>
+            <title>{`ThreadFlow | My Profile`}</title>
             <img src={userData?.role==="admin"? userData?.photoURL :user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10 border border-black' />
             <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{userData?.name?.toUpperCase()}</p>
             <div className="w-full max-w-[600px] self-center divider divider-neutral"></div>

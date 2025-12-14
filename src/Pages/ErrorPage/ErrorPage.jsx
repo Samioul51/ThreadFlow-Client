@@ -7,6 +7,7 @@ const ErrorPage = () => {
 
   return (
     <div className='w-full max-w-[1440px] flex flex-col justify-center items-center mx-auto h-screen px-4 font-inter'>
+      <title>{`ThreadFlow`}</title>
       <StyledWrapper>
         <div className="main_wrapper">
           <div className="main">

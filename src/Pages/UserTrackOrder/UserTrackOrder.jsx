@@ -38,6 +38,7 @@ const UserTrackOrder = () => {
 
     return (
         <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white font-inter'>
+            <title>{`ThreadFlow | Track Order`}</title>
             <div className='w-full bg-[#FAFAFA] shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
 
                 <div className='w-full lg:max-w-[50%] h-auto flex-col px-5 py-5 box-border'>

@@ -23,6 +23,7 @@ const Products = () => {
 
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
+            <title>{`ThreadFlow | All Products`}</title>
             <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>All Products</p>
             <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
                 <div className="dropdown dropdown-start">

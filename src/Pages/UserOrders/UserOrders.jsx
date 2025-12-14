@@ -55,6 +55,8 @@ const UserOrders = () => {
 
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
+            <title>{`ThreadFlow | My Orders`}</title>
+            <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS</p>
             {
                 myOrders.length > 0 ?
                     <div className="w-full overflow-x-auto">

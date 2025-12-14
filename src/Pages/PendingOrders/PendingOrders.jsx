@@ -65,6 +65,7 @@ const PendingOrders = () => {
 
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
+            <title>{`ThreadFlow | Manager - Pending Orders`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>PENDING ORDERS</p>
             {
                 myPendingOrders.length > 0 ?

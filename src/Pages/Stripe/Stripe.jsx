@@ -39,6 +39,7 @@ const Stripe = () => {
     // console.log(newOrder);
     return (
         <div className="max-w-xl mx-auto mt-16">
+            <title>{`ThreadFlow | Stripe Payment`}</title>
             <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Stripe Payment</p>
             {clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>

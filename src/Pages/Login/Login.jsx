@@ -49,6 +49,7 @@ const Login = () => {
 
     return (
         <div className='w-full mx-auto max-w-[1440px] h-screen'>
+            <title>{`ThreadFlow | Login`}</title>
             <div className='bg-white shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
                 <p className='font-playfair font-bold text-[40px] mb-[8px]'>Welcome Back</p>
                 <form onSubmit={handleLogin}>
