@@ -1,17 +1,29 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
-import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 import { IoIosArrowDropdown } from 'react-icons/io';
 
 
 const ManageProducts = () => {
 
-    const { user, userData } = use(AuthContext);
+    const { user } = use(AuthContext);
     const [myProducts, setMyProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const [id, setID] = useState("");
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/products");
+                const data = await response.json();
+                const products = data.data.filter(product => product.email === user.email);
+                setMyProducts(products);
+            } catch (error) {
+                toast.error("Failed to load products! "+ error.message);
+            }
+        }
+
+        fetchProducts();
+    }, [user.email]);
 
     const categories = ["All", "Shirt", "Pant", "Jacket", "Accessories"];
 
@@ -26,19 +38,19 @@ const ManageProducts = () => {
 
     // For deletion
 
-    const handleOpenModal = (orderID) => {
-        setID(orderID);
+    const handleOpenModal = (product) => {
+        setSelectedProduct(product);
         document.getElementById("my_modal_5").showModal();
     }
     const handleCloseModal = () => {
         document.getElementById("my_modal_5").close();
-        setID("");
+        setSelectedProduct();
     }
 
     const handleProductDelete = async () => {
-        if (!id)
+        if (!selectedProduct)
             return;
-        const response = await fetch(`http://localhost:3000/products/${id}`, {
+        const response = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
             method: "DELETE"
         });
 
@@ -46,9 +58,9 @@ const ManageProducts = () => {
             throw new Error("Failed to delete product!");
 
         await response.json();
-        const remaining = myProducts.filter(product => product._id !== id);
+        const remaining = myProducts.filter(product => product._id !== selectedProduct._id);
         setMyProducts(remaining);
-        toast.success("Product deleted successfully");
+        toast.success("Product deleted successfully!");
         handleCloseModal();
     }
 
@@ -125,22 +137,6 @@ const ManageProducts = () => {
             toast.error("Failed to update!");
     }
 
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch("http://localhost:3000/products");
-                const data = await response.json();
-                const products = data.data.filter(product => product.email === user.email);
-                setMyProducts(products);
-            } catch (error) {
-                toast.error("Failed to load products!");
-            }
-        }
-
-        fetchProducts();
-    }, [user.email]);
-
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY PRODUCTS</p>
@@ -202,7 +198,7 @@ const ManageProducts = () => {
                                                 <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
                                                     UPDATE
                                                 </button>
-                                                <button onClick={() => handleOpenModal(product._id)} className="w-full btn btn-error">DELETE</button>
+                                                <button onClick={() => handleOpenModal(product)} className="w-full btn btn-error">DELETE</button>
                                             </td>
                                         </tr>
                                     ))
