@@ -44,6 +44,44 @@ const AdminAllProducts = () => {
         fetchUsers();
     }, []);
 
+    // Toggle show on home
+
+    const handleToggleHome=async(product)=>{
+        const newStatus=!product.showOnHome;
+
+        try{
+            const response=await fetch(`http://localhost:3000/products/${product._id}/toggle-home`,{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({showOnHome:newStatus})
+            });
+
+            const data=await response.json();
+
+            if(!response.ok){
+                toast.error(data.message);
+                return;
+            }
+
+            const updatedProducts=products.map(p=>
+                p._id===product._id
+                ?
+                {
+                    ...p,
+                    showOnHome:newStatus
+                }
+                :
+                p
+            );
+            setProducts(updatedProducts);
+            toast.success(data.message);
+        }catch(error){
+            toast.error("Failed to update product status!");
+        }
+    }
+
     // For deletion
 
     const handleOpenDeleteModal = (product) => {
@@ -221,6 +259,8 @@ const AdminAllProducts = () => {
     // console.log(products);
     // console.log(users);
 
+    // const homeProductsCount=products.filter(p=>p.showOnHome).length;
+
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ALL PRODUCTS</p>
@@ -267,7 +307,10 @@ const AdminAllProducts = () => {
                                                 }
                                             </td>
                                             <td className='text-center'>
-                                                <input type="checkbox" defaultChecked className="checkbox checkbox-neutral" />
+                                                <input type="checkbox" 
+                                                checked={product?.showOnHome || false}
+                                                onChange={()=>handleToggleHome(product)}
+                                                className="checkbox checkbox-neutral" />
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
                                                 <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>

@@ -57,7 +57,7 @@ const AddProduct = () => {
             paymentOptions:form.paymentOptions.value,
             images:imageURLs,
             email:user.email,
-            showOnHome:form.showOnHome.value
+            showOnHome:form.showOnHome.checked
         }
 
         const res=await fetch("http://localhost:3000/products",{
@@ -174,7 +174,8 @@ const AddProduct = () => {
 
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Show On Homepage</label>
-                        <input type="text" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="showOnHome" value={"false"}  readOnly />
+                        <input type="checkbox" className="checkbox checkbox-neutral mb-2" name="showOnHome" checked={false}  readOnly />
+                        <p className='text-[12px] text-gray-600'>MAINTAINED BY ADMIN. INITIALLY FALSE</p>
                     </div>
 
                     {
