@@ -1,10 +1,67 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const Contact = () => {
+
+    const handleSendMessage = async (e) => {
+        e.preventDefault();
+
+        const form=e.target;
+        const name=form.name.value;
+        const email=form.email.value;
+        const subject=form.subject.value;
+        const message=form.message.value;
+
+        const fields={
+            name:name,
+            email:email,
+            subject:subject,
+            message:message,
+            sent: new Date()
+        };
+
+        const res=await fetch("http://localhost:3000/contact",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(fields)
+        });
+
+        if(res.ok){
+            toast.success("Message sent successfully!");
+            form.reset();
+        }
+        else
+            toast.error("Failed to send message!");
+    }
+
     return (
-        <div>
+        <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
             <title>{`ThreadFlow | Contact Us`}</title>
-            contact
+            <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>LEAVE A MESSAGE FOR US</p>
+            <form onSubmit={handleSendMessage} className=' bg-white shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto '>
+                <div className='flex flex-col mb-[24px]'>
+                    <label className="label mb-[8px] font-medium text-black">Your Name</label>
+                    <input type="text" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="name" placeholder="Enter your name" required />
+                </div>
+                <div className='flex flex-col mb-[24px]'>
+                    <label className="label mb-[8px] font-medium text-black">Your Email</label>
+                    <input type="email" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="email" placeholder="Enter your Email" required />
+                </div>
+                <div className='flex flex-col mb-[24px]'>
+                    <label className="label mb-[8px] font-medium text-black">Subject</label>
+                    <input type="text" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="subject" placeholder="Subject" required />
+                </div>
+                <div className='flex flex-col mb-[24px]'>
+                    <label className="label mb-[8px] font-medium text-black">Message</label>
+                    <textarea name="message" class="textarea bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300 resize-none h-[200px]" placeholder="Message" required></textarea>
+                </div>
+                
+                <button type="submit" className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer mb-[24px]'>
+                    Send
+                </button>
+            </form>
         </div>
     );
 };
