@@ -7,6 +7,10 @@ const AdminAllProducts = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [users, setUsers] = useState([]);
 
+    const [images, setImages] = useState([]);
+    const [imagesToKeep, setImagesToKeep] = useState([]);
+    const imgBB = import.meta.env.VITE_IMG_BB_API_KEY;
+
     // Products data
 
     useEffect(() => {
@@ -78,12 +82,51 @@ const AdminAllProducts = () => {
 
     const handleOpenUpdateModal = (product) => {
         setSelectedProduct(product);
+        setImages([]);
+        setImagesToKeep(product.images || []);
         document.getElementById("update_product_modal").showModal();
     }
 
     const handleCloseUpdateModal = () => {
         document.getElementById("update_product_modal").close();
         setSelectedProduct(null);
+        setImages([]);
+        setImagesToKeep([]);
+    }
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        const existingCount = imagesToKeep.length;
+
+        if (files.length + existingCount > 3) {
+            toast.error("You can upload a maximum of 3 images!");
+            return;
+        }
+
+        const previews = files.map(file => ({
+            file,
+            url: URL.createObjectURL(file)
+        }));
+
+        setImages(previews);
+    };
+
+    const uploadNewImages = async () => {
+        const uploadedURLs = [];
+        for (const img of images) {
+            const formData = new FormData();
+            formData.append("image", img.file);
+
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgBB}`, {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+            if (data.success)
+                uploadedURLs.push(data.data.url);
+        }
+        return uploadedURLs;
     }
 
     const handleProductUpdate = async (e) => {
@@ -105,6 +148,17 @@ const AdminAllProducts = () => {
         const category = form.category.value;
         const paymentOptions = form.paymentOptions.value;
 
+        let newImageURLs = [];
+
+        if (images.length > 0)
+            newImageURLs = await uploadNewImages();
+
+        const updatedImages = [...imagesToKeep, ...newImageURLs].slice(0, 3);
+
+        const imagesChanged=
+        updatedImages.length!==selectedProduct.images.length ||
+        updatedImages.some((img,i)=>img.url!==selectedProduct.images[i]);
+
         const isEmpty =
             (price === selectedProduct.price)
             &&
@@ -114,7 +168,9 @@ const AdminAllProducts = () => {
             &&
             (productName === selectedProduct.productName)
             &&
-            (category.toLowerCase() === selectedProduct.category.toLowerCase());
+            (category.toLowerCase() === selectedProduct.category.toLowerCase())
+            &&
+            !imagesChanged;
 
         if (isEmpty) {
             toast.error("Please change at least one field to update the product.");
@@ -132,6 +188,7 @@ const AdminAllProducts = () => {
             price: price,
             category: category,
             paymentOptions: paymentOptions,
+            images: updatedImages
         };
 
         const res = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
@@ -143,23 +200,21 @@ const AdminAllProducts = () => {
         });
 
         if (res.ok) {
-            toast.success("Product updated!");
             const updatedProducts = products.map(p => p._id === selectedProduct._id ?
                 {
                     ...p,
-                    productName: updatedProduct.productName,
-                    productDescription: updatedProduct.productDescription,
-                    price: updatedProduct.price,
-                    category: updatedProduct.category,
-                    paymentOptions: updatedProduct.paymentOptions,
+                    ...updatedProduct
                 }
                 : p
             );
             setProducts(updatedProducts);
             handleCloseUpdateModal();
+            toast.success("Product updated!");
         }
-        else
+        else{
+            handleCloseUpdateModal();
             toast.error("Product update failed!");
+        }
         // console.log("update triggered");
     }
 
@@ -258,7 +313,7 @@ const AdminAllProducts = () => {
                                 type="text"
                                 name="productName"
                                 defaultValue={selectedProduct?.productName}
-                                className="input w-full bg-gray-100 cursor-not-allowed"
+                                className="input w-full bg-gray-100"
                             />
                         </div>
 
@@ -304,23 +359,43 @@ const AdminAllProducts = () => {
                             </select>
                         </div>
 
-                        {/* Image Preview (Read Only) */}
+                        {/* Existing Images Preview */}
                         <div className="mt-4">
                             <label className="font-medium">Images</label>
                             <div className="grid grid-cols-3 gap-3 mt-2">
-                                {selectedProduct?.images?.map((img, i) => (
+                                {imagesToKeep?.map((img, i) => (
                                     <div
                                         key={i}
-                                        className="w-full h-24 border rounded-lg overflow-hidden"
+                                        className="relative w-full h-24 border rounded-lg overflow-hidden"
                                     >
                                         <img
                                             src={img}
                                             className="w-full h-full object-cover"
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setImagesToKeep(prev => prev.filter((_, index) => index !== i));
+                                            }}
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                                        >
+                                            X
+                                        </button>
                                     </div>
                                 ))}
                             </div>
-                            <p className="text-sm text-gray-500 mt-1">(Images cannot be changed)</p>
+                        </div>
+
+                        {/* Upload New Images */}
+                        <div className='flex flex-col mb-3 mt-3'>
+                            <label className="label mb-1 font-medium">Upload New Photos (Max 3)</label>
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="file-input w-full bg-[#fafafa]"
+                            />
                         </div>
 
                         {/* Payment Options */}
