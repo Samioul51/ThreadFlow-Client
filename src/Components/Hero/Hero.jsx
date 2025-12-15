@@ -56,9 +56,9 @@ const Hero = () => {
                             Real-Time Production Tracking
                         </h2>
                         <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
-                            Monitor every stage of your garment production from cutting to finishing. Get instant updates and ensure quality control at every step.
+                            As a Buyer, monitor every stage of your garment production from cutting to finishing. Get instant updates and ensure quality control at every step.
                         </p>
-                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/register")}>Register Now</button>
+                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/dashboard/my-orders")}>Check Now</button>
                     </div>
 
                     <div className="w-full lg:w-1/2 flex justify-center px-6 lg:px-0 lg:items-center">
@@ -75,9 +75,9 @@ const Hero = () => {
                             Easy Stock Management
                         </h2>
                         <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
-                            Keep track of your raw materials, work-in-progress, and finished goods with real-time visibility. Optimize your inventory levels, reduce waste, and improve overall production efficiency.
+                            As a Manager, keep track of your raw materials, work-in-progress, and finished goods. Optimize your inventory levels, reduce waste, and improve overall production efficiency.
                         </p>
-                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/contact")}>Leave a message</button>
+                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/dashboard/manage-products")}>Try Now</button>
                     </div>
                     <div className="w-full lg:w-1/2 flex justify-center px-6 lg:px-0 lg:items-center">
                         <img

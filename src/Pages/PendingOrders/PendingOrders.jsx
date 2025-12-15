@@ -290,7 +290,7 @@ const PendingOrders = () => {
                     )}
 
                     <div className="modal-action mt-6">
-                        <button className="btn btn-neutral" onClick={closeViewModal}>Close</button>
+                        <button className="btn" onClick={closeViewModal}>Close</button>
                     </div>
                 </div>
             </dialog>

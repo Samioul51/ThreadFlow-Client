@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { CgProfile } from "react-icons/cg";
 import { TbShoppingBagCheck } from "react-icons/tb";
@@ -13,6 +13,14 @@ import logo from "../../assets/logo.png"
 
 const Dashboard = () => {
     const { user, userData } = use(AuthContext);
+
+    useEffect(()=>{
+        const savedTheme=localStorage.getItem("theme");
+        if(savedTheme==="dark")
+            document.documentElement.classList.add("dark");
+        else
+            document.documentElement.classList.remove("dark");
+    },[]);
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />

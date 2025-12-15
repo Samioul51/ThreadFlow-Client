@@ -38,7 +38,7 @@ p,label {
   color: black;
 }
 
-.dark p,.dark label,.dark th{
+.dark p,.dark label,.dark th,.dark h3, .dark span{
   color: white;
 }
 
@@ -50,8 +50,8 @@ input::placeholder {
   color: gray;
 }
 
-.dark input::placeholder {
-  color: #ccc; 
+.dark input::placeholder,.dark textarea::placeholder,.dark  select {
+  color: black; 
 }
 
 .review p{
@@ -68,4 +68,20 @@ input::placeholder {
 
 .hero-text,.dark .hero-text{
   color:#d4d4d4
+}
+
+.dark input{
+  color:black;
+}
+
+dialog h3,dialog label,.dark dialog label,.dark dialog h3,dialog button,.dark dialog button,dialog p,.dark dialog p,dialog label span,.dark dialog label span{
+   color:black;
+}
+
+dialog input,.dark dialog input,dialog textarea,.dark dialog textarea,dialog select,.dark dialog select{
+  background-color: white;
+}
+
+.foot p,.dark .foot p{
+  color:white;
 }

@@ -297,14 +297,14 @@ const ProductDetails = () => {
 
                         <div className="modal-action justify-between">
                             <button
-                                type="button" className="btn btn-neutral mt-4 border-none bg-[#000000] text-[#ffffff] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500"
+                                type="button" className="btn mt-4 cursor-pointer"
                                 onClick={() => orderModalRef.current.close()}
                             >
                                 Cancel
                             </button>
                             {
                                 minimumOrderQuantity <= availableQuantity &&
-                                <button type="submit" className="btn btn-neutral mt-4 border-none bg-[#000000] text-[#ffffff] cursor-pointer font-medium hover:bg-gray-800 transition-colors ease-in-out duration-500">
+                                <button type="submit" className="btn mt-4 cursor-pointer">
                                     Place Order
                                 </button>
                             }

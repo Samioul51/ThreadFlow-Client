@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 const ErrorPage = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark")
+      document.documentElement.classList.add("dark");
+    else
+      document.documentElement.classList.remove("dark");
+  }, []);
 
   return (
+    <div className='bg-white-bg'>
     <div className='w-full max-w-[1440px] flex flex-col justify-center items-center mx-auto h-screen px-4 font-inter'>
       <title>{`ThreadFlow`}</title>
       <StyledWrapper>
@@ -30,10 +39,10 @@ const ErrorPage = () => {
                 <div className="screen_out">
                   <div className="screen_out1">
                     <div className="screen">
-                      <span className="notfound_text"> NOT FOUND</span>
+                      <span className="notfound_text">404 NOT FOUND</span>
                     </div>
                     <div className="screenM">
-                      <span className="notfound_text"> NOT FOUND</span>
+                      <span className="notfound_text">404 NOT FOUND</span>
                     </div>
                   </div>
                 </div>
@@ -64,13 +73,14 @@ const ErrorPage = () => {
             </div>
           </div>
           <div className="text_404">
-            <div className="text_4041">4</div>
-            <div className="text_4042">0</div>
-            <div className="text_4043">4</div>
+            <div className="text_4041"></div>
+            <div className="text_4042"></div>
+            <div className="text_4043"></div>
           </div>
         </div>
       </StyledWrapper>
-      <button onClick={()=>navigate(-1)} className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500 '>Go Back</button>
+      <button onClick={() => navigate(-1)} className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500 '>Go Back</button>
+    </div>
     </div>
   );
 };

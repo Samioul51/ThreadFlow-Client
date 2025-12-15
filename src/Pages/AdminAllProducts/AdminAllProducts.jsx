@@ -356,7 +356,7 @@ const AdminAllProducts = () => {
             {/* Modal for update */}
             <dialog id="update_product_modal" className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box max-w-xl">
-                    <h3 className="font-bold text-lg">Update Product</h3>
+                    <h3 className="font-bold text-lg text-black">Update Product</h3>
                     <form onSubmit={handleProductUpdate}>
                         {/* Product Name */}
                         <div className="mt-3">

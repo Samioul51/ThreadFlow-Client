@@ -172,11 +172,11 @@ const Navbar = () => {
 
             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <p className="py-4">Are you sure you want to logout?</p>
+                    <p className="py-4 text-black">Are you sure you want to logout?</p>
                     <div className="modal-action">
                         <form method="dialog">
-                            <button onClick={handleLogout} className="btn">Yes</button>
-                            <button onClick={handleCloseModal} className="btn">No</button>
+                            <button onClick={handleLogout} className="btn text-black">Yes</button>
+                            <button onClick={handleCloseModal} className="btn text-black">No</button>
                         </form>
                     </div>
                 </div>
