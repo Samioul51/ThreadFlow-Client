@@ -1,14 +1,33 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 
-const ordersPromise = fetch("http://localhost:3000/orders").then(res => res.json());
-
 const ApprovedOrders = () => {
-    const { user, userData } = use(AuthContext);
-    const data = use(ordersPromise);
+    const { user, userData,userToken } = use(AuthContext);
 
-    const orders = data.data;
+    const [orders,setOrders] = useState([]); 
+
+    useEffect(()=>{
+        if(!user)
+            return;
+        const fetchUsers=async()=>{
+            try{
+                const res=await fetch("http://localhost:3000/orders",{
+                    headers:{
+                        Authorization: `Bearer ${userToken}`
+                    }
+                })
+                .then(res => res.json());
+                if(res.success)
+                    setOrders(res.data);
+                else
+                    toast.error(res.message);
+            }catch(error){
+                toast.error("Failed to fetch users!");
+            }
+        };
+        fetchUsers();
+    },[user,userToken]);
 
     const myApprovedOrders = orders.filter(order => order.sellerEmail === user.email && order.deliveryStatus !== "pending" && order.deliveryStatus !== "rejected");
 
@@ -65,6 +84,7 @@ const ApprovedOrders = () => {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
+                Authorization:`Bearer ${userToken}`
             },
             body: JSON.stringify(body)
         });

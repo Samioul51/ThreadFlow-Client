@@ -5,14 +5,18 @@ import { useNavigate } from 'react-router';
 import StatusPieChart from '../../Components/StatusPieChart/StatusPieChart';
 
 const UserOrders = () => {
-    const { user } = use(AuthContext);
+    const { user, userToken } = use(AuthContext);
     const [myOrders, setMyOrders] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch("http://localhost:3000/orders");
+                const response = await fetch("http://localhost:3000/orders", {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`
+                    }
+                });
                 const data = await response.json();
                 const orders = data.data.filter(order => order.email === user.email);
                 setMyOrders(orders);
@@ -22,12 +26,12 @@ const UserOrders = () => {
         };
 
         fetchOrders();
-    }, [user.email]);
+    }, [user.email, userToken]);
     // console.log(user);
     // console.log(myOrders);
 
     const pendingCount = myOrders.filter(o => o.deliveryStatus === "pending").length;
-    const deliveredCount = myOrders.filter(o => o.deliveryStatus === "shipped" ).length;
+    const deliveredCount = myOrders.filter(o => o.deliveryStatus === "shipped").length;
     const rejectedCount = myOrders.filter(o => o.deliveryStatus === "rejected").length;
 
     const chartData = [
@@ -59,7 +63,10 @@ const UserOrders = () => {
         if (!id)
             return;
         const response = await fetch(`http://localhost:3000/orders/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${userToken}`
+            }
         });
 
         if (!response.ok)
@@ -145,7 +152,7 @@ const UserOrders = () => {
                                                     VIEW
                                                 </button>
                                                 {
-                                                    (order.deliveryStatus === "pending" && order.paymentStatus==="pending") && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
+                                                    (order.deliveryStatus === "pending" && order.paymentStatus === "pending") && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
                                                 }
 
                                             </td>

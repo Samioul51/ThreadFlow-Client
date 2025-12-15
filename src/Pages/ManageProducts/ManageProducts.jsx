@@ -6,7 +6,7 @@ import { IoIosArrowDropdown } from 'react-icons/io';
 
 const ManageProducts = () => {
 
-    const { user } = use(AuthContext);
+    const { user, userToken } = use(AuthContext);
     const [myProducts, setMyProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -55,7 +55,10 @@ const ManageProducts = () => {
         if (!selectedProduct)
             return;
         const response = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${userToken}`
+            }
         });
 
         if (!response.ok)
@@ -197,7 +200,8 @@ const ManageProducts = () => {
         const res = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
             method: "PATCH",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`
             },
             body: JSON.stringify(updatedProduct),
         });

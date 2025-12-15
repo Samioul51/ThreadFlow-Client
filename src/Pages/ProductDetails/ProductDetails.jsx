@@ -64,7 +64,8 @@ const ProductDetails = () => {
             const orderResponse = await fetch("http://localhost:3000/orders", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization:`Bearer ${user?.userToken}`
                 },
                 body: JSON.stringify(order)
             });
@@ -74,15 +75,14 @@ const ProductDetails = () => {
 
             const orderData = await orderResponse.json();
 
-            const newStock = availableQuantity - quantity;
-
-            const stockResponse = await fetch(`http://localhost:3000/products/${product._id}`, {
+            const stockResponse = await fetch(`http://localhost:3000/products/${product._id}/stock`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization:`Bearer ${user?.userToken}`
                 },
                 body: JSON.stringify({
-                    newQuantity: newStock
+                    quantitySold: quantity
                 })
             });
 
@@ -93,6 +93,7 @@ const ProductDetails = () => {
             toast.success("Order completed successfully!");
         }
     }
+
     const allImages = [
         {
             original: images[0], thumbnail: images[0]

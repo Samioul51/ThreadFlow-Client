@@ -113,7 +113,26 @@ const router = createBrowserRouter([
         element: <UserRoute>
           <UserTrackOrder></UserTrackOrder>
         </UserRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/orders/${params.id}`)
+        loader: async ({ params }) => {
+          const auth = getAuth();
+          const user = auth.currentUser;
+
+          if (!user)
+            throw new Response("Unauthorized", { status: 401 });
+
+          const token = await user.getIdToken();
+
+          const res = await fetch(`http://localhost:3000/orders/${params.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          if (!res.ok)
+            throw new Response("Failed to load order!")
+
+          return res.json();
+        }
       },
       {
         path: "/dashboard/manage-products",
@@ -163,21 +182,21 @@ const router = createBrowserRouter([
           <AdminTrackOrder></AdminTrackOrder>
         </AdminRoute>,
         loader: async ({ params }) => {
-          const auth=getAuth();
-          const user=auth.currentUser;
+          const auth = getAuth();
+          const user = auth.currentUser;
 
-          if(!user)
-            throw new Response("Unauthorized",{status:401});
+          if (!user)
+            throw new Response("Unauthorized", { status: 401 });
 
           const token = await user.getIdToken();
 
-          const res=await fetch(`http://localhost:3000/orders/${params.id}`, {
+          const res = await fetch(`http://localhost:3000/orders/${params.id}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
           });
 
-          if(!res.ok)
+          if (!res.ok)
             throw new Response("Failed to load order!")
 
           return res.json();
