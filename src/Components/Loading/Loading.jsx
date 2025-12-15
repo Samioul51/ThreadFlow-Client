@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-
 const Loading = () => {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark")
+      document.documentElement.classList.add("dark");
+    else
+      document.documentElement.classList.remove("dark");
+  }, []);
   return (
     <div className='bg-white-bg w-full h-screen flex justify-center items-center'>
       <StyledWrapper>
