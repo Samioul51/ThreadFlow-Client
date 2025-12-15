@@ -1,17 +1,36 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import StatusPieChart from '../../Components/StatusPieChart/StatusPieChart';
-
-const userPromise = fetch("http://localhost:3000/users").then(res => res.json());
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 
 const ManageUsers = () => {
-
-    const userResponse = use(userPromise);
-    const users = userResponse.data;
     // console.log(users);
-
+    const {user,userToken}=use(AuthContext);
+    const [users,setUsers]=useState([]);   
     const [selectedUser, setSelectedUser] = useState(null);
+
+    useEffect(()=>{
+        if(!user)
+            return;
+        const fetchUsers=async()=>{
+            try{
+                const res=await fetch("http://localhost:3000/users",{
+                    headers:{
+                        Authorization: `Bearer ${userToken}`
+                    }
+                })
+                .then(res => res.json());
+                if(res.success)
+                    setUsers(res.data);
+                else
+                    toast.error(res.message);
+            }catch(error){
+                toast.error("Failed to fetch users!");
+            }
+        };
+        fetchUsers();
+    },[user,userToken]);
 
     const categories = ["All Role", "Buyer", "Manager", "Admin"];
     const allStatus = ["All Status", "Pending", "Suspended", "Approved"];
@@ -73,7 +92,8 @@ const ManageUsers = () => {
         const res = await fetch(`http://localhost:3000/users/${selectedUser._id}`, {
             method: "PATCH",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`
             },
             body: JSON.stringify(updatedInfo),
         });

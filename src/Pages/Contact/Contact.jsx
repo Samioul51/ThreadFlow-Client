@@ -33,7 +33,7 @@ const Contact = () => {
             form.reset();
         }
         else
-            toast.error("Failed to send message!");
+            toast.error("Failed to send message. Try again later.");
     }
 
     return (

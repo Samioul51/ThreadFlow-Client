@@ -1,25 +1,35 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import { useNavigate } from 'react-router';
-
-const ordersPromise = fetch("http://localhost:3000/orders").then(res => res.json());
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import toast from 'react-hot-toast';
 
 const AdminAllOrders = () => {
-    const data = use(ordersPromise);
-    const orders = data.data;
-    // console.log(orders);
-
-    // const handleOpenModal = (order) => {
-    //     setSelectedOrder(order);
-    //     document.getElementById("order_modal").showModal();
-    // }
-
-    // const handleCloseModal = () => {
-    //     document.getElementById("order_modal").close();
-    //     setSelectedOrder(null);
-    // }
-
+    const {user,userToken}=use(AuthContext);
     const navigate=useNavigate();
+    const [orders,setOrders]=useState([]);
+
+    useEffect(()=>{
+        if(!user)
+            return;
+        const fetchUsers=async()=>{
+            try{
+                const res=await fetch("http://localhost:3000/orders",{
+                    headers:{
+                        Authorization: `Bearer ${userToken}`
+                    }
+                })
+                .then(res => res.json());
+                if(res.success)
+                    setOrders(res.data);
+                else
+                    toast.error(res.message);
+            }catch(error){
+                toast.error("Failed to fetch users!");
+            }
+        };
+        fetchUsers();
+    },[user,userToken]);
 
     const categories = ["All", "Pending", "Rejected", "Approved"];
 

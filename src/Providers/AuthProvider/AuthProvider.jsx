@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import auth from '../../Firebase/firebase.init';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import toast from 'react-hot-toast';
 
 export const AuthContext = createContext();
 const googleProvider = new GoogleAuthProvider();
@@ -9,6 +10,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userData,setUserData]=useState(null);
+    const [userToken,setUserToken]=useState(null);
 
     // Registration
 
@@ -56,14 +58,28 @@ const AuthProvider = ({ children }) => {
 
     // User Data from backend
 
-    const fetchUserData=async (email)=>{
+    const fetchUserData=async (firebaseUser)=>{
         try{
-            const res=await fetch(`http://localhost:3000/users/${email}`);
+            if(!firebaseUser)
+                return null;
+
+            const token=await firebaseUser.getIdToken();
+
+            const res=await fetch(`http://localhost:3000/users/${firebaseUser.email}`,{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
             if(res.ok){
                 const result=await res.json();
                 if(result.success){
                     setUserData(result.data);
                     return result.data;
+                }
+                else{
+                    setUserData(null);
+                    toast.error(result.message);
+                    return null;
                 }
             }
             return null;
@@ -106,10 +122,15 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
-            if(currentUser)
-                await fetchUserData(currentUser.email);
-            else
+            if(currentUser){
+                const token=await currentUser.getIdToken();
+                setUserToken(token);
+                await fetchUserData(currentUser);
+            }
+            else{
                 setUserData(null);
+                setUserToken(null);
+            }
             setLoading(false);
         });
         return () => unsubscribe();
@@ -117,6 +138,7 @@ const AuthProvider = ({ children }) => {
 
     const authData = {
         user,
+        userToken,
         setUser,
         createUser,
         userData,

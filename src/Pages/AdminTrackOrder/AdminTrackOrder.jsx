@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router';
 
 const AdminTrackOrder = () => {
     const order = useLoaderData().data;
-
+    console.log(order);
     const steps = [
         { id: 1, title: 'Order Confirmed', statusKey: 'orderConfirmed' },
         { id: 2, title: 'Cutting Completed', statusKey: 'cuttingCompleted' },

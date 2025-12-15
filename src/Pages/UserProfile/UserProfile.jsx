@@ -1,20 +1,26 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 
-const orderPromise = fetch("http://localhost:3000/orders").then(res => res.json());
-const productPromise=fetch("http://localhost:3000/products").then(res => res.json());
 
 const UserProfile = () => {
-    const { user, userData, logout } = use(AuthContext);
+    const { user, userToken, userData, logout } = use(AuthContext);
     const navigate = useNavigate();
-    // console.log(user);
-    // console.log(userData);
-    const allOrders = use(orderPromise).data;
 
-    const totalProducts= use(productPromise).data;
-    // console.log(allOrders);
+    const [allOrders,setAllOrders]=useState([])
+    const [totalProducts,setTotalProducts]=useState([])
+
+    useEffect(()=>{
+        fetch("http://localhost:3000/orders")
+        .then(res => res.json())
+        .then(data=>setAllOrders(data.data || []));
+            
+        fetch("http://localhost:3000/products")
+        .then(res => res.json())
+        .then(data=>setTotalProducts(data.data || []));
+    },[]);
+
     const myOrders = allOrders.filter(order => order.email === user.email);
     const myProducts=totalProducts.filter(product=>product.email===user.email);
     const handleOpenModal = () => document.getElementById("my_modal_5").showModal();

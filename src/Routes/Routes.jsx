@@ -27,6 +27,7 @@ import ManageUsers from "../Pages/ManageUsers/ManageUsers";
 import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
 import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
 import AdminTrackOrder from "../Pages/AdminTrackOrder/AdminTrackOrder";
+import { getAuth } from "firebase/auth";
 
 const router = createBrowserRouter([
   {
@@ -161,7 +162,26 @@ const router = createBrowserRouter([
         element: <AdminRoute>
           <AdminTrackOrder></AdminTrackOrder>
         </AdminRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/orders/${params.id}`)
+        loader: async ({ params }) => {
+          const auth=getAuth();
+          const user=auth.currentUser;
+
+          if(!user)
+            throw new Response("Unauthorized",{status:401});
+
+          const token = await user.getIdToken();
+
+          const res=await fetch(`http://localhost:3000/orders/${params.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          if(!res.ok)
+            throw new Response("Failed to load order!")
+
+          return res.json();
+        }
       }
     ]
   }

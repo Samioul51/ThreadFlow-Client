@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 
 const AdminAllProducts = () => {
-
+    const { user, userToken } = use(AuthContext);
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [users, setUsers] = useState([]);
@@ -30,9 +31,15 @@ const AdminAllProducts = () => {
     // Users Data
 
     useEffect(() => {
+        if (!user)
+            return;
         const fetchUsers = async () => {
             try {
-                const response = await fetch("http://localhost:3000/users");
+                const response = await fetch("http://localhost:3000/users", {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`
+                    }
+                });
                 const data = await response.json();
                 const allUsers = data.data;
                 setUsers(allUsers);
@@ -42,42 +49,43 @@ const AdminAllProducts = () => {
         }
 
         fetchUsers();
-    }, []);
+    }, [user, userToken]);
 
     // Toggle show on home
 
-    const handleToggleHome=async(product)=>{
-        const newStatus=!product.showOnHome;
+    const handleToggleHome = async (product) => {
+        const newStatus = !product.showOnHome;
 
-        try{
-            const response=await fetch(`http://localhost:3000/products/${product._id}/toggle-home`,{
-                method:"PATCH",
-                headers:{
-                    "Content-Type":"application/json"
+        try {
+            const response = await fetch(`http://localhost:3000/products/${product._id}/toggle-home`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${userToken}`
                 },
-                body:JSON.stringify({showOnHome:newStatus})
+                body: JSON.stringify({ showOnHome: newStatus })
             });
 
-            const data=await response.json();
+            const data = await response.json();
 
-            if(!response.ok){
+            if (!response.ok) {
                 toast.error(data.message);
                 return;
             }
 
-            const updatedProducts=products.map(p=>
-                p._id===product._id
-                ?
-                {
-                    ...p,
-                    showOnHome:newStatus
-                }
-                :
-                p
+            const updatedProducts = products.map(p =>
+                p._id === product._id
+                    ?
+                    {
+                        ...p,
+                        showOnHome: newStatus
+                    }
+                    :
+                    p
             );
             setProducts(updatedProducts);
             toast.success(data.message);
-        }catch(error){
+        } catch (error) {
             toast.error("Failed to update product status!");
         }
     }
@@ -88,7 +96,7 @@ const AdminAllProducts = () => {
         setSelectedProduct(product);
         document.getElementById("delete_product_modal").showModal();
     }
-    
+
     const handleCloseDeleteModal = () => {
         document.getElementById("delete_product_modal").close();
         setSelectedProduct(null);
@@ -102,7 +110,10 @@ const AdminAllProducts = () => {
             return;
 
         const response = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${userToken}`
+            }
         });
 
         if (!response.ok)
@@ -194,9 +205,9 @@ const AdminAllProducts = () => {
 
         const updatedImages = [...imagesToKeep, ...newImageURLs].slice(0, 3);
 
-        const imagesChanged=
-        updatedImages.length!==selectedProduct.images.length ||
-        updatedImages.some((img,i)=>img.url!==selectedProduct.images[i]);
+        const imagesChanged =
+            updatedImages.length !== selectedProduct.images.length ||
+            updatedImages.some((img, i) => img.url !== selectedProduct.images[i]);
 
         const isEmpty =
             (price === selectedProduct.price)
@@ -233,7 +244,8 @@ const AdminAllProducts = () => {
         const res = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
             method: "PATCH",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`
             },
             body: JSON.stringify(updatedProduct),
         });
@@ -250,17 +262,12 @@ const AdminAllProducts = () => {
             handleCloseUpdateModal();
             toast.success("Product updated!");
         }
-        else{
+        else {
             handleCloseUpdateModal();
             toast.error("Product update failed!");
         }
         // console.log("update triggered");
     }
-
-    // console.log(products);
-    // console.log(users);
-
-    // const homeProductsCount=products.filter(p=>p.showOnHome).length;
 
     return (
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
@@ -305,14 +312,14 @@ const AdminAllProducts = () => {
                                             </td>
                                             <td className='text-center'>
                                                 {
-                                                    users.find(u => u.email === product?.email)?.name.toUpperCase() || "UNKNOWN"
+                                                    users.find(u => u.email === product?.email)?.name?.toUpperCase() || "UNKNOWN"
                                                 }
                                             </td>
                                             <td className='text-center'>
-                                                <input type="checkbox" 
-                                                checked={product?.showOnHome || false}
-                                                onChange={()=>handleToggleHome(product)}
-                                                className="checkbox checkbox-neutral" />
+                                                <input type="checkbox"
+                                                    checked={product?.showOnHome || false}
+                                                    onChange={() => handleToggleHome(product)}
+                                                    className="checkbox checkbox-neutral" />
                                             </td>
                                             <td className='flex flex-col items-center gap-1'>
                                                 <button onClick={() => handleOpenUpdateModal(product)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
