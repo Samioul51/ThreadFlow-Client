@@ -18,7 +18,7 @@ const Login = () => {
         const password = form.password.value;
         signIn(email, password).then((res) => {
             const user = res.user;
-            console.log(user);
+            // console.log(user);
             toast.success("Logged In Successfully!");
             navigate(`${location.state ? location.state : "/"}`);
         }).catch((error) => {
