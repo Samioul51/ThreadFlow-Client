@@ -1,9 +1,11 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
+import { motion, useScroll } from "framer-motion"
 
 const AdminTrackOrder = () => {
     const order = useLoaderData().data;
     console.log(order);
+    const { scrollYProgress } = useScroll();
     const steps = [
         { id: 1, title: 'Order Confirmed', statusKey: 'orderConfirmed' },
         { id: 2, title: 'Cutting Completed', statusKey: 'cuttingCompleted' },
@@ -37,6 +39,21 @@ const AdminTrackOrder = () => {
     }
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - Track Order`}</title>
             <div className='w-full bg-fafafa-bg shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
@@ -264,6 +281,7 @@ const AdminTrackOrder = () => {
 
             </div>
         </div>
+        </>
     );
 };
 

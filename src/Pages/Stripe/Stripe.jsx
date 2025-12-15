@@ -4,15 +4,16 @@ import React, { use, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import CheckoutForm from '../../Components/CheckoutForm/CheckoutForm';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
-
+import { motion, useScroll } from "framer-motion"
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUB_KEY);
 
 const Stripe = () => {
-    const {userToken}=use(AuthContext);
+    const { userToken } = use(AuthContext);
     const { state } = useLocation();
     const newOrder = state?.newOrder;
-    const availableQuantity=state?.availableQuantity;
+    const availableQuantity = state?.availableQuantity;
     const navigate = useNavigate();
+    const { scrollYProgress } = useScroll();
 
     const [clientSecret, setClientSecret] = useState("");
 
@@ -32,7 +33,7 @@ const Stripe = () => {
             .then(data => {
                 setClientSecret(data.clientSecret);
             })
-    }, [newOrder]);
+    }, [newOrder, userToken]);
 
     if (!newOrder)
         return <div className='w-full max-w-[1440px] flex justify-center items-center h-[50vh]'>
@@ -41,15 +42,31 @@ const Stripe = () => {
 
     // console.log(newOrder);
     return (
-        <div className="max-w-xl mx-auto mt-16">
-            <title>{`ThreadFlow | Stripe Payment`}</title>
-            <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Stripe Payment</p>
-            {clientSecret && (
-                <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm newOrder={newOrder} availableQuantity={availableQuantity} navigate={navigate} />
-                </Elements>
-            )}
-        </div>
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
+            <div className="max-w-xl mx-auto mt-16">
+                <title>{`ThreadFlow | Stripe Payment`}</title>
+                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Stripe Payment</p>
+                {clientSecret && (
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                        <CheckoutForm newOrder={newOrder} availableQuantity={availableQuantity} navigate={navigate} />
+                    </Elements>
+                )}
+            </div>
+        </>
     );
 };
 

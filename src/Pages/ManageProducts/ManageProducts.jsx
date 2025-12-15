@@ -2,14 +2,14 @@ import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 import { IoIosArrowDropdown } from 'react-icons/io';
-
+import { motion, useScroll } from "framer-motion"
 
 const ManageProducts = () => {
 
     const { user, userToken } = use(AuthContext);
     const [myProducts, setMyProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
-
+    const { scrollYProgress } = useScroll();
     const [images, setImages] = useState([]);
     const [imagesToKeep, setImagesToKeep] = useState([]);
     const imgBB = import.meta.env.VITE_IMG_BB_API_KEY;
@@ -223,6 +223,21 @@ const ManageProducts = () => {
     }
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Manager - My Products`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY PRODUCTS</p>
@@ -456,6 +471,7 @@ const ManageProducts = () => {
             </dialog>
 
         </div>
+        </>
     );
 };
 

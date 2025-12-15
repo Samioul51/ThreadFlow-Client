@@ -2,11 +2,13 @@ import React, { use } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import { motion, useScroll } from "framer-motion"
 
 const Login = () => {
     const { signIn, signInWithGoogle,createUserInDb } = use(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
+    const { scrollYProgress } = useScroll();
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -48,6 +50,21 @@ const Login = () => {
     }
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='w-full mx-auto max-w-[1440px] h-screen'>
             <title>{`ThreadFlow | Login`}</title>
             <div className='bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
@@ -73,6 +90,7 @@ const Login = () => {
                 </button>
             </div>
         </div>
+        </>
     );
 };
 

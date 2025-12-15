@@ -2,12 +2,14 @@ import React, { use, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import { motion, useScroll } from "framer-motion"
 
 const Register = () => {
     const { createUser, setUser, updateUser, signInWithGoogle,createUserInDb } = use(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const [error, setError] = useState("");
+    const { scrollYProgress } = useScroll();
 
 
     const handleRegister = async (e) => {
@@ -98,6 +100,21 @@ const Register = () => {
     }
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
             <title>{`ThreadFlow | Register`}</title>
             <div className='bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
@@ -150,6 +167,7 @@ const Register = () => {
             </div>
 
         </div>
+        </>
     );
 };
 

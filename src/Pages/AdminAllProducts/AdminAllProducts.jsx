@@ -1,12 +1,14 @@
 import React, { use, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import { motion, useScroll } from "framer-motion"
 
 const AdminAllProducts = () => {
     const { user, userToken } = use(AuthContext);
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [users, setUsers] = useState([]);
+    const { scrollYProgress } = useScroll();
 
     const [images, setImages] = useState([]);
     const [imagesToKeep, setImagesToKeep] = useState([]);
@@ -270,6 +272,21 @@ const AdminAllProducts = () => {
     }
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - All Products`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ALL PRODUCTS</p>
@@ -479,6 +496,7 @@ const AdminAllProducts = () => {
                 </div>
             </dialog>
         </div>
+        </>
     );
 };
 

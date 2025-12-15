@@ -1,12 +1,14 @@
 import React, { use, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import { motion, useScroll } from "framer-motion"
 
 const AddProduct = () => {
     const { user } = use(AuthContext);
     const [images, setImages] = useState([]);
     const imgBB = import.meta.env.VITE_IMG_BB_API_KEY;
     const [userData, setUserData] = useState(null);
+    const { scrollYProgress } = useScroll();
 
     useEffect(() => {
         if (!user)
@@ -105,6 +107,21 @@ const AddProduct = () => {
     }
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Manager - Add Product`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ADD NEW PRODUCT</p>
@@ -216,6 +233,7 @@ const AddProduct = () => {
 
             </form>
         </div>
+        </>
     );
 };
 

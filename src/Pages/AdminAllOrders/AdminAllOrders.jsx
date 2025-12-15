@@ -3,11 +3,13 @@ import { IoIosArrowDropdown } from 'react-icons/io';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import { motion, useScroll } from "framer-motion"
 
 const AdminAllOrders = () => {
     const {user,userToken}=use(AuthContext);
     const navigate=useNavigate();
     const [orders,setOrders]=useState([]);
+    const { scrollYProgress } = useScroll();
 
     useEffect(()=>{
         if(!user)
@@ -71,6 +73,21 @@ const AdminAllOrders = () => {
     });
 
     return (
+        <>
+            <motion.div
+                id="scroll-indicator"
+                style={{
+                    scaleX: scrollYProgress,
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 10,
+                    originX: 0,
+                    backgroundColor: "#545454",
+                    zIndex: 9999
+                }}
+            />
         <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - All Orders`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ALL ORDERS</p>
@@ -144,6 +161,7 @@ const AdminAllOrders = () => {
             }
 
         </div>
+        </>
     );
 };
 
