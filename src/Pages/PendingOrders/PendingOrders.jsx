@@ -61,9 +61,9 @@ const PendingOrders = () => {
 
         const newStatus = actionType === "approve"
             ?
-            "Order Confirmed" : "rejected"
+            "Confirmed" : "Rejected"
 
-        const statusKey = actionType === "approve" ? "orderConfirmed" : undefined;
+        const statusKey = actionType === "approve" ? "orderConfirmed" : "rejected";
 
         // console.log(selectedOrder);
 
@@ -82,11 +82,11 @@ const PendingOrders = () => {
         const data = await res.json();
 
         if (data.success) {
-            toast.success(`${newStatus.toUpperCase()}!`);
             document.getElementById("action_modal").close();
             setSelectedOrder(null);
             setActionType("");
             window.location.reload();
+            toast.success(`Order ${newStatus}!`);
         }
         else
             toast.error("Failed to update order!")

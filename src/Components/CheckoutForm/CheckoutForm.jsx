@@ -1,10 +1,13 @@
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { use } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 
 const CheckoutForm = ({ newOrder,availableQuantity,navigate }) => {
+    const {userToken}=use(AuthContext);
     const stripe = useStripe();
     const elements = useElements();
-    console.log(newOrder);
+    // console.log(newOrder);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -29,18 +32,20 @@ const CheckoutForm = ({ newOrder,availableQuantity,navigate }) => {
 
             fetch("http://localhost:3000/orders", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${userToken}`
+                },
                 body: JSON.stringify(order)
             }).then(() => {
-                const newStock = availableQuantity - newOrder.quantity;
-                
-                fetch(`http://localhost:3000/products/${newOrder._id}`, {
+                fetch(`http://localhost:3000/products/${newOrder.productID}/stock`, {
                     method: "PATCH",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        Authorization:`Bearer ${userToken}`
                     },
                     body: JSON.stringify({
-                        newQuantity: newStock
+                        quantitySold: newOrder.quantity
                     })
                 });
                 toast.success("Payment successful! Order placed.");

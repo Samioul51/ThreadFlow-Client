@@ -1,12 +1,14 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from "@stripe/react-stripe-js";
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import CheckoutForm from '../../Components/CheckoutForm/CheckoutForm';
+import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUB_KEY);
 
 const Stripe = () => {
+    const {userToken}=use(AuthContext);
     const { state } = useLocation();
     const newOrder = state?.newOrder;
     const availableQuantity=state?.availableQuantity;
@@ -21,7 +23,8 @@ const Stripe = () => {
         fetch("http://localhost:3000/create-payment-intent", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userToken}`
             },
             body: JSON.stringify({ amount: newOrder.totalPrice })
         })
