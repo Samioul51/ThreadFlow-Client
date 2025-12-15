@@ -44,7 +44,7 @@ const UserOrders = () => {
             value: pendingCount
         },
         {
-            name: "Suspended",
+            name: "Rejected",
             value: rejectedCount
         }
     ];

@@ -15,3 +15,21 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+:root{
+  --light-bg:#ffffff;
+  --light-bg-alt:#fafafa;
+}
+
+.dark{
+  --light-bg:#333333;
+  --light-bg-alt:#444444;
+}
+
+.bg-white-bg{
+  background-color: var(--light-bg);
+}
+
+.bg-fafafa-bg{
+  background-color: var(--light-bg-alt);
+}
