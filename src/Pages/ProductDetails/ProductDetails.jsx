@@ -108,7 +108,7 @@ const ProductDetails = () => {
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto px-4 font-inter'>
             <title>{`ThreadFlow | ${productName}`}</title>
-            <div className='w-full bg-[#FAFAFA] shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
+            <div className='w-full bg-fafafa-bg shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
                 <div className='w-full lg:max-w-[50%] h-auto'>
                     <ReactImageGallery items={allImages}></ReactImageGallery>
                 </div>

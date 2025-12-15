@@ -133,7 +133,7 @@ const ApprovedOrders = () => {
 
 
     return (
-        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
+        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Manager - Approved Orders`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>APPROVED ORDERS</p>
             {
@@ -234,7 +234,7 @@ const ApprovedOrders = () => {
                             <label className="font-medium">Updated Completed Step</label>
                             <select
                                 name="statusKey"
-                                className="bg-[#fafafa] px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300w-full bg-[#fafafa]"
+                                className="bg-fafafa-bg px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300w-full bg-fafafa-bg"
                                 value={statusValue}
                                 onChange={(e) => setStatusValue(e.target.value)}
                             >

@@ -37,9 +37,9 @@ const AdminTrackOrder = () => {
     }
 
     return (
-        <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white font-inter'>
+        <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - Track Order`}</title>
-            <div className='w-full bg-[#FAFAFA] shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
+            <div className='w-full bg-fafafa-bg shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
                 <div className='w-full lg:max-w-[50%] h-auto flex-col px-5 py-5 box-border'>
                     {/* Product Name */}
                     <p className='text-5xl font-bold text-black font-playfair mb-5'>{order?.productName.toUpperCase()}</p>
@@ -53,7 +53,7 @@ const AdminTrackOrder = () => {
                     {/* Customer Details Section */}
                     <div className='mb-5'>
                         <p className='text-xl font-bold text-black font-playfair mb-3'>CUSTOMER DETAILS</p>
-                        <div className='bg-[#fafafa] border border-[#e0e0e0] p-4 space-y-3'>
+                        <div className='bg-fafafa-bg border border-[#e0e0e0] p-4 space-y-3'>
                             <div className='flex flex-col gap-1'>
                                 <p className='text-black font-bold text-sm'>FULL NAME</p>
                                 <p className='text-[#666666] font-medium'>{order?.firstName} {order?.lastName}</p>
@@ -84,7 +84,7 @@ const AdminTrackOrder = () => {
                     {/* Manager Info Section */}
                     <div className='mb-5'>
                         <p className='text-xl font-bold text-black font-playfair mb-3'>MANAGER INFORMATION</p>
-                        <div className='bg-[#fafafa] border border-[#e0e0e0] p-4 space-y-3'>
+                        <div className='bg-fafafa-bg border border-[#e0e0e0] p-4 space-y-3'>
                             <div className='flex flex-col gap-1'>
                                 <p className='text-black font-bold text-sm'>SELLER EMAIL</p>
                                 <p className='text-[#666666] font-medium'>{order?.sellerEmail ? order?.sellerEmail: "NOT AVAILABLE"}</p>

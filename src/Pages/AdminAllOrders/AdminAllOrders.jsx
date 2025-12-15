@@ -71,7 +71,7 @@ const AdminAllOrders = () => {
     });
 
     return (
-        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
+        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - All Orders`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ALL ORDERS</p>
             <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>

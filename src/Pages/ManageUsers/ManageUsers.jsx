@@ -109,7 +109,7 @@ const ManageUsers = () => {
     }
 
     return (
-        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
+        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - Manage Users`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center'>USERS STATUS ANALYSIS</p>
             <StatusPieChart data={chartData}></StatusPieChart>    
@@ -204,7 +204,7 @@ const ManageUsers = () => {
                                         roleStatus: e.target.value
                                     }))
                                 }
-                                className="bg-[#fafafa] px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300w-full bg-[#fafafa]"
+                                className="bg-fafafa-bg px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300w-full bg-fafafa-bg"
                             >
                                 <option value="pending">Pending</option>
                                 <option value="approved">Approve</option>
@@ -218,7 +218,7 @@ const ManageUsers = () => {
                             <input
                                 type="text"
                                 name="feedback"
-                                className="input w-full bg-[#fafafa]"
+                                className="input w-full bg-fafafa-bg"
                                 disabled={selectedUser?.roleStatus !== "suspended"}
                                 required={selectedUser?.roleStatus === "suspended"}
                             />

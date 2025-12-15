@@ -33,3 +33,39 @@
 .bg-fafafa-bg{
   background-color: var(--light-bg-alt);
 }
+
+p,label {
+  color: black;
+}
+
+.dark p,.dark label,.dark th{
+  color: white;
+}
+
+.dark td{
+  color: #ccc; 
+}
+
+input::placeholder {
+  color: gray;
+}
+
+.dark input::placeholder {
+  color: #ccc; 
+}
+
+.review p{
+  color: white;
+}
+
+.about-head{
+  color:white;
+}
+
+.about-text, .dark .about-text{
+  color:#666666;
+}
+
+.hero-text,.dark .hero-text{
+  color:#d4d4d4
+}

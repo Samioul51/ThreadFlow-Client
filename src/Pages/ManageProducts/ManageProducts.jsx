@@ -223,7 +223,7 @@ const ManageProducts = () => {
     }
 
     return (
-        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white font-inter'>
+        <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
             <title>{`ThreadFlow | Manager - My Products`}</title>
             <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY PRODUCTS</p>
             <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
@@ -347,7 +347,7 @@ const ManageProducts = () => {
                                 type="number"
                                 name="price"
                                 defaultValue={selectedProduct?.price}
-                                className="input w-full bg-[#fafafa]"
+                                className="input w-full bg-fafafa-bg"
                             />
                         </div>
 
@@ -358,7 +358,7 @@ const ManageProducts = () => {
                                 type="number"
                                 name="addStock"
                                 min={0}
-                                className="input w-full bg-[#fafafa]"
+                                className="input w-full bg-fafafa-bg"
                                 placeholder={`Current Stock: ${selectedProduct?.availableQuantity}`}
                             />
                             <p className="text-sm text-gray-500 mt-1">
@@ -373,7 +373,7 @@ const ManageProducts = () => {
                                 type="number"
                                 name="minimumOrderQuantity"
                                 defaultValue={selectedProduct?.minimumOrderQuantity}
-                                className="input w-full bg-[#fafafa]"
+                                className="input w-full bg-fafafa-bg"
                             />
                         </div>
 
@@ -389,7 +389,7 @@ const ManageProducts = () => {
                                         paymentOptions: e.target.value
                                     })
                                 }
-                                className="bg-[#fafafa] px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300w-full bg-[#fafafa]"
+                                className="bg-fafafa-bg px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300w-full bg-fafafa-bg"
                             >
                                 <option value="Stripe">Stripe</option>
                                 <option value="Cash on Delivery">Cash on Delivery</option>
@@ -402,7 +402,7 @@ const ManageProducts = () => {
                             <textarea
                                 name="productDescription"
                                 defaultValue={selectedProduct?.productDescription}
-                                className="textarea textarea-lg w-full bg-[#fafafa] resize-none"
+                                className="textarea textarea-lg w-full bg-fafafa-bg resize-none"
                             ></textarea>
                         </div>
 
@@ -441,7 +441,7 @@ const ManageProducts = () => {
                                 multiple
                                 accept="image/*"
                                 onChange={handleImageChange}
-                                className="file-input w-full bg-[#fafafa]"
+                                className="file-input w-full bg-fafafa-bg"
                             />
                         </div>
 

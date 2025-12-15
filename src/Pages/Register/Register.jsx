@@ -98,27 +98,27 @@ const Register = () => {
     }
 
     return (
-        <div className='w-full mx-auto max-w-[1440px] h-screen'>
+        <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
             <title>{`ThreadFlow | Register`}</title>
-            <div className='bg-white shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
+            <div className='bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
                 <p className='font-playfair font-bold text-[40px] mb-[8px]'>Create Account</p>
                 <form onSubmit={handleRegister}>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Full Name</label>
-                        <input type="text" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="name" placeholder="Enter your full name" required />
+                        <input type="text" className="input bg-fafafa-bg px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="name" placeholder="Enter your full name" required />
                     </div>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Email Address</label>
-                        <input type="email" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="email" placeholder="Enter your Email" required />
+                        <input type="email" className="input bg-fafafa-bg px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="email" placeholder="Enter your Email" required />
                     </div>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Photo</label>
-                        <input type="file" className="file-input bg-[#fafafa] w-full" name="photo" required />
+                        <input type="file" className="file-input bg-fafafa-bg w-full" name="photo" required />
                     </div>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Select Role</label>
                         <select
-                            className="bg-[#fafafa] px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300"
+                            className="bg-fafafa-bg px-[14px] h-[40px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300"
                             name="role"
                             defaultValue=""
                             required
@@ -132,7 +132,7 @@ const Register = () => {
                     </div>
                     <div className='flex flex-col mb-[8px]'>
                         <label className="label mb-[8px] font-medium text-black">Password</label>
-                        <input type="password" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="password" placeholder="Enter Password" />
+                        <input type="password" className="input bg-fafafa-bg px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="password" placeholder="Enter Password" />
                     </div>
                     {
                         error && <p className='text-xs text-red-500'>{error}</p>

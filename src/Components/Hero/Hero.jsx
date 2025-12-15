@@ -35,7 +35,7 @@ const Hero = () => {
                         <h2 className="font-playfair text-white text-4xl md:text-5xl lg:text-6xl leading-snug text-left">
                             Streamline your Garment Production
                         </h2>
-                        <p className="text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
+                        <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
                             Manage orders, track production stages, and ensure timely delivery with our comprehensive production tracker system. Built for efficiency, designed for growth.
                         </p>
                         <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/products")}>View Products</button>
@@ -55,7 +55,7 @@ const Hero = () => {
                         <h2 className="font-playfair text-white text-4xl md:text-5xl lg:text-6xl leading-snug text-left">
                             Real-Time Production Tracking
                         </h2>
-                        <p className="text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
+                        <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
                             Monitor every stage of your garment production from cutting to finishing. Get instant updates and ensure quality control at every step.
                         </p>
                         <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/register")}>Register Now</button>
@@ -74,7 +74,7 @@ const Hero = () => {
                         <h2 className="font-playfair text-white text-4xl md:text-5xl lg:text-6xl leading-snug text-left">
                             Easy Stock Management
                         </h2>
-                        <p className="text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
+                        <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
                             Keep track of your raw materials, work-in-progress, and finished goods with real-time visibility. Optimize your inventory levels, reduce waste, and improve overall production efficiency.
                         </p>
                         <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/contact")}>Leave a message</button>

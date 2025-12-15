@@ -8,7 +8,7 @@ const RootLayout = () => {
     return (
         <div className="min-h-screen flex flex-col">
             <Navbar></Navbar>
-            <main className="grow mb-48 bg-white">
+            <main className="grow pb-48 bg-white-bg">
                 <Outlet></Outlet>
             </main>
             <Footer></Footer>

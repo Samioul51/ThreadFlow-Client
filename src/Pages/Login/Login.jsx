@@ -50,16 +50,16 @@ const Login = () => {
     return (
         <div className='w-full mx-auto max-w-[1440px] h-screen'>
             <title>{`ThreadFlow | Login`}</title>
-            <div className='bg-white shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
+            <div className='bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
                 <p className='font-playfair font-bold text-[40px] mb-[8px]'>Welcome Back</p>
                 <form onSubmit={handleLogin}>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Email Address</label>
-                        <input type="email" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="email" placeholder="Enter your Email" required />
+                        <input type="email" className="input bg-fafafa-bg px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="email" placeholder="Enter your Email" required />
                     </div>
                     <div className='flex flex-col mb-[8px]'>
                         <label className="label mb-[8px] font-medium text-black">Password</label>
-                        <input type="password" className="input bg-[#fafafa] px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="password" placeholder="Enter Password" />
+                        <input type="password" className="input bg-fafafa-bg px-[14px] py-[19px] w-full text-[1rem] rounded-lg border border-gray-200 focus:outline-none focus:border-gray-300" name="password" placeholder="Enter Password" />
                     </div>
                     <p className='mb-[24px]'>Don't have an account? <Link to="/register" className='text-blue-500'>Register</Link></p>
 

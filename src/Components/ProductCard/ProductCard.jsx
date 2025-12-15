@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => {
     console.log(_id);
     return (
         <div>
-            <div className="w-full bg-white shadow-lg rounded-lg overflow-hidden mx-auto font-inter">
+            <div className="w-full bg-white-bg shadow-lg rounded-lg overflow-hidden mx-auto font-inter">
                 {/* Product Image */}
                 <div className="bg-gray-200 flex items-center aspect-square w-full">
                     <img src={images[0]} alt={productName} className="h-full w-full object-cover" />

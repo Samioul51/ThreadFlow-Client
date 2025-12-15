@@ -28,7 +28,7 @@ const Dashboard = () => {
                     <div className="px-4 font-playfair font-bold text-white">My Dashboard</div>
                 </nav>
 
-                <div className="p-4 bg-[#fafafa]">
+                <div className="p-4 bg-fafafa-bg">
                     <Outlet />
                 </div>
             </div>
