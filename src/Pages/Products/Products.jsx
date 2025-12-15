@@ -7,31 +7,44 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const [category, setCategory] = useState("All");
+    const [searchTitle, setSearchTitle] = useState("");
 
     const limit = 9;
 
     useEffect(() => {
         const skip = (page - 1) * limit;
 
-        fetch(`http://localhost:3000/products?limit=${limit}&skip=${skip}`)
+        const params=new URLSearchParams({
+            limit:limit.toString(),
+            skip:skip.toString()
+        });
+
+        if(category!=="All")
+            params.append("category",category);
+
+        if(searchTitle)
+            params.append("search",searchTitle);
+
+        fetch(`http://localhost:3000/products?${params}`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.data);
                 setTotal(data.total);
             });
-    }, [page])
-    // console.log(products);
+    }, [page,category,searchTitle]);
+
+    const handleCategoryChange=(newCategory)=>{
+        setCategory(newCategory);
+        setPage(1);
+    };
+
+    const handleSearchChange=(e)=>{
+        setSearchTitle(e.target.value);
+        setPage(1);
+    };
 
     const categories = ["All", "Shirt", "Pant", "Jacket", "Accessories"];
-
-    const [category, setCategory] = useState("All");
-    const [searchTitle, setSearchTitle] = useState("");
-
-    const data = products.filter(p => {
-        const matchCategory = category === "All" ? true : p.category === category;
-        const matchTitle = p.productName.toLowerCase().includes(searchTitle.toLowerCase());
-        return matchCategory && matchTitle;
-    });
 
     const totalPages = Math.ceil(total / limit);
 
@@ -44,17 +57,17 @@ const Products = () => {
                     <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
                     <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                         {
-                            categories.map(c => <li key={c}><a onClick={() => setCategory(c)}>{c}</a></li>)
+                            categories.map(c => <li key={c}><a onClick={() =>handleCategoryChange(c)}>{c}</a></li>)
                         }
                     </ul>
                 </div>
-                <input type="text" placeholder="Search by Title" className="input input-primary" onChange={(e) => setSearchTitle(e.target.value)} />
+                <input type="text" placeholder="Search by Title" className="input input-primary" onChange={handleSearchChange} />
             </div>
             {
-                data.length > 0 ? (
+                products.length > 0 ? (
                     <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
                         {
-                            data.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
+                            products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
                         }
                     </div>
                 )
