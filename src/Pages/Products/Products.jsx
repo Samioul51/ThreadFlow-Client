@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import { motion, useScroll } from "framer-motion"
+import TextType from '../../Components/TextType/TextType';
 
 const Products = () => {
 
@@ -67,7 +68,17 @@ const Products = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
                 <title>{`ThreadFlow | All Products`}</title>
-                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>All Products</p>
+                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+                    <TextType
+                    text={"All Products"}
+                    typingSpeed={100}
+                    pauseDuration={1500}
+                    showCursor={false}
+                    startOnVisible={true}
+                    deletingSpeed={0}
+                    loop={false}
+                />
+                </p>
                 <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
                     <div className="dropdown dropdown-start">
                         <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>

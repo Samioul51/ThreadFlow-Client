@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Review from '../Review/Review';
+import TextType from '../TextType/TextType';
 
 const reviews = [
   {
@@ -33,28 +34,39 @@ const reviews = [
 const Reviews = () => {
   return (
     <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'>
-      <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Our Customers</p>
-    <StyledWrapper 
-      style={{
-        '--width': '400px',
-        '--height': '200px',
-        '--quantity': reviews.length
-      }}
-    >
-      <div className="slider">
-        <div className="list">
-          {reviews.map((review, index) => (
-            <div 
-              key={review.id} 
-              className="item"
-              style={{ '--position': index + 1 }}
-            >
-              <Review review={review} />
-            </div>
-          ))}
+      <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+        <TextType
+          text={"Our Customers"}
+          typingSpeed={75}
+          pauseDuration={1500}
+          showCursor={false}
+          startOnVisible={true}
+          deletingSpeed={0}
+          loop={false}
+        />
+
+      </p>
+      <StyledWrapper
+        style={{
+          '--width': '400px',
+          '--height': '200px',
+          '--quantity': reviews.length
+        }}
+      >
+        <div className="slider">
+          <div className="list">
+            {reviews.map((review, index) => (
+              <div
+                key={review.id}
+                className="item"
+                style={{ '--position': index + 1 }}
+              >
+                <Review review={review} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </StyledWrapper>
+      </StyledWrapper>
     </div>
   );
 }

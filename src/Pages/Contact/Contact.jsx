@@ -1,6 +1,7 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { motion, useScroll } from "framer-motion"
+import TextType from '../../Components/TextType/TextType';
 
 const Contact = () => {
     const { scrollYProgress } = useScroll();
@@ -56,7 +57,18 @@ const Contact = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
                 <title>{`ThreadFlow | Contact Us`}</title>
-                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>LEAVE A MESSAGE FOR US</p>
+                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+                    <TextType
+                    text={"LEAVE A MESSAGE FOR US"}
+                    typingSpeed={100}
+                    pauseDuration={1500}
+                    showCursor={false}
+                    startOnVisible={true}
+                    deletingSpeed={0}
+                    loop={false}
+                />
+                    
+                </p>
                 <form onSubmit={handleSendMessage} className=' bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto '>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Your Name</label>

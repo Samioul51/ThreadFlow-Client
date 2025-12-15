@@ -5,11 +5,22 @@ import brand2 from '../../assets/brand2.png';
 import brand3 from '../../assets/brand3.png';
 import brand4 from '../../assets/brand4.png';
 import brand5 from '../../assets/brand5.png';
+import TextType from '../TextType/TextType';
 
 const Partners = () => {
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'>
-            <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Our Partners</p>
+            <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+                <TextType
+                text={"Our Partners"}
+                    typingSpeed={75}
+                    pauseDuration={1500}
+                    showCursor={false}
+                    startOnVisible={true}
+                    deletingSpeed={0}
+                    loop={false}
+                />
+            </p>
             <Marquee 
                 pauseOnHover={true}
                 pauseOnClick={true}

@@ -85,3 +85,7 @@ dialog input,.dark dialog input,dialog textarea,.dark dialog textarea,dialog sel
 .foot p,.dark .foot p{
   color:white;
 }
+
+*{
+  cursor:none;
+}
