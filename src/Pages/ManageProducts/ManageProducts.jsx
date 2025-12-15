@@ -17,7 +17,7 @@ const ManageProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch("http://localhost:3000/products");
+                const response = await fetch("https://thread-flow-server.vercel.app/products");
                 const data = await response.json();
                 const products = data.data.filter(product => product.email === user.email);
                 setMyProducts(products);
@@ -54,7 +54,7 @@ const ManageProducts = () => {
     const handleProductDelete = async () => {
         if (!selectedProduct)
             return;
-        const response = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
+        const response = await fetch(`https://thread-flow-server.vercel.app/products/${selectedProduct._id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${userToken}`
@@ -197,7 +197,7 @@ const ManageProducts = () => {
         };
 
         // console.log(updatedProduct);
-        const res = await fetch(`http://localhost:3000/products/${selectedProduct._id}`, {
+        const res = await fetch(`https://thread-flow-server.vercel.app/products/${selectedProduct._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -319,7 +319,7 @@ const ManageProducts = () => {
                     <p className="py-4">Are you sure you want to delete product?</p>
                     <div className="modal-action">
                         <form method="dialog">
-                            <button onClick={handleProductDelete} className="btn">Yes</button>
+                            <button onClick={handleProductDelete} className="btn mr-2">Yes</button>
                             <button onClick={handleCloseModal} className="btn">No</button>
                         </form>
                     </div>

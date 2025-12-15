@@ -16,7 +16,7 @@ const AdminAllOrders = () => {
             return;
         const fetchUsers=async()=>{
             try{
-                const res=await fetch("http://localhost:3000/orders",{
+                const res=await fetch("https://thread-flow-server.vercel.app/orders",{
                     headers:{
                         Authorization: `Bearer ${userToken}`
                     }

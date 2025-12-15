@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 
 const ProductCard = ({ product }) => {
     const { _id, images, productName, category, price, availableQuantity } = product;
-    console.log(_id);
+    // console.log(_id);
     return (
         <motion.div
             whileHover={{ scale: 1.05 }}

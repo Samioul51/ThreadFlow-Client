@@ -62,7 +62,7 @@ const ProductDetails = () => {
         }
         else {
             const order = { ...newOrder, paymentStatus: "pending" };
-            const orderResponse = await fetch("http://localhost:3000/orders", {
+            const orderResponse = await fetch("https://thread-flow-server.vercel.app/orders", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -76,7 +76,7 @@ const ProductDetails = () => {
 
             const orderData = await orderResponse.json();
 
-            const stockResponse = await fetch(`http://localhost:3000/products/${product._id}/stock`, {
+            const stockResponse = await fetch(`https://thread-flow-server.vercel.app/products/${product._id}/stock`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

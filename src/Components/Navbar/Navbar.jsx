@@ -119,7 +119,7 @@ const Navbar = () => {
                 <div className={`absolute top-[100px] left-0 w-full bg-black flex flex-col items-center py-[24px] lg:hidden gap-[24px] z-50 transform transition-all duration-300 ease-in-out
                         ${isOpen ? "translate-y-0 opacity-100 max-h-[500px]" : "-translate-y-10 opacity-0 max-h-0 overflow-hidden"}`}>
                     {
-                        navOptions.slice(0, 4).map(option => (
+                        navOptions.slice(0, 2).map(option => (
                             <NavLink key={option.name} to={option.path} className='text-[#ffffff] font-medium'>{option.name}</NavLink>
                         ))
                     }
@@ -133,7 +133,7 @@ const Navbar = () => {
                         ) : (
                             <>
                                 {
-                                    navOptions.slice(4, 5).map(option => (
+                                    navOptions.slice(2, 5).map(option => (
                                         <NavLink key={option.name} to={option.path} className='text-[#ffffff] font-medium'>{option.name}</NavLink>
                                     ))}
                                 <button className='text-black bg-white rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer' onClick={() => navigate("/register")}>Register</button>
@@ -175,7 +175,7 @@ const Navbar = () => {
                     <p className="py-4 text-black">Are you sure you want to logout?</p>
                     <div className="modal-action">
                         <form method="dialog">
-                            <button onClick={handleLogout} className="btn text-black">Yes</button>
+                            <button onClick={handleLogout} className="btn text-black mr-2">Yes</button>
                             <button onClick={handleCloseModal} className="btn text-black">No</button>
                         </form>
                     </div>

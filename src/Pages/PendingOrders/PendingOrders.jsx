@@ -15,7 +15,7 @@ const PendingOrders = () => {
             return;
         const fetchUsers = async () => {
             try {
-                const res = await fetch("http://localhost:3000/orders", {
+                const res = await fetch("https://thread-flow-server.vercel.app/orders", {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -70,7 +70,7 @@ const PendingOrders = () => {
 
         // console.log(selectedOrder);
 
-        const res = await fetch(`http://localhost:3000/orders/${selectedOrder._id}`, {
+        const res = await fetch(`https://thread-flow-server.vercel.app/orders/${selectedOrder._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

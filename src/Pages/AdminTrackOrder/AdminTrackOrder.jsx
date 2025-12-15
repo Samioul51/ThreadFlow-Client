@@ -4,7 +4,7 @@ import { motion, useScroll } from "framer-motion"
 
 const AdminTrackOrder = () => {
     const order = useLoaderData().data;
-    console.log(order);
+    // console.log(order);
     const { scrollYProgress } = useScroll();
     const steps = [
         { id: 1, title: 'Order Confirmed', statusKey: 'orderConfirmed' },

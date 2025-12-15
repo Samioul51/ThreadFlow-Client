@@ -10,7 +10,7 @@ const OurProducts = () => {
     useEffect(() => {
         const fetchHomeProducts = async () => {
             try {
-                const response = await fetch("http://localhost:3000/products/home");
+                const response = await fetch("https://thread-flow-server.vercel.app/products/home");
                 const data = await response.json();
                 setHomeProducts(data.data);
             } catch (error) {

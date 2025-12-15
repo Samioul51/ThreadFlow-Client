@@ -17,7 +17,7 @@ const ManageUsers = () => {
             return;
         const fetchUsers = async () => {
             try {
-                const res = await fetch("http://localhost:3000/users", {
+                const res = await fetch("https://thread-flow-server.vercel.app/users", {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -91,7 +91,7 @@ const ManageUsers = () => {
             feedback: feedback
         };
 
-        const res = await fetch(`http://localhost:3000/users/${selectedUser._id}`, {
+        const res = await fetch(`https://thread-flow-server.vercel.app/users/${selectedUser._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

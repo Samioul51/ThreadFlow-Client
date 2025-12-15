@@ -23,7 +23,7 @@ const Contact = () => {
             sent: new Date()
         };
 
-        const res = await fetch("http://localhost:3000/contact", {
+        const res = await fetch("https://thread-flow-server.vercel.app/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

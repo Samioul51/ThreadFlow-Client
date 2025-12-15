@@ -28,7 +28,7 @@ const Products = () => {
         if (searchTitle)
             params.append("search", searchTitle);
 
-        fetch(`http://localhost:3000/products?${params}`)
+        fetch(`https://thread-flow-server.vercel.app/products?${params}`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.data);

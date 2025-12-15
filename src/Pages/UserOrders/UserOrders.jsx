@@ -14,7 +14,7 @@ const UserOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch("http://localhost:3000/orders", {
+                const response = await fetch("https://thread-flow-server.vercel.app/orders", {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -64,7 +64,7 @@ const UserOrders = () => {
     const handleDelete = async () => {
         if (!id)
             return;
-        const response = await fetch(`http://localhost:3000/orders/${id}`, {
+        const response = await fetch(`https://thread-flow-server.vercel.app/orders/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${userToken}`

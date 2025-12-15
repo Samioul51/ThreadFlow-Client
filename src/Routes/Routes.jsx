@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute>
           <ProductDetails></ProductDetails>
         </PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/products/${params.id}`)
+        loader: ({ params }) => fetch(`https://thread-flow-server.vercel.app/products/${params.id}`)
       },
       {
 
@@ -122,7 +122,7 @@ const router = createBrowserRouter([
 
           const token = await user.getIdToken();
 
-          const res = await fetch(`http://localhost:3000/orders/${params.id}`, {
+          const res = await fetch(`https://thread-flow-server.vercel.app/orders/${params.id}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -190,7 +190,7 @@ const router = createBrowserRouter([
 
           const token = await user.getIdToken();
 
-          const res = await fetch(`http://localhost:3000/orders/${params.id}`, {
+          const res = await fetch(`https://thread-flow-server.vercel.app/orders/${params.id}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }

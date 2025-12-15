@@ -15,7 +15,7 @@ const AddProduct = () => {
             return
 
         user.getIdToken().then(token => {
-            fetch(`http://localhost:3000/users/${user.email}`, {
+            fetch(`https://thread-flow-server.vercel.app/users/${user.email}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -86,7 +86,7 @@ const AddProduct = () => {
 
         const token = await user.getIdToken();
 
-        const res = await fetch("http://localhost:3000/products", {
+        const res = await fetch("https://thread-flow-server.vercel.app/products", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const AddProduct = () => {
         else
             toast.error("Failed to add product!");
 
-        console.log(newProduct);
+        // console.log(newProduct);
     }
 
     return (
