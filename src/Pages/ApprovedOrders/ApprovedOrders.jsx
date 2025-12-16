@@ -9,13 +9,15 @@ const ApprovedOrders = () => {
     const [orders, setOrders] = useState([]);
 
     const { scrollYProgress } = useScroll();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!user)
             return;
-        const fetchUsers = async () => {
+        const fetchOrders = async () => {
+            setLoading(true);
             try {
-                const res = await fetch("https://thread-flow-server.vercel.app/orders", {
+                const res = await fetch("https://thread-flow-server51.vercel.app/orders", {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -27,9 +29,11 @@ const ApprovedOrders = () => {
                     toast.error(res.message);
             } catch (error) {
                 toast.error("Failed to fetch users!");
+            } finally {
+                setLoading(false);
             }
         };
-        fetchUsers();
+        fetchOrders();
     }, [user, userToken]);
 
     const myApprovedOrders = orders.filter(order => order.sellerEmail === user.email && order.deliveryStatus !== "pending" && order.deliveryStatus !== "rejected");
@@ -83,7 +87,7 @@ const ApprovedOrders = () => {
         if (statusValue !== "shipped")
             body.location = location;
 
-        const res = await fetch(`https://thread-flow-server.vercel.app/orders/${selectedOrder._id}`, {
+        const res = await fetch(`https://thread-flow-server51.vercel.app/orders/${selectedOrder._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -155,92 +159,104 @@ const ApprovedOrders = () => {
                 <title>{`ThreadFlow | Manager - Approved Orders`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>APPROVED ORDERS</p>
                 {
-                    myApprovedOrders.length > 0 ?
-                        <div className="w-full overflow-x-auto">
-                            <table className="table">
-                                {/* head */}
-                                <thead>
-                                    <tr>
-                                        <th className='text-black font-bold font-playfair'>ORDER ID</th>
-                                        <th className='text-black font-bold font-playfair'>USER</th>
-                                        <th className='text-black font-bold font-playfair'>PRODUCT NAME</th>
-                                        <th className='text-black font-bold font-playfair'>QUANTITY</th>
-                                        <th className='text-black font-bold font-playfair'>APPROVED DATE</th>
-                                        <th className='text-black font-bold font-playfair'>COMPLETED STEP</th>
-                                        <th className='text-black font-bold font-playfair'>ACTIONS</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {
-                                        myApprovedOrders.map(order => (
-                                            <tr key={order._id}>
-                                                <td>
-                                                    {order._id}
-                                                </td>
-                                                <td>
-                                                    {order.firstName.toUpperCase()} {order.lastName.toUpperCase()}
-                                                </td>
-                                                <td>
-                                                    {order.productName.toUpperCase()}
-                                                </td>
-                                                <td>
-                                                    {order.quantity}
-                                                </td>
-                                                <td>
-                                                    {order?.productionStatus?.["orderConfirmed"].date.split("T")[0]}
-                                                </td>
-                                                <td>
-                                                    {
-                                                        order?.deliveryStatus === "orderConfirmed" && <span>ORDER CONFIRMED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "cuttingCompleted" && <span>CUTTING COMPLETED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "sewingStarted" && <span>SEWING STARTED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "finishing" && <span>FINISHING</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "qcChecked" && <span>QC CHECKED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "packed" && <span>PACKED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "shipped" && <span>SHIPPED</span>
-                                                    }
-
-                                                    {
-                                                        order?.deliveryStatus === "rejected" && <span className='text-red-600'>REJECTED</span>
-                                                    }
-                                                </td>
-                                                <td className='flex flex-col items-center gap-1'>
-                                                    {
-                                                        order.deliveryStatus !== "shipped" &&
-                                                        <button
-                                                            onClick={() => handleOpenUpdateModal(order)}
-                                                            className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
-                                                            UPDATE
-                                                        </button>
-                                                    }
-
-                                                    <button
-                                                        onClick={() => handleOpenViewModal(order)} className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                    loading
+                        ?
+                        (
+                            <div className="flex justify-center items-center my-10">
+                                <span className="loading loading-spinner text-primary"></span>
+                            </div>
+                        )
                         :
-                        <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
-                            <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO APPROVED ORDERS FOUND!</p>
-                        </div>
+                        (
+                            myApprovedOrders.length > 0 ?
+                                <div className="w-full overflow-x-auto">
+                                    <table className="table">
+                                        {/* head */}
+                                        <thead>
+                                            <tr>
+                                                <th className='text-black font-bold font-playfair'>ORDER ID</th>
+                                                <th className='text-black font-bold font-playfair'>USER</th>
+                                                <th className='text-black font-bold font-playfair'>PRODUCT NAME</th>
+                                                <th className='text-black font-bold font-playfair'>QUANTITY</th>
+                                                <th className='text-black font-bold font-playfair'>APPROVED DATE</th>
+                                                <th className='text-black font-bold font-playfair'>COMPLETED STEP</th>
+                                                <th className='text-black font-bold font-playfair'>ACTIONS</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {
+                                                myApprovedOrders.map(order => (
+                                                    <tr key={order._id}>
+                                                        <td>
+                                                            {order._id}
+                                                        </td>
+                                                        <td>
+                                                            {order.firstName.toUpperCase()} {order.lastName.toUpperCase()}
+                                                        </td>
+                                                        <td>
+                                                            {order.productName.toUpperCase()}
+                                                        </td>
+                                                        <td>
+                                                            {order.quantity}
+                                                        </td>
+                                                        <td>
+                                                            {order?.productionStatus?.["orderConfirmed"].date.split("T")[0]}
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                order?.deliveryStatus === "orderConfirmed" && <span>ORDER CONFIRMED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "cuttingCompleted" && <span>CUTTING COMPLETED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "sewingStarted" && <span>SEWING STARTED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "finishing" && <span>FINISHING</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "qcChecked" && <span>QC CHECKED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "packed" && <span>PACKED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "shipped" && <span>SHIPPED</span>
+                                                            }
+
+                                                            {
+                                                                order?.deliveryStatus === "rejected" && <span className='text-red-600'>REJECTED</span>
+                                                            }
+                                                        </td>
+                                                        <td className='flex flex-col items-center gap-1'>
+                                                            {
+                                                                order.deliveryStatus !== "shipped" &&
+                                                                <button
+                                                                    onClick={() => handleOpenUpdateModal(order)}
+                                                                    className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                                    UPDATE
+                                                                </button>
+                                                            }
+
+                                                            <button
+                                                                onClick={() => handleOpenViewModal(order)} className='w-full bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>VIEW</button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                :
+                                <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
+                                    <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO APPROVED ORDERS FOUND!</p>
+                                </div>
+                        )
                 }
+
+
                 {/* Update Modal */}
                 <dialog id="update_order_modal" className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box max-w-xl">

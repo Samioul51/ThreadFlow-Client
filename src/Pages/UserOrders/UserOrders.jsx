@@ -10,11 +10,13 @@ const UserOrders = () => {
     const [myOrders, setMyOrders] = useState([]);
     const navigate = useNavigate();
     const { scrollYProgress } = useScroll();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchOrders = async () => {
+            setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server.vercel.app/orders", {
+                const response = await fetch("https://thread-flow-server51.vercel.app/orders", {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -24,6 +26,8 @@ const UserOrders = () => {
                 setMyOrders(orders);
             } catch (error) {
                 toast.error("Failed to load orders!");
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -64,7 +68,7 @@ const UserOrders = () => {
     const handleDelete = async () => {
         if (!id)
             return;
-        const response = await fetch(`https://thread-flow-server.vercel.app/orders/${id}`, {
+        const response = await fetch(`https://thread-flow-server51.vercel.app/orders/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${userToken}`
@@ -101,89 +105,114 @@ const UserOrders = () => {
             <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | My Orders`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS ANALYSIS</p>
-                <StatusPieChart data={chartData}></StatusPieChart>
+                {
+                    loading
+                        ?
+                        (
+                            <div className="flex justify-center items-center my-10">
+                                <span className="loading loading-spinner text-primary"></span>
+                            </div>
+                        )
+                        :
+                        (
+                            <StatusPieChart data={chartData}></StatusPieChart>
+                        )
+                }
                 <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS</p>
                 {
-                    myOrders.length > 0 ?
-                        <div className="w-full overflow-x-auto">
-                            <table class="table">
-                                {/* head */}
-                                <thead>
-                                    <tr>
-                                        <th className='text-black font-bold font-playfair'>ORDER ID</th>
-                                        <th className='text-black font-bold font-playfair'>PRODUCT</th>
-                                        <th className='text-black font-bold font-playfair'>QUANTITY</th>
-                                        <th className='text-black font-bold font-playfair'>COMPLETED STEP</th>
-                                        <th className='text-black font-bold font-playfair'>PAYMENT</th>
-                                        <th className='text-black font-bold font-playfair'>ACTIONS</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {
-                                        myOrders.map(order => (
-                                            <tr key={order._id}>
-                                                <td>
-                                                    {order._id}
-                                                </td>
-                                                <td>
-                                                    {order.productName.toUpperCase()}
-                                                </td>
-                                                <td>
-                                                    {order.quantity}
-                                                </td>
-                                                <td>
-                                                    {
-                                                        order?.deliveryStatus === "pending" && <span>PENDING</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "orderConfirmed" && <span>ORDER CONFIRMED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "cuttingCompleted" && <span>CUTTING COMPLETED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "sewingStarted" && <span>SEWING STARTED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "finishing" && <span>FINISHING</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "qcChecked" && <span>QC CHECKED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "packed" && <span>PACKED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "shipped" && <span>SHIPPED</span>
-                                                    }
-                                                    {
-                                                        order?.deliveryStatus === "rejected" && <span className='text-red-600'>REJECTED</span>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    {order.paymentStatus.toUpperCase()}
-                                                </td>
-                                                <td className='flex flex-col items-center gap-1'>
-                                                    <button onClick={() => navigate(`/dashboard/track-order/${order._id}`)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
-                                                        VIEW
-                                                    </button>
-                                                    {
-                                                        (order.deliveryStatus === "pending" && order.paymentStatus === "pending") && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
-                                                    }
-
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                    loading
+                        ?
+                        (
+                            <div className="flex justify-center items-center my-10">
+                                <span className="loading loading-spinner text-primary"></span>
+                            </div>
+                        )
                         :
-                        <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
-                            <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO ORDERS FOUND!</p>
-                        </div>
+                        (
+
+                            myOrders.length > 0 ?
+                                <div className="w-full overflow-x-auto">
+                                    <table class="table">
+                                        {/* head */}
+                                        <thead>
+                                            <tr>
+                                                <th className='text-black font-bold font-playfair'>ORDER ID</th>
+                                                <th className='text-black font-bold font-playfair'>PRODUCT</th>
+                                                <th className='text-black font-bold font-playfair'>QUANTITY</th>
+                                                <th className='text-black font-bold font-playfair'>COMPLETED STEP</th>
+                                                <th className='text-black font-bold font-playfair'>PAYMENT</th>
+                                                <th className='text-black font-bold font-playfair'>ACTIONS</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {
+                                                myOrders.map(order => (
+                                                    <tr key={order._id}>
+                                                        <td>
+                                                            {order._id}
+                                                        </td>
+                                                        <td>
+                                                            {order.productName.toUpperCase()}
+                                                        </td>
+                                                        <td>
+                                                            {order.quantity}
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                order?.deliveryStatus === "pending" && <span>PENDING</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "orderConfirmed" && <span>ORDER CONFIRMED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "cuttingCompleted" && <span>CUTTING COMPLETED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "sewingStarted" && <span>SEWING STARTED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "finishing" && <span>FINISHING</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "qcChecked" && <span>QC CHECKED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "packed" && <span>PACKED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "shipped" && <span>SHIPPED</span>
+                                                            }
+                                                            {
+                                                                order?.deliveryStatus === "rejected" && <span className='text-red-600'>REJECTED</span>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {order.paymentStatus.toUpperCase()}
+                                                        </td>
+                                                        <td className='flex flex-col items-center gap-1'>
+                                                            <button onClick={() => navigate(`/dashboard/track-order/${order._id}`)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                                VIEW
+                                                            </button>
+                                                            {
+                                                                (order.deliveryStatus === "pending" && order.paymentStatus === "pending") && <button onClick={() => handleOpenModal(order._id)} className="w-full btn btn-error">CANCEL</button>
+                                                            }
+
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                :
+                                <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
+                                    <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO ORDERS FOUND!</p>
+                                </div>
+
+                        )
                 }
+
 
                 {/* Modal for deletion */}
 

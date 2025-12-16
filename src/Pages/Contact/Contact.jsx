@@ -23,7 +23,7 @@ const Contact = () => {
             sent: new Date()
         };
 
-        const res = await fetch("https://thread-flow-server.vercel.app/contact", {
+        const res = await fetch("https://thread-flow-server51.vercel.app/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -57,7 +57,7 @@ const Contact = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
                 <title>{`ThreadFlow | Contact Us`}</title>
-                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+                <div className='font-playfair text-black text-5xl font-bold text-center mb-10'>
                     <TextType
                     text={"LEAVE A MESSAGE FOR US"}
                     typingSpeed={100}
@@ -68,7 +68,7 @@ const Contact = () => {
                     loop={false}
                 />
                     
-                </p>
+                </div>
                 <form onSubmit={handleSendMessage} className=' bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto '>
                     <div className='flex flex-col mb-[24px]'>
                         <label className="label mb-[8px] font-medium text-black">Your Name</label>

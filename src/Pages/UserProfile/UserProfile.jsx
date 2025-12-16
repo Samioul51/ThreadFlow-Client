@@ -12,11 +12,11 @@ const UserProfile = () => {
     const [totalProducts, setTotalProducts] = useState([])
 
     useEffect(() => {
-        fetch("https://thread-flow-server.vercel.app/orders")
+        fetch("https://thread-flow-server51.vercel.app/orders")
             .then(res => res.json())
             .then(data => setAllOrders(data.data || []));
 
-        fetch("https://thread-flow-server.vercel.app/products")
+        fetch("https://thread-flow-server51.vercel.app/products")
             .then(res => res.json())
             .then(data => setTotalProducts(data.data || []));
     }, []);

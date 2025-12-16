@@ -10,7 +10,7 @@ const OurProducts = () => {
     useEffect(() => {
         const fetchHomeProducts = async () => {
             try {
-                const response = await fetch("https://thread-flow-server.vercel.app/products/home");
+                const response = await fetch("https://thread-flow-server51.vercel.app/products/home");
                 const data = await response.json();
                 setHomeProducts(data.data);
             } catch (error) {
@@ -22,7 +22,7 @@ const OurProducts = () => {
 
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'>
-            <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+            <div className='font-playfair text-black text-5xl font-bold text-center mb-10'>
                 <TextType
                     text={"Our Products"}
                     typingSpeed={75}
@@ -32,7 +32,7 @@ const OurProducts = () => {
                     deletingSpeed={0}
                     loop={false}
                 />
-            </p>
+            </div>
             <AnimatedContent
                 distance={100}
                 direction="vertical"

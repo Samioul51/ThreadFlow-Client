@@ -12,11 +12,12 @@ const Products = () => {
     const [category, setCategory] = useState("All");
     const [searchTitle, setSearchTitle] = useState("");
     const { scrollYProgress } = useScroll();
+    const [loading, setLoading] = useState(true);
     const limit = 9;
 
     useEffect(() => {
         const skip = (page - 1) * limit;
-
+        setLoading(true);
         const params = new URLSearchParams({
             limit: limit.toString(),
             skip: skip.toString()
@@ -28,11 +29,12 @@ const Products = () => {
         if (searchTitle)
             params.append("search", searchTitle);
 
-        fetch(`https://thread-flow-server.vercel.app/products?${params}`)
+        fetch(`https://thread-flow-server51.vercel.app/products?${params}`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.data);
                 setTotal(data.total);
+                setLoading(false);
             });
     }, [page, category, searchTitle]);
 
@@ -68,17 +70,17 @@ const Products = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
                 <title>{`ThreadFlow | All Products`}</title>
-                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+                <div className='font-playfair text-black text-5xl font-bold text-center mb-10'>
                     <TextType
-                    text={"All Products"}
-                    typingSpeed={100}
-                    pauseDuration={1500}
-                    showCursor={false}
-                    startOnVisible={true}
-                    deletingSpeed={0}
-                    loop={false}
-                />
-                </p>
+                        text={"All Products"}
+                        typingSpeed={100}
+                        pauseDuration={1500}
+                        showCursor={false}
+                        startOnVisible={true}
+                        deletingSpeed={0}
+                        loop={false}
+                    />
+                </div>
                 <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
                     <div className="dropdown dropdown-start">
                         <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
@@ -91,21 +93,34 @@ const Products = () => {
                     <input type="text" placeholder="Search by Title" className="input input-primary" onChange={handleSearchChange} />
                 </div>
                 {
-                    products.length > 0 ? (
-                        <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
-                            {
-                                products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
-                            }
-                        </div>
-                    )
+                    loading
+                        ?
+                        (
+                            <div className="flex justify-center items-center my-10">
+                                <span className="loading loading-spinner text-primary"></span>
+                            </div>
+                        )
                         :
                         (
-                            <div className='w-full max-w-[1440px] flex justify-center items-center h-[50vh]'>
-                                <p className='font-playfair text-2xl text-center font-bold text-black'>NO PRODUCT FOUND!</p>
-                            </div>
+
+                            products.length > 0 ? (
+                                <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
+                                    {
+                                        products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
+                                    }
+                                </div>
+                            )
+                                :
+                                (
+                                    <div className='w-full max-w-[1440px] flex justify-center items-center h-[50vh]'>
+                                        <p className='font-playfair text-2xl text-center font-bold text-black'>NO PRODUCT FOUND!</p>
+                                    </div>
+
+                                )
 
                         )
                 }
+
 
                 {/* Pagination */}
                 {

@@ -21,7 +21,7 @@ const Stripe = () => {
         if (!newOrder)
             return;
 
-        fetch("https://thread-flow-server.vercel.app/create-payment-intent", {
+        fetch("https://thread-flow-server51.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

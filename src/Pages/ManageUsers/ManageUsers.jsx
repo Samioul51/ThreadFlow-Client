@@ -11,13 +11,15 @@ const ManageUsers = () => {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const { scrollYProgress } = useScroll();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!user)
             return;
         const fetchUsers = async () => {
+            setLoading(true);
             try {
-                const res = await fetch("https://thread-flow-server.vercel.app/users", {
+                const res = await fetch("https://thread-flow-server51.vercel.app/users", {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -29,6 +31,8 @@ const ManageUsers = () => {
                     toast.error(res.message);
             } catch (error) {
                 toast.error("Failed to fetch users!");
+            } finally {
+                setLoading(false);
             }
         };
         fetchUsers();
@@ -91,7 +95,7 @@ const ManageUsers = () => {
             feedback: feedback
         };
 
-        const res = await fetch(`https://thread-flow-server.vercel.app/users/${selectedUser._id}`, {
+        const res = await fetch(`https://thread-flow-server51.vercel.app/users/${selectedUser._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -129,7 +133,19 @@ const ManageUsers = () => {
             <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Admin - Manage Users`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center'>USERS STATUS ANALYSIS</p>
-                <StatusPieChart data={chartData}></StatusPieChart>
+                {
+                    loading
+                        ?
+                        (
+                            <div className="flex justify-center items-center my-10">
+                                <span className="loading loading-spinner text-primary"></span>
+                            </div>
+                        )
+                        :
+                        (
+                            <StatusPieChart data={chartData}></StatusPieChart>
+                        )
+                }
                 <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
                 <div className='w-full max-w-full p-[16px] box-border flex flex-col  md:flex-row md:justify-between md:items-center items-start md:gap-0 gap-2'>
                     <div className="dropdown dropdown-start">
@@ -151,58 +167,72 @@ const ManageUsers = () => {
                     <input type="text" placeholder="Search" className="input input-primary" onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 {
-                    filteredUsers.length > 0 ?
-                        <div className="w-full overflow-x-auto">
-                            <table className="table">
-                                {/* head */}
-                                <thead>
-                                    <tr>
-                                        <th className='text-black font-bold font-playfair'>USER ID</th>
-                                        <th className='text-black font-bold font-playfair'>NAME</th>
-                                        <th className='text-black font-bold font-playfair'>EMAIL</th>
-                                        <th className='text-black font-bold font-playfair'>ROLE</th>
-                                        <th className='text-black font-bold font-playfair'>ROLE STATUS</th>
-                                        <th className='text-black font-bold font-playfair'>ACTIONS</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {
-                                        filteredUsers?.map((user, index) => (
-                                            <tr key={index}>
-                                                <td>
-                                                    {index + 1}
-                                                </td>
-                                                <td>
-                                                    {user?.name.toUpperCase()}
-                                                </td>
-                                                <td>
-                                                    {user?.email}
-                                                </td>
-                                                <td>
-                                                    {user?.role.toUpperCase()}
-                                                </td>
-                                                <td>
-                                                    {user?.roleStatus === "pending" && <p className='text-blue-500'>{user?.roleStatus.toUpperCase()}</p>}
-                                                    {user?.roleStatus === "suspended" && <p className='text-red-500'>{user?.roleStatus.toUpperCase()}</p>}
-                                                    {user?.roleStatus === "approved" && <p className='text-green-500'>{user?.roleStatus.toUpperCase()}</p>}
-                                                </td>
-                                                <td className='flex flex-col items-center gap-1'>
-                                                    <button onClick={() => handleOpenModal(user)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
-                                                        UPDATE
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                    loading
+                        ?
+                        (
+                            <div className="flex justify-center items-center my-10">
+                                <span className="loading loading-spinner text-primary"></span>
+                            </div>
+                        )
                         :
-                        <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
-                            <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO USERS FOUND!</p>
-                        </div>
+                        (
+
+                            filteredUsers.length > 0 ?
+                                <div className="w-full overflow-x-auto">
+                                    <table className="table">
+                                        {/* head */}
+                                        <thead>
+                                            <tr>
+                                                <th className='text-black font-bold font-playfair'>USER ID</th>
+                                                <th className='text-black font-bold font-playfair'>NAME</th>
+                                                <th className='text-black font-bold font-playfair'>EMAIL</th>
+                                                <th className='text-black font-bold font-playfair'>ROLE</th>
+                                                <th className='text-black font-bold font-playfair'>ROLE STATUS</th>
+                                                <th className='text-black font-bold font-playfair'>ACTIONS</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {
+                                                filteredUsers?.map((user, index) => (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            {index + 1}
+                                                        </td>
+                                                        <td>
+                                                            {user?.name.toUpperCase()}
+                                                        </td>
+                                                        <td>
+                                                            {user?.email}
+                                                        </td>
+                                                        <td>
+                                                            {user?.role.toUpperCase()}
+                                                        </td>
+                                                        <td>
+                                                            {user?.roleStatus === "pending" && <p className='text-blue-500'>{user?.roleStatus.toUpperCase()}</p>}
+                                                            {user?.roleStatus === "suspended" && <p className='text-red-500'>{user?.roleStatus.toUpperCase()}</p>}
+                                                            {user?.roleStatus === "approved" && <p className='text-green-500'>{user?.roleStatus.toUpperCase()}</p>}
+                                                        </td>
+                                                        <td className='flex flex-col items-center gap-1'>
+                                                            <button onClick={() => handleOpenModal(user)} className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer'>
+                                                                UPDATE
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                :
+                                <div className='w-full max-w-[1440px] flex justify-center items-center my-10'>
+                                    <p className='font-playfair text-2xl text-center font-bold text-gray-500'>NO USERS FOUND!</p>
+                                </div>
+
+                        )
+
                 }
+
 
                 {/* Modal for update */}
                 <dialog id="update_user_modal" className="modal modal-bottom sm:modal-middle">

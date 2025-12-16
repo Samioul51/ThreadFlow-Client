@@ -69,7 +69,7 @@ const Login = () => {
             <div className='w-full mx-auto max-w-[1440px] h-screen'>
                 <title>{`ThreadFlow | Login`}</title>
                 <div className='bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
-                    <p className='font-playfair font-bold text-[40px] mb-[8px]'>
+                    <div className='font-playfair font-bold text-[40px] mb-[8px]'>
                         <TextType
                             text={"Welcome Back"}
                             typingSpeed={100}
@@ -78,7 +78,7 @@ const Login = () => {
                             startOnVisible={true}
                             deletingSpeed={0}
                             loop={false}
-                        /></p>
+                        /></div>
                     <form onSubmit={handleLogin}>
                         <div className='flex flex-col mb-[24px]'>
                             <label className="label mb-[8px] font-medium text-black">Email Address</label>

@@ -5,7 +5,7 @@ import AnimatedContent from '../AnimatedContent/AnimatedContent';
 const Stats = () => {
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'>
-            <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>
+            <div className='font-playfair text-black text-5xl font-bold text-center mb-10'>
                 <TextType
                     text={"Statistics"}
                     typingSpeed={75}
@@ -15,7 +15,7 @@ const Stats = () => {
                     deletingSpeed={0}
                     loop={false}
                 />
-            </p>
+            </div>
             <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                 <AnimatedContent
                     distance={100}
