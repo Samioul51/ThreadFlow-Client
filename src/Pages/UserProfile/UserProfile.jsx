@@ -40,7 +40,7 @@ const UserProfile = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 mx-5 mt-5 flex flex-col items-center bg-white-bg font-inter'>
+            <div className='py-5 px-3 mx-5 mt-5 flex flex-col items-center bg-white-bg font-inter'>
                 <title>{`ThreadFlow | My Profile`}</title>
                 <img src={userData?.role === "admin" ? userData?.photoURL : user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10 border border-black' />
                 <p className='font-playfair font-bold text-xl lg:text-[40px] text-black text-center mb-10'>{userData?.name?.toUpperCase()}</p>
