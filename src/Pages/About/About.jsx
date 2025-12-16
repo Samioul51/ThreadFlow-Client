@@ -22,7 +22,7 @@ const About = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto px-4 font-inter'>
                 <title>{`ThreadFlow | About Us`}</title>
-                <div className='bg-[url(../../src/assets/about.jpg)] bg-cover bg-center bg-no-repeat w-full h-[400px] flex flex-col justify-center mb-10'>
+                <div className='bg-[url("/about.jpg")] bg-cover bg-center bg-no-repeat w-full h-[400px] flex flex-col justify-center mb-10'>
                     <p className='about-head font-playfair font-bold text-[40px] mb-[5px] text-white text-center'>
                         <Typewriter
                             onInit={(typewriter) => {
