@@ -54,14 +54,14 @@ const AdminTrackOrder = () => {
                     zIndex: 9999
                 }}
             />
-        <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white-bg font-inter'>
+        <div className='py-5 px-3 mx-5 mt-5 flex flex-col items-center bg-white-bg font-inter'>
             <title>{`ThreadFlow | Admin - Track Order`}</title>
             <div className='w-full bg-fafafa-bg shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
                 <div className='w-full lg:max-w-[50%] h-auto flex-col px-5 py-5 box-border'>
                     {/* Product Name */}
-                    <p className='text-5xl font-bold text-black font-playfair mb-5'>{order?.productName.toUpperCase()}</p>
+                    <p className='text-2xl lg:text-[40px] font-bold text-black font-playfair mb-5'>{order?.productName.toUpperCase()}</p>
                     {/* Tracking ID */}
-                    <div className='w-full p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>• TRACKING ID - {order?._id} </div>
+                    <div className='w-full max-w-full text-[8px] lg:text-[16px] p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>• TRACKING ID - {order?._id} </div>
                     {/* Total Price */}
                     <p className='text-[#666666] text-justify mb-5'>TOTAL PRICE: ৳ {order?.totalPrice}</p>
 
@@ -70,26 +70,26 @@ const AdminTrackOrder = () => {
                     {/* Customer Details Section */}
                     <div className='mb-5'>
                         <p className='text-xl font-bold text-black font-playfair mb-3'>CUSTOMER DETAILS</p>
-                        <div className='bg-fafafa-bg border border-[#e0e0e0] p-4 space-y-3'>
-                            <div className='flex flex-col gap-1'>
-                                <p className='text-black font-bold text-sm'>FULL NAME</p>
+                        <div className='w-full max-w-full bg-fafafa-bg border border-[#e0e0e0] p-2 space-y-3'>
+                            <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                <p className='text-black font-bold'>FULL NAME</p>
                                 <p className='text-[#666666] font-medium'>{order?.firstName} {order?.lastName}</p>
                             </div>
-                            <div className='flex flex-col gap-1'>
-                                <p className='text-black font-bold text-sm'>EMAIL ADDRESS</p>
+                            <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                <p className='text-black font-bold'>EMAIL ADDRESS</p>
                                 <p className='text-[#666666] font-medium'>{order?.email}</p>
                             </div>
-                            <div className='flex flex-col gap-1'>
-                                <p className='text-black font-bold text-sm'>PHONE NUMBER</p>
+                            <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                <p className='text-black font-bold'>PHONE NUMBER</p>
                                 <p className='text-[#666666] font-medium'>{order?.phone}</p>
                             </div>
-                            <div className='flex flex-col gap-1'>
-                                <p className='text-black font-bold text-sm'>DELIVERY ADDRESS</p>
+                            <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                <p className='text-black font-bold'>DELIVERY ADDRESS</p>
                                 <p className='text-[#666666] font-medium'>{order?.address}</p>
                             </div>
                             {order?.additionalNotes && (
-                                <div className='flex flex-col gap-1'>
-                                    <p className='text-black font-bold text-sm'>ADDITIONAL NOTES</p>
+                                <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                    <p className='text-black font-bold'>ADDITIONAL NOTES</p>
                                     <p className='text-[#666666] font-medium italic'>{order?.additionalNotes}</p>
                                 </div>
                             )}
@@ -101,13 +101,13 @@ const AdminTrackOrder = () => {
                     {/* Manager Info Section */}
                     <div className='mb-5'>
                         <p className='text-xl font-bold text-black font-playfair mb-3'>MANAGER INFORMATION</p>
-                        <div className='bg-fafafa-bg border border-[#e0e0e0] p-4 space-y-3'>
-                            <div className='flex flex-col gap-1'>
-                                <p className='text-black font-bold text-sm'>SELLER EMAIL</p>
+                        <div className='bg-fafafa-bg border border-[#e0e0e0] p-2 space-y-3'>
+                            <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                <p className='text-black font-bold'>SELLER EMAIL</p>
                                 <p className='text-[#666666] font-medium'>{order?.sellerEmail ? order?.sellerEmail: "NOT AVAILABLE"}</p>
                             </div>
-                            <div className='flex flex-col gap-1'>
-                                <p className='text-black font-bold text-sm'>PRODUCT ID</p>
+                            <div className='text-[12px] lg:text-[16px] flex flex-col gap-1'>
+                                <p className='text-black font-bold'>PRODUCT ID</p>
                                 <p className='text-[#666666] font-medium'>{order?.productID}</p>
                             </div>
                         </div>
@@ -116,13 +116,13 @@ const AdminTrackOrder = () => {
                     <hr className='border-[#666666] mb-5' />
 
                     {/* Order Details */}
-                    <div className='flex gap-20 mb-5'>
-                        <div className='flex flex-col gap-2'>
-                            <p className='text-black font-bold text-sm'>QUANTITY</p>
+                    <div className='flex flex-col lg:flex-row gap-5 lg:gap-20 mb-5'>
+                        <div className='text-[12px] lg:text-[16px] flex flex-col gap-2'>
+                            <p className='text-black font-bold'>QUANTITY</p>
                             <p className='text-[#666666] font-medium'>{order?.quantity} Units</p>
                         </div>
-                        <div className='flex flex-col gap-2'>
-                            <p className='text-black font-bold text-sm'>PAYMENT OPTION</p>
+                        <div className='text-[12px] lg:text-[16px] flex flex-col gap-2'>
+                            <p className='text-black font-bold'>PAYMENT OPTION</p>
                             <p className='text-[#666666] font-medium'>{order?.paymentOption}</p>
                         </div>
                     </div>
@@ -130,19 +130,19 @@ const AdminTrackOrder = () => {
                     <hr className='border-[#666666] mb-5' />
 
                     {/* Status Information */}
-                    <div className='flex gap-20 mb-5'>
-                        <div className='flex flex-col gap-2'>
-                            <p className='text-black font-bold text-sm'>PAYMENT STATUS</p>
-                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase text-center ${order?.paymentStatus === 'paid'
+                    <div className='flex flex-col lg:flex-row gap-5 lg:gap-20 mb-5'>
+                        <div className=' flex flex-col gap-2'>
+                            <p className='text-black font-bold text-[12px] lg:text-[16px]'>PAYMENT STATUS</p>
+                            <span className={`text-[12px] lg:text-[16px] inline-block px-2 py-1 rounded-full font-semibold uppercase text-center ${order?.paymentStatus === 'paid'
                                     ? 'bg-[#f0fff4] text-[#38a169] border border-[#38a169]'
                                     : 'bg-[#fff5f0] text-[#dd6b20] border border-[#dd6b20]'
                                 }`}>
                                 {order?.paymentStatus}
                             </span>
                         </div>
-                        <div className='flex flex-col gap-2'>
-                            <p className='text-black font-bold text-sm'>DELIVERY STATUS</p>
-                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase text-center ${order?.deliveryStatus === 'shipped'
+                        <div className='text-[12px] lg:text-[16px] flex flex-col gap-2'>
+                            <p className='text-black font-bold'>DELIVERY STATUS</p>
+                            <span className={`text-[12px] lg:text-[16px] inline-block px-2 py-1 rounded-full font-semibold uppercase text-center ${order?.deliveryStatus === 'shipped'
                                     ? 'bg-[#ebf8ff] text-[#3182ce] border border-[#3182ce]'
                                     : order?.deliveryStatus === 'delivered'
                                         ? 'bg-[#f0fff4] text-[#38a169] border border-[#38a169]'
@@ -157,15 +157,15 @@ const AdminTrackOrder = () => {
 
                     {/* Order Date */}
                     <div className='flex flex-col gap-2'>
-                        <p className='text-black font-bold text-sm'>ORDER DATE</p>
-                        <p className='text-[#666666] font-medium'>{order?.createdAt.split("T")[0]}</p>
+                        <p className='text-[12px] lg:text-[16px] text-black font-bold text-sm'>ORDER DATE</p>
+                        <p className='text-[12px] lg:text-[16px] text-[#666666] font-medium'>{order?.createdAt.split("T")[0]}</p>
                     </div>
                 </div>
                 {
                     order?.deliveryStatus === "rejected" ?
                         <div className='w-full lg:max-w-[50%] h-auto flex flex-col items-center justify-center px-5 py-5 box-border text-center my-auto'>
-                            <p className='text-4xl font-bold text-red-600 mb-4'>Order Rejected</p>
-                            <p className='text-gray-700 text-lg'>
+                            <p className=' text-2xl lg:text-4xl font-bold text-red-600 mb-4'>Order Rejected</p>
+                            <p className='text-gray-700 text-[12px] lg:text-lg'>
                                 Order has been rejected by manager.
                             </p>
                         </div>

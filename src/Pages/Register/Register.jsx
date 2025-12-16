@@ -118,8 +118,8 @@ const Register = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
                 <title>{`ThreadFlow | Register`}</title>
-                <div className='bg-white-bg shadow-2xl p-[64px]  w-full max-w-[720px] mx-auto mt-48'>
-                    <div className='font-playfair font-bold text-[40px] mb-[8px]'>
+                <div className='bg-white-bg shadow-2xl p-[32px]  w-full max-w-[720px] mx-auto mt-48'>
+                    <div className='font-playfair font-bold text-3xl lg:text-[40px] mb-[8px]'>
                         <TextType
                             text={"Create Account"}
                             typingSpeed={100}

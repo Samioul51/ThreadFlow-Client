@@ -40,20 +40,20 @@ const UserProfile = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white-bg font-inter'>
+            <div className='py-5 mx-5 mt-5 flex flex-col items-center bg-white-bg font-inter'>
                 <title>{`ThreadFlow | My Profile`}</title>
                 <img src={userData?.role === "admin" ? userData?.photoURL : user.photoURL} className='w-[150px] h-[150px] rounded-[50%] mb-10 border border-black' />
-                <p className='font-playfair font-bold text-[40px] text-black text-center mb-10'>{userData?.name?.toUpperCase()}</p>
+                <p className='font-playfair font-bold text-xl lg:text-[40px] text-black text-center mb-10'>{userData?.name?.toUpperCase()}</p>
                 <div className="w-full max-w-[600px] self-center divider divider-neutral"></div>
                 <div className='w-full max-w-[600px]'>
-                    <div className='flex justify-between mb-5'>
+                    <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                         <p className='font-inter font-bold text-black'>FULL NAME</p>
                         <p className='font-medium font-inter text-[#666]'>{userData?.name?.toUpperCase()}</p>
                     </div>
                     <div className="divider divider-neutral mb-5"></div>
                 </div>
                 <div className='w-full max-w-[600px]'>
-                    <div className='flex justify-between mb-5'>
+                    <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                         <p className='font-inter font-bold text-black'>EMAIL</p>
                         <p className='font-medium font-inter text-[#666]'>{user.email}</p>
                     </div>
@@ -63,7 +63,7 @@ const UserProfile = () => {
                     userData?.roleStatus === "pending" || userData?.roleStatus === "approved"
                         ?
                         <div className='w-full max-w-[600px]'>
-                            <div className='flex justify-between mb-5'>
+                            <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                                 <p className='font-inter font-bold text-black'>ACCOUNT STATUS</p>
                                 {
                                     userData?.roleStatus === "pending" ?
@@ -77,14 +77,14 @@ const UserProfile = () => {
                         :
                         <div className='w-full max-w-[600px]'>
                             <div>
-                                <div className='flex justify-between mb-5'>
+                                <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                                     <p className='font-inter font-bold text-black'>ACCOUNT STATUS</p>
                                     <p className='font-medium font-inter text-red-500'>SUSPENDED</p>
                                 </div>
                                 <div className="divider divider-neutral mb-5"></div>
                             </div>
                             <div>
-                                <div className='flex justify-between mb-5'>
+                                <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                                     <p className='font-inter font-bold text-black'>SUSPENSION FEEDBACK</p>
                                     <p className='font-medium font-inter text-gray-500'>{userData?.feedback}</p>
                                 </div>
@@ -110,14 +110,14 @@ const UserProfile = () => {
                 <div className="divider divider-neutral mb-5"></div>
             </div> */}
                 <div className='w-full max-w-[600px]'>
-                    <div className='flex justify-between mb-5'>
+                    <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                         <p className='font-inter font-bold text-black'>USER TYPE</p>
                         <p className='font-medium font-inter text-[#666]'>{userData?.role.toUpperCase()}</p>
                     </div>
                     <div className="divider divider-neutral mb-5"></div>
                 </div>
                 <div className='w-full max-w-[600px]'>
-                    <div className='flex justify-between mb-5'>
+                    <div className='text-[12px] lg:text-[16px] flex justify-between mb-5'>
                         <p className='font-inter font-bold text-black'>MEMBER SINCE</p>
                         <p className='font-medium font-inter text-[#666]'>{userData?.createdAt.split("T")[0]}</p>
                     </div>

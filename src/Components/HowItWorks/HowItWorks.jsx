@@ -29,7 +29,7 @@ const HowItWorks = () => {
 
     return (
         <div className='w-full max-w-[1440px] mx-auto h-auto mb-10'>
-            <div className='font-playfair text-black text-5xl font-bold text-center mb-5'>
+            <div className='font-playfair text-black text-3xl lg:text-[40px] font-bold text-center mb-5'>
                 <TextType
                 text={"How It Works"}
                     typingSpeed={75}
@@ -40,7 +40,7 @@ const HowItWorks = () => {
                     loop={false}
                 />
             </div>
-            <p className='font-inter text-[#666666] text-center mb-10'>Simple steps to manage your garment production efficiently</p>
+            <p className='font-inter text-[#666666] text-[12px] lg:text-[16px] text-center mb-10'>Simple steps to manage your garment production efficiently</p>
             
             <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                 {   

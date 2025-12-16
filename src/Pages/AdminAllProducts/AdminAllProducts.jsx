@@ -291,7 +291,7 @@ const AdminAllProducts = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
+            <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Admin - All Products`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ALL PRODUCTS</p>
                 {

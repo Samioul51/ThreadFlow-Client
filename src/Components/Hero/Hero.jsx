@@ -32,13 +32,13 @@ const Hero = () => {
             >
                 <SwiperSlide className="bg-[#1a1a1a] flex flex-col lg:flex-row gap-5 h-full pb-5">
                     <div className="flex flex-col justify-center items-start gap-6 px-6 px-12 lg:px-16 w-full max-w-[459px] lg:max-w-1/2">
-                        <h2 className="font-playfair text-white text-4xl md:text-5xl lg:text-6xl leading-snug text-left">
+                        <h2 className="font-playfair text-white text-2xl md:text-3xl lg:text-6xl leading-snug text-left">
                             Streamline your Garment Production
                         </h2>
-                        <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
+                        <p className="hero-text text-[#d4d4d4] text-[10px] md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
                             Manage orders, track production stages, and ensure timely delivery with our comprehensive production tracker system. Built for efficiency, designed for growth.
                         </p>
-                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/products")}>View Products</button>
+                        <button className='text-black bg-white rounded-[2px] font-medium w-full max-w-[150px] h-[40px] lg:h-[60px] cursor-pointer' onClick={()=>navigate("/products")}>View Products</button>
                     </div>
 
                     <div className="w-full lg:w-1/2 flex justify-center px-6 lg:px-0 lg:items-center">
@@ -52,13 +52,13 @@ const Hero = () => {
 
                 <SwiperSlide className="bg-[#1a1a1a] flex flex-col lg:flex-row gap-5 h-full pb-5">
                     <div className="flex flex-col justify-center items-start gap-6 px-6 px-12 lg:px-16 w-full max-w-[459px] lg:max-w-1/2">
-                        <h2 className="font-playfair text-white text-4xl md:text-5xl lg:text-6xl leading-snug text-left">
+                        <h2 className="font-playfair text-white text-2xl md:text-3xl lg:text-6xl leading-snug text-left">
                             Real-Time Production Tracking
                         </h2>
-                        <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
+                        <p className="hero-text text-[#d4d4d4] text-[10px] md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
                             As a Buyer, monitor every stage of your garment production from cutting to finishing. Get instant updates and ensure quality control at every step.
                         </p>
-                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/dashboard/my-orders")}>Check Now</button>
+                        <button className='text-black bg-white rounded-[2px] font-medium w-full max-w-[150px] h-[40px] lg:h-[60px] cursor-pointer' onClick={()=>navigate("/dashboard/my-orders")}>Check Now</button>
                     </div>
 
                     <div className="w-full lg:w-1/2 flex justify-center px-6 lg:px-0 lg:items-center">
@@ -71,13 +71,13 @@ const Hero = () => {
                 </SwiperSlide>
                 <SwiperSlide className="bg-[#1a1a1a] flex flex-col lg:flex-row gap-5 h-full pb-5">
                     <div className="flex flex-col justify-center items-start gap-6 px-6 px-12 lg:px-16 w-full max-w-[459px] lg:max-w-1/2">
-                        <h2 className="font-playfair text-white text-4xl md:text-5xl lg:text-6xl leading-snug text-left">
+                        <h2 className="font-playfair text-white text-2xl md:text-3xl lg:text-6xl leading-snug text-left">
                             Easy Stock Management
                         </h2>
-                        <p className="hero-text text-[#d4d4d4] text-base md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
+                        <p className="hero-text text-[#d4d4d4] text-[10px] md:text-lg lg:text-xl leading-relaxed max-w-prose text-left">
                             As a Manager, keep track of your raw materials, work-in-progress, and finished goods. Optimize your inventory levels, reduce waste, and improve overall production efficiency.
                         </p>
-                        <button className='text-black bg-white rounded-[2px] font-medium w-[200px] h-[60px] cursor-pointer' onClick={()=>navigate("/dashboard/manage-products")}>Try Now</button>
+                        <button className='text-black bg-white rounded-[2px] font-medium w-full max-w-[150px] h-[40px] lg:h-[60px] cursor-pointer' onClick={()=>navigate("/dashboard/manage-products")}>Try Now</button>
                     </div>
                     <div className="w-full lg:w-1/2 flex justify-center px-6 lg:px-0 lg:items-center">
                         <img

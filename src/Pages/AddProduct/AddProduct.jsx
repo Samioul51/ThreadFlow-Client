@@ -109,7 +109,7 @@ const AddProduct = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
+            <div className='py-5 mx-5 px-3 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Manager - Add Product`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>ADD NEW PRODUCT</p>
                 <form className='w-full max-w-[500px]' onSubmit={handleAddProduct}>

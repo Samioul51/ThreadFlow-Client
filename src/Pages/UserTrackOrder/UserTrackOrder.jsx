@@ -53,18 +53,18 @@ const UserTrackOrder = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 px-5 mx-10 mt-10 flex flex-col items-center bg-white-bg font-inter'>
+            <div className='py-5 px-3 mx-5 mt-5 flex flex-col items-center bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Track Order`}</title>
                 <div className='w-full bg-fafafa-bg shadow-xl flex flex-col items-center lg:items-start gap-5 lg:flex-row mt-16'>
 
                     <div className='w-full lg:max-w-[50%] h-auto flex-col px-5 py-5 box-border'>
 
-                        <p className='text-5xl font-bold text-black font-playfair mb-5'>{order.productName.toUpperCase()}</p>
+                        <p className='text-2xl lg:text-[40px] font-bold text-black font-playfair mb-5'>{order.productName.toUpperCase()}</p>
 
-                        <div className='w-full p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>• TRACKING ID - {order._id} </div>
-                        <p className='text-[#666666] text-justify mb-5'>TOTAL PRICE: ৳ {order.totalPrice}</p>
+                        <div className='w-full max-w-full text-[8px] lg:text-[16px] p-2 border border-solid border-[#38a169] bg-[#f0fff4] text-[#22543d] font-medium mb-5'>&nbsp; • TRACKING ID - &nbsp;{order._id} </div>
+                        <p className='text-[#666666] text-justify text-[8px] lg:text-[16px] mb-5'>TOTAL PRICE: ৳ {order.totalPrice}</p>
                         <hr className='border-[#666666] mb-5' />
-                        <div className='flex gap-20 mb-5'>
+                        <div className='flex flex-col lg:flex-row gap-3 lg:gap-20 mb-5'>
                             <div className='flex flex-col gap-2'>
                                 <p className='text-black font-bold'>QUANTITY</p>
                                 <p className='text-[#666666] font-medium'>{order.quantity} Units</p>
@@ -75,7 +75,7 @@ const UserTrackOrder = () => {
                             </div>
                         </div>
                         <hr className='border-[#666666] mb-5' />
-                        <div className='flex gap-20 mb-5'>
+                        <div className='flex flex-col lg:flex-row gap-3 lg:gap-20 mb-5'>
                             <div className='flex flex-col gap-2'>
                                 <p className='text-black font-bold'>ADDRESS</p>
                                 <p className='text-[#666666] font-medium'>{order.address}</p>

@@ -125,7 +125,7 @@ const PendingOrders = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
+            <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Manager - Pending Orders`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center'>ORDER STATUS ANALYSIS</p>
                 {
@@ -249,7 +249,7 @@ const PendingOrders = () => {
                                 {/* Order Information */}
                                 <div className="bg-base-200 p-4 rounded-lg">
                                     <h4 className="font-semibold text-sm text-base-content/70 mb-2">Order Information</h4>
-                                    <div className="grid grid-cols-2 gap-3">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                                         <div>
                                             <p className="text-xs text-base-content/60">Order ID</p>
                                             <p className="font-medium">{selectedOrder._id}</p>

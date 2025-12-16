@@ -130,7 +130,7 @@ const ManageUsers = () => {
                     zIndex: 9999
                 }}
             />
-            <div className='py-5 mx-10 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
+            <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Admin - Manage Users`}</title>
                 <p className='font-playfair text-black text-3xl font-bold text-center'>USERS STATUS ANALYSIS</p>
                 {
