@@ -14,7 +14,7 @@ const OurProducts = () => {
                 const data = await response.json();
                 setHomeProducts(data.data);
             } catch (error) {
-                toast.error("Failed to load home products!");
+                // toast.error("Failed to load home products!");
             }
         };
         fetchHomeProducts();
