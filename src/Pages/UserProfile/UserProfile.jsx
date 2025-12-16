@@ -8,21 +8,6 @@ const UserProfile = () => {
     const { user, userToken, userData, logout } = use(AuthContext);
     const navigate = useNavigate();
     const { scrollYProgress } = useScroll();
-    const [allOrders, setAllOrders] = useState([])
-    const [totalProducts, setTotalProducts] = useState([])
-
-    useEffect(() => {
-        fetch("https://thread-flow-server51.vercel.app/orders")
-            .then(res => res.json())
-            .then(data => setAllOrders(data.data || []));
-
-        fetch("https://thread-flow-server51.vercel.app/products")
-            .then(res => res.json())
-            .then(data => setTotalProducts(data.data || []));
-    }, []);
-
-    const myOrders = allOrders.filter(order => order.email === user.email);
-    const myProducts = totalProducts.filter(product => product.email === user.email);
     const handleOpenModal = () => document.getElementById("my_modal_5").showModal();
     const handleCloseModal = () => document.getElementById("my_modal_5").close();
 
@@ -138,26 +123,6 @@ const UserProfile = () => {
                     </div>
                     <div className="divider divider-neutral mb-5"></div>
                 </div>
-                {
-                    userData?.role === "buyer" && <div className='w-full max-w-[600px] mb-10'>
-                        <div className='flex justify-between mb-5'>
-                            <p className='font-inter font-bold text-black'>TOTAL ORDERS</p>
-                            <p className='font-medium font-inter text-[#666]'>{myOrders.length}</p>
-                        </div>
-                        <div className="divider divider-neutral mb-5"></div>
-                    </div>
-                }
-                {
-                    userData?.role === "manager" && <div className='w-full max-w-[600px] mb-10'>
-                        <div className='flex justify-between mb-5'>
-                            <p className='font-inter font-bold text-black'>TOTAL PRODUCTS</p>
-                            <p className='font-medium font-inter text-[#666]'>
-                                {myProducts.length}
-                            </p>
-                        </div>
-                        <div className="divider divider-neutral mb-5"></div>
-                    </div>
-                }
 
                 <button className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500' onClick={handleOpenModal}>Logout</button>
                 {/* Modal for logout */}

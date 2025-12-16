@@ -8,7 +8,7 @@ const AddProduct = () => {
     const [images, setImages] = useState([]);
     const imgBB = import.meta.env.VITE_IMG_BB_API_KEY;
     const { scrollYProgress } = useScroll();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -48,7 +48,7 @@ const AddProduct = () => {
         e.preventDefault();
         const form = e.target;
 
-        setLoading(true)
+        setLoading(true);
         try {
 
 
