@@ -57,7 +57,7 @@ const Contact = () => {
             />
             <div className='w-full max-w-[1440px] mx-auto h-auto mb-10 mt-16'>
                 <title>{`ThreadFlow | Contact Us`}</title>
-                <div className='font-playfair text-black text-3xl lg:text-[40px] font-bold text-center mb-10'>
+                <div className='tf_heading font-playfair text-black text-3xl lg:text-[40px] font-bold text-center mb-10'>
                     <TextType
                     text={"Leave a Message For Us"}
                     typingSpeed={100}

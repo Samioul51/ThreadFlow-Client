@@ -40,7 +40,7 @@ const About = () => {
                     <p className='text-[12px] px-2 lg:text-[16px] about-text text-[#666666] text-center'>Revolutionizing garment production management with innovative technology and seamless workflow solutions.</p>
                 </div>
                 <div className='mx-auto'>
-                    <p className='font-playfair font-bold text-xl lg:text-[40px] mb-[5px] text-black text-center'>Empowering Garment Businesses Worldwide</p>
+                    <p className='tf_heading font-playfair font-bold text-xl lg:text-[40px] mb-[5px] text-black text-center'>Empowering Garment Businesses Worldwide</p>
                     <br />
                     <p className='text-[#666666] text-justify'>ThreadFlow was born from a simple vision: to transform the way garment manufacturers manage their production workflow. We understand the complexities of the garment industry, from managing multiple orders to tracking production stages, maintaining inventory, and ensuring timely delivery. Our platform is designed to address these challenges head-on, providing a comprehensive solution that streamlines every aspect of garment production management.</p>
                     <br />

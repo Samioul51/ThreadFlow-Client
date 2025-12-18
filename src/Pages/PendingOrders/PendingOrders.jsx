@@ -89,11 +89,20 @@ const PendingOrders = () => {
         const data = await res.json();
 
         if (data.success) {
-            document.getElementById("action_modal").close();
-            setSelectedOrder(null);
-            setActionType("");
-            window.location.reload();
+            setOrders(prev=>
+                prev.map(o=>o._id===selectedOrder._id
+                    ?
+                    {
+                        ...o,
+                        deliveryStatus:statusKey
+                    }
+                    :
+                    o
+                )
+            );
             toast.success(`Order ${newStatus}!`);
+            setActionType("");
+            document.getElementById("action_modal").close();
         }
         else
             toast.error("Failed to update order!")
@@ -127,7 +136,7 @@ const PendingOrders = () => {
             />
             <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Manager - Pending Orders`}</title>
-                <p className='font-playfair text-black text-3xl font-bold text-center'>ORDER STATUS ANALYSIS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center'>ORDER STATUS ANALYSIS</p>
                 {
                     loading
                         ?
@@ -141,7 +150,7 @@ const PendingOrders = () => {
                             <StatusPieChart data={chartData}></StatusPieChart>
                         )
                 }
-                <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>PENDING ORDERS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center mb-5'>PENDING ORDERS</p>
                 {
                     loading
                         ?

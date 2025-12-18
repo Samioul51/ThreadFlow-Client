@@ -244,7 +244,7 @@ const ManageProducts = () => {
             />
             <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Manager - My Products`}</title>
-                <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY PRODUCTS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center mb-5'>MY PRODUCTS</p>
                 <div className='w-full max-w-full flex-col lg:flex-row p-[16px] gap-2 lg:gap-0 box-border flex justify-between items-start lg:items-center'>
                     <div className="dropdown dropdown-start">
                         <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>

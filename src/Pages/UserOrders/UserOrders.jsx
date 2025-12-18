@@ -104,7 +104,7 @@ const UserOrders = () => {
             />
             <div className='py-5 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | My Orders`}</title>
-                <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS ANALYSIS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS ANALYSIS</p>
                 {
                     loading
                         ?
@@ -118,7 +118,7 @@ const UserOrders = () => {
                             <StatusPieChart data={chartData}></StatusPieChart>
                         )
                 }
-                <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center mb-5'>MY ORDERS</p>
                 {
                     loading
                         ?

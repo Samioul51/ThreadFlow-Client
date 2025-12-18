@@ -97,8 +97,8 @@ const ApprovedOrders = () => {
         });
 
         if (res.ok) {
-            toast.success("Order updated!");
             handleCloseUpdateModal();
+            toast.success("Order updated!");
         }
         else
             toast.error("Update failed!");
@@ -157,7 +157,7 @@ const ApprovedOrders = () => {
             />
             <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Manager - Approved Orders`}</title>
-                <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>APPROVED ORDERS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center mb-5'>APPROVED ORDERS</p>
                 {
                     loading
                         ?

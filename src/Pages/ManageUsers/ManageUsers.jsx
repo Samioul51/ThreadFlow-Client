@@ -105,10 +105,18 @@ const ManageUsers = () => {
         });
 
         if (res.ok) {
-            toast.success("User updated!");
+            const updatedUsers=users.map(u=>u._id===selectedUser._id
+                ?
+                {
+                    ...u,
+                    ...updatedInfo
+                }
+                :
+                u
+            );
+            setUsers(updatedUsers);
             handleCloseModal();
-            setSelectedUser(null);
-            window.location.reload();
+            toast.success("User updated!");
         }
         else
             toast.error("Failed to update!");
@@ -132,7 +140,7 @@ const ManageUsers = () => {
             />
             <div className='py-5 px-3 mx-5 mt-10 flex flex-col items-center min-h-screen bg-white-bg font-inter'>
                 <title>{`ThreadFlow | Admin - Manage Users`}</title>
-                <p className='font-playfair text-black text-3xl font-bold text-center'>USERS STATUS ANALYSIS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center'>USERS STATUS ANALYSIS</p>
                 {
                     loading
                         ?
@@ -146,7 +154,7 @@ const ManageUsers = () => {
                             <StatusPieChart data={chartData}></StatusPieChart>
                         )
                 }
-                <p className='font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
+                <p className='tf_heading font-playfair text-black text-3xl font-bold text-center mb-5'>MANAGE USERS</p>
                 <div className='w-full max-w-full p-[16px] box-border flex flex-col  md:flex-row md:justify-between md:items-center items-start md:gap-0 gap-2'>
                     <div className="dropdown dropdown-start">
                         <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>

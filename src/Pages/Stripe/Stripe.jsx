@@ -59,7 +59,7 @@ const Stripe = () => {
             />
             <div className="max-w-xl mx-auto mt-16">
                 <title>{`ThreadFlow | Stripe Payment`}</title>
-                <p className='font-playfair text-black text-5xl font-bold text-center mb-10'>Stripe Payment</p>
+                <p className='tf_heading font-playfair text-black font-bold text-3xl lg:text-[40px] text-center mb-10'>Stripe Payment</p>
                 {clientSecret && (
                     <Elements stripe={stripePromise} options={{ clientSecret }}>
                         <CheckoutForm newOrder={newOrder} availableQuantity={availableQuantity} navigate={navigate} />
