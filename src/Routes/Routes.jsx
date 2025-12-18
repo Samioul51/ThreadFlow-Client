@@ -28,6 +28,7 @@ import AdminAllProducts from "../Pages/AdminAllProducts/AdminAllProducts";
 import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
 import AdminTrackOrder from "../Pages/AdminTrackOrder/AdminTrackOrder";
 import { getAuth } from "firebase/auth";
+import { authReady } from "../Providers/authReady/authReady";
 
 const router = createBrowserRouter([
   {
@@ -114,8 +115,7 @@ const router = createBrowserRouter([
           <UserTrackOrder></UserTrackOrder>
         </UserRoute>,
         loader: async ({ params }) => {
-          const auth = getAuth();
-          const user = auth.currentUser;
+          const user = await authReady();
 
           if (!user)
             throw new Response("Unauthorized", { status: 401 });
@@ -182,8 +182,7 @@ const router = createBrowserRouter([
           <AdminTrackOrder></AdminTrackOrder>
         </AdminRoute>,
         loader: async ({ params }) => {
-          const auth = getAuth();
-          const user = auth.currentUser;
+          const user = await authReady();
 
           if (!user)
             throw new Response("Unauthorized", { status: 401 });

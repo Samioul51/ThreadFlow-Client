@@ -349,9 +349,7 @@ const PendingOrders = () => {
 
                         <p className="py-4 text-base">
                             Are you sure you want to
-                            <span>
-                                {" "}{actionType}
-                            </span>
+                            {" "}{actionType}
                             {" "}this order?
                         </p>
 
