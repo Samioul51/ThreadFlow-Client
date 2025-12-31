@@ -106,7 +106,48 @@ VITE_IMG_BB_API_KEY=your_imgbb_api_key
 VITE_STRIPE_PUB_KEY=your_stripe_publishable_key
 ```
 
-### 4. Start Development Server
+## 4. Full Dependency List
+
+### 🔹 Dependencies
+
+```json
+"@stripe/react-stripe-js": "^5.4.1",
+"@stripe/stripe-js": "^8.5.3",
+"@tailwindcss/vite": "^4.1.17",
+"firebase": "^12.6.0",
+"gsap": "^3.14.2",
+"motion": "^12.23.25",
+"react": "^19.2.0",
+"react-dom": "^19.2.0",
+"react-fast-marquee": "^1.6.5",
+"react-hot-toast": "^2.6.0",
+"react-icons": "^5.5.0",
+"react-image-gallery": "^1.4.0",
+"react-router": "^7.10.1",
+"recharts": "^3.5.1",
+"styled-components": "^6.1.19",
+"swiper": "^12.0.3",
+"tailwindcss": "^4.1.17",
+"typewriter-effect": "^2.22.0"
+```
+
+### 🔹Dev Dependencies
+
+```json
+"@eslint/js": "^9.39.1",
+"@types/react": "^19.2.5",
+"@types/react-dom": "^19.2.3",
+"@vitejs/plugin-react": "^5.1.1",
+"daisyui": "^5.5.8",
+"eslint": "^9.39.1",
+"eslint-plugin-react-hooks": "^7.0.1",
+"eslint-plugin-react-refresh": "^0.4.24",
+"globals": "^16.5.0",
+"vite": "^7.2.4"
+```
+
+
+### 5. Start Development Server
 
 ```bash
 npm run dev
@@ -114,13 +155,13 @@ npm run dev
 
 The application will open at `http://localhost:5173`
 
-### 5. Build for Production
+### 6. Build for Production
 
 ```bash
 npm run build
 ```
 
-### 6. Preview Production Build
+### 7. Preview Production Build
 
 ```bash
 npm run preview
