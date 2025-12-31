@@ -37,7 +37,7 @@ const Login = () => {
                 name: loggedUser.displayName,
                 email: loggedUser.email,
                 role: "buyer",
-                roleStatus: "pending",
+                roleStatus: "approved",
                 createdAt: new Date()
             });
 

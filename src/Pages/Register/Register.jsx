@@ -27,7 +27,7 @@ const Register = () => {
             name: name,
             email: email,
             role: role,
-            roleStatus: "pending",
+            roleStatus: role==="manager"?"pending":"approved",
             createdAt: new Date()
         }
 
@@ -88,7 +88,7 @@ const Register = () => {
                 name: loggedUser.displayName,
                 email: loggedUser.email,
                 role: "buyer",
-                roleStatus: "pending",
+                roleStatus: "approved",
                 createdAt: new Date()
             });
 
