@@ -57,15 +57,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <PublicRoute>
-          <About></About>
-        </PublicRoute>
+        Component:About
       },
       {
         path: "/contact",
-        element: <PublicRoute>
-          <Contact></Contact>
-        </PublicRoute>
+        Component:Contact
       },
       {
         path: "/products/:id",
