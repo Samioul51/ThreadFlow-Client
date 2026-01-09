@@ -60,9 +60,20 @@ const Navbar = () => {
                     {
                         user ? (
                             <>
-                                <NavLink to="/dashboard" className='text-[#ffffff] font-medium'>Dashboard</NavLink>
-                                <img src={user.photoURL} className="w-[40px] h-[40px] rounded-[50%]" />
-                                <button className='text-black bg-white rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer' onClick={handleOpenModal}>Logout</button>
+
+                                <div className="dropdown dropdown-hover cursor-pointer dropdown-center">
+                                    <div tabIndex={0} role="button">
+                                        <img src={user.photoURL} className="w-[40px] h-[40px] rounded-[50%]" />
+                                    </div>
+                                    <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                        <li className='cursor-pointer'>
+                                            <NavLink to="/dashboard">
+                                                My Dashboard
+                                            </NavLink>
+                                        </li>
+                                        <li className='cursor-pointer' onClick={handleOpenModal}><a>Logout</a></li>
+                                    </ul>
+                                </div>
                             </>
                         ) : (
                             <>
@@ -126,9 +137,19 @@ const Navbar = () => {
                     {
                         user ? (
                             <>
-                                <NavLink to="/dashboard" className='text-[#ffffff] font-medium'>Dashboard</NavLink>
-                                <img src={user.photoURL} className="w-[40px] h-[40px] rounded-[50%]" />
-                                <button className='text-black bg-white rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer' onClick={handleOpenModal}>Logout</button>
+                                <div className="dropdown dropdown-hover dropdown-center cursor-pointer">
+                                    <div tabIndex={0} role="button">
+                                        <img src={user.photoURL} className="w-[40px] h-[40px] rounded-[50%]" />
+                                    </div>
+                                    <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                        <li className='cursor-pointer'>
+                                            <NavLink to="/dashboard">
+                                                My Dashboard
+                                            </NavLink>
+                                        </li>
+                                        <li className='cursor-pointer' onClick={handleOpenModal}><a>Logout</a></li>
+                                    </ul>
+                                </div>
                             </>
                         ) : (
                             <>
