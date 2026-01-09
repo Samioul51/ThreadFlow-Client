@@ -71,7 +71,7 @@ const Navbar = () => {
                                                 My Dashboard
                                             </NavLink>
                                         </li>
-                                        <li className='cursor-pointer' onClick={handleOpenModal}><a>Logout</a></li>
+                                        <li className='cursor-pointer text-red-700' onClick={handleOpenModal}><a>Logout</a></li>
                                     </ul>
                                 </div>
                             </>
@@ -147,7 +147,7 @@ const Navbar = () => {
                                                 My Dashboard
                                             </NavLink>
                                         </li>
-                                        <li className='cursor-pointer' onClick={handleOpenModal}><a>Logout</a></li>
+                                        <li className='cursor-pointer text-red-700' onClick={handleOpenModal}><a>Logout</a></li>
                                     </ul>
                                 </div>
                             </>
