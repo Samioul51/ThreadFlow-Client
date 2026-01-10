@@ -23,6 +23,8 @@ const Login = () => {
             // console.log(user);
             toast.success("Logged In Successfully!");
             navigate(`${location.state ? location.state : "/"}`);
+            setDemoEmail("");
+            setDemoPassword("");
         }).catch((error) => {
             toast.error(error.message);
         });

@@ -12,6 +12,7 @@ const Products = () => {
     const [total, setTotal] = useState(0);
     const [category, setCategory] = useState("All");
     const [searchTitle, setSearchTitle] = useState("");
+    const [sort,setSort]=useState("");
     const { scrollYProgress } = useScroll();
     const [loading, setLoading] = useState(true);
     const limit = 12;
@@ -30,14 +31,17 @@ const Products = () => {
         if (searchTitle)
             params.append("search", searchTitle);
 
-        fetch(`https://thread-flow-server51.vercel.app/products?${params}`)
+        if(sort)
+            params.append("sort",sort);
+
+        fetch(`http://localhost:3000/products?${params}`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.data);
                 setTotal(data.total);
                 setLoading(false);
             });
-    }, [page, category, searchTitle]);
+    }, [page, category, searchTitle,sort]);
 
     const handleCategoryChange = (newCategory) => {
         setCategory(newCategory);
@@ -82,16 +86,36 @@ const Products = () => {
                         loop={false}
                     />
                 </div>
-                <div className='w-full max-w-full p-[16px] box-border flex justify-between items-center'>
-                    <div className="dropdown dropdown-start">
-                        <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
-                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                            {
-                                categories.map(c => <li key={c}><a onClick={() => handleCategoryChange(c)}>{c}</a></li>)
-                            }
-                        </ul>
-                    </div>
+                <div className='w-full max-w-full p-[16px] box-border flex flex-col items-start gap-4'>
                     <input type="text" placeholder="Search by Title" className="input input-primary" onChange={handleSearchChange} />
+                    <div className='flex gap-8 items-center'>
+                        <div className="dropdown dropdown-start">
+                            <div tabIndex={0} role="button" className="btn m-1">{category} <IoIosArrowDropdown /></div>
+                            <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                {
+                                    categories.map(c => <li key={c}><a onClick={() => handleCategoryChange(c)}>{c}</a></li>)
+                                }
+                            </ul>
+                        </div>
+                        <div className="dropdown dropdown-hover">
+                            <div tabIndex={0} className="btn flex items-center gap-2">
+                                <IoIosArrowDropdown /> 
+                                {
+                                    sort? (
+                                        sort==="price_asc"
+                                        ?
+                                        "Price: Low to High"
+                                        :
+                                        "Price: High to Low"
+                                    ):"Sort"
+                                }
+                            </div>
+                            <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box w-52 p-2 shadow">
+                                <li><a onClick={()=>setSort("price_asc")}>Price: Low to High</a></li>
+                                <li><a onClick={()=>setSort("price_desc")}>Price: High to Low</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 {
                     loading
@@ -99,7 +123,7 @@ const Products = () => {
                         (
                             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                                 {
-                                    Array.from({length:12}).map((_,index)=>(
+                                    Array.from({ length: 12 }).map((_, index) => (
                                         <CardSkeleton key={index}></CardSkeleton>
                                     ))
                                 }
