@@ -3,6 +3,7 @@ import ProductCard from '../../Components/ProductCard/ProductCard';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import { motion, useScroll } from "framer-motion"
 import TextType from '../../Components/TextType/TextType';
+import CardSkeleton from '../../Components/CardSkeleton/CardSkeleton';
 
 const Products = () => {
 
@@ -13,7 +14,7 @@ const Products = () => {
     const [searchTitle, setSearchTitle] = useState("");
     const { scrollYProgress } = useScroll();
     const [loading, setLoading] = useState(true);
-    const limit = 9;
+    const limit = 12;
 
     useEffect(() => {
         const skip = (page - 1) * limit;
@@ -96,15 +97,19 @@ const Products = () => {
                     loading
                         ?
                         (
-                            <div className="flex justify-center items-center my-10">
-                                <span className="loading loading-spinner text-primary"></span>
+                            <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
+                                {
+                                    Array.from({length:12}).map((_,index)=>(
+                                        <CardSkeleton key={index}></CardSkeleton>
+                                    ))
+                                }
                             </div>
                         )
                         :
                         (
 
                             products.length > 0 ? (
-                                <div className='grid grid-cols-1 lg:grid-cols-3 px-4 gap-4 auto-rows-fr'>
+                                <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                                     {
                                         products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
                                     }
