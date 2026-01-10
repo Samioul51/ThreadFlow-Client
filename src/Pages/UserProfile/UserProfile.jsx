@@ -1,15 +1,45 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { use } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 import { motion, useScroll } from "framer-motion"
 
 const UserProfile = () => {
-    const { user, userToken, userData, logout } = use(AuthContext);
+    const { user, userToken, userData, logout,setUserData } = use(AuthContext);
     const navigate = useNavigate();
     const { scrollYProgress } = useScroll();
     const handleOpenModal = () => document.getElementById("my_modal_5").showModal();
     const handleCloseModal = () => document.getElementById("my_modal_5").close();
+
+    const handleOpenUpdateModal=()=>document.getElementById("update_modal").showModal();
+    const handleCloseUpdateModal=()=>document.getElementById("update_modal").close();
+
+    const handleProfileUpdate=async (e)=>{
+        e.preventDefault();
+        const name=e.target.name.value;
+        
+        // console.log(name);
+
+        const updatedProfile={
+            name:name
+        };
+
+        const res=await fetch(`http://localhost:3000/profile/${userData?._id}`,{
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:`Bearer ${userToken}`
+            },
+            body:JSON.stringify(updatedProfile),
+        });
+
+        handleCloseUpdateModal();
+
+        if(res.ok)
+            toast.success("Profile updated successfully!");
+        else
+            toast.error("Profile update failed!");
+    }
 
     const handleLogout = () => {
         handleCloseModal();
@@ -107,8 +137,10 @@ const UserProfile = () => {
                     </div>
                     <div className="divider divider-neutral mb-5"></div>
                 </div>
-
-                <button className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500' onClick={handleOpenModal}>Logout</button>
+                <div className='w-full max-w-[600px] flex flex-col items-center gap-5 lg:flex-row lg:justify-between '>
+                    <button className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500' onClick={handleOpenUpdateModal}>Edit</button>
+                    <button className='text-white bg-black rounded-[2px] font-medium w-[100px] h-[40px] cursor-pointer hover:bg-gray-800 transition-colors ease-in-out duration-500' onClick={handleOpenModal}>Logout</button>
+                </div>
                 {/* Modal for logout */}
 
                 <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
@@ -120,6 +152,32 @@ const UserProfile = () => {
                                 <button onClick={handleCloseModal} className="btn">No</button>
                             </form>
                         </div>
+                    </div>
+                </dialog>
+
+                {/* Modal for update */}
+                <dialog id="update_modal" className="modal modal-bottom sm:modal-middle">
+                    <div className="modal-box max-w-xl">
+                        <h3 className="font-bold text-lg">Update Profile</h3>
+                        <form onSubmit={handleProfileUpdate} className='mb-3'>
+                            {/* Name */}
+                            <div className="mt-3">
+                                <label className="font-medium">Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    defaultValue={userData?.name}
+                                    className="input w-full bg-gray-100"
+                                />
+                            </div>
+                            <div className="modal-action">
+                                <button type="submit" className="btn">
+                                    Update
+                                </button>
+                                <button type="button" className="btn" onClick={handleCloseUpdateModal}>Cancel</button>
+                            </div>
+                        </form>
+                        <p className='text-sm text-red-600 text-center'>You can only update your name.</p>
                     </div>
                 </dialog>
             </div>
