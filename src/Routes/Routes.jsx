@@ -65,9 +65,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <PrivateRoute>
-          <ProductDetails></ProductDetails>
-        </PrivateRoute>,
+        Component:ProductDetails,
         loader: ({ params }) => fetch(`https://thread-flow-server51.vercel.app/products/${params.id}`)
       },
       {

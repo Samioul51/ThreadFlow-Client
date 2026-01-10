@@ -167,7 +167,7 @@ const ProductDetails = () => {
                             )
 
                                 :
-                                <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium mb-5'>YOU CAN'T ORDER</div>
+                                <div className='w-full p-2 border border-solid border-red-400 bg-[#f0fff4] text-center text-red-600 font-medium mb-5'>PLEASE LOGIN TO ORDER</div>
                         }
 
                     </div>
