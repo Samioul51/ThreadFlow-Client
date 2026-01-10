@@ -7,6 +7,7 @@ import Stats from '../../Components/Stats/Stats';
 import Partners from '../../Components/Partners/Partners';
 import { motion, useScroll } from "framer-motion"
 import FAQ from '../../Components/FAQ/FAQ';
+import Trust from '../../Components/Trust/Trust';
 
 const Home = () => {
     const { scrollYProgress } = useScroll();
@@ -34,6 +35,7 @@ const Home = () => {
                 <Reviews></Reviews>
                 <Stats></Stats>
                 <Partners></Partners>
+                <Trust></Trust>
                 <FAQ></FAQ>
             </div>
         </>
