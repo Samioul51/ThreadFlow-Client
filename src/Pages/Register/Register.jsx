@@ -11,6 +11,7 @@ const Register = () => {
     const location = useLocation();
     const [error, setError] = useState("");
     const { scrollYProgress } = useScroll();
+    const [loading, setLoading] = useState(false);
 
 
     const handleRegister = async (e) => {
@@ -27,7 +28,7 @@ const Register = () => {
             name: name,
             email: email,
             role: role,
-            roleStatus: role==="manager"?"pending":"approved",
+            roleStatus: role === "manager" ? "pending" : "approved",
             createdAt: new Date()
         }
 
@@ -39,7 +40,7 @@ const Register = () => {
         }
         else
             setError("");
-
+        setLoading(true);
         try {
             const formData = new FormData();
             formData.append("image", photoFile);
@@ -75,6 +76,7 @@ const Register = () => {
         catch (error) {
             toast.error(error.message);
         }
+        setLoading(false);
     }
 
     const handleGoogleRegister = () => {
@@ -167,8 +169,18 @@ const Register = () => {
                         }
                         <p className='mb-[24px]'>Already registered? <Link to="/login" className='text-blue-500'>Login</Link></p>
 
-                        <button type="submit" className='w-full  bg-black text-white text-center py-2 px-4 rounded hover:bg-gray-800 transition-colors ease-in-out duration-500 cursor-pointer mb-[24px]'>
-                            Register
+                        <button type="submit" disabled={loading} className={`w-full py-2 px-4 rounded mb-[24px] text-white text-center transition-colors duration-300
+                            ${loading
+                                ? "bg-gray-600 cursor-not-allowed"
+                                : "bg-black hover:bg-gray-800 cursor-pointer"}
+                            `}>
+                            {
+                                loading
+                                    ?
+                                    "Registering..."
+                                    :
+                                    "Register"
+                            }
                         </button>
                     </form>
                     <button onClick={handleGoogleRegister} className="w-full btn bg-white text-black border-[#e5e5e5] shadow-2xl">
