@@ -97,7 +97,7 @@ const Products = () => {
                     loading
                         ?
                         (
-                            <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                                 {
                                     Array.from({length:12}).map((_,index)=>(
                                         <CardSkeleton key={index}></CardSkeleton>
@@ -109,7 +109,7 @@ const Products = () => {
                         (
 
                             products.length > 0 ? (
-                                <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
+                                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                                     {
                                         products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
                                     }

@@ -40,7 +40,7 @@ const OurProducts = () => {
             {
                 loading ?
 
-                    <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                         {
                             Array.from({ length: 8 }).map((_, index) => (
                                 <CardSkeleton key={index}></CardSkeleton>
@@ -63,7 +63,7 @@ const OurProducts = () => {
                         delay={0.3}
                         startOnVisible={true}
                     >
-                        <div className='grid grid-cols-1 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4 auto-rows-fr'>
                             {
                                 homeProducts.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
                             }
