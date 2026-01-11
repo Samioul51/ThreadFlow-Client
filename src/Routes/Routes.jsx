@@ -29,6 +29,7 @@ import AdminAllOrders from "../Pages/AdminAllOrders/AdminAllOrders";
 import AdminTrackOrder from "../Pages/AdminTrackOrder/AdminTrackOrder";
 import { getAuth } from "firebase/auth";
 import { authReady } from "../Providers/authReady/authReady";
+import ProfileDashboard from "../Pages/Dashboard/ProfileDashboard";
 
 const router = createBrowserRouter([
   {
@@ -91,7 +92,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/dashboard/profile" />
+        element: <Navigate to="/dashboard/my-dashboard" />
+      },
+      {
+        path:"/dashboard/my-dashboard",
+        element:<ProfileDashboard></ProfileDashboard>
       },
       {
         path: "/dashboard/profile",
