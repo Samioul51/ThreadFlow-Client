@@ -6,7 +6,7 @@ import { motion, useScroll } from "framer-motion"
 import TextType from '../../Components/TextType/TextType';
 
 const Login = () => {
-    const { signIn, signInWithGoogle, createUserInDb } = use(AuthContext);
+    const { signIn, signInWithGoogle, createUserInDb,setLoading } = use(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
     const { scrollYProgress } = useScroll();
@@ -26,7 +26,8 @@ const Login = () => {
             setDemoEmail("");
             setDemoPassword("");
         }).catch((error) => {
-            toast.error(error.message);
+            toast.error("Wrong Credentials");
+            setLoading(false);
         });
     }
 

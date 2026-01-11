@@ -84,7 +84,7 @@ const Dashboard = () => {
 
                 </nav>
 
-                <div className="p-4 bg-fafafa-bg">
+                <div className="p-4 bg-fafafa-bg min-h-screen">
                     <Outlet />
                 </div>
             </div>

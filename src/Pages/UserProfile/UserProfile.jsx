@@ -24,7 +24,7 @@ const UserProfile = () => {
             name:name
         };
 
-        const res=await fetch(`http://localhost:3000/profile/${userData?._id}`,{
+        const res=await fetch(`https://thread-flow-server51.vercel.app/profile/${userData?._id}`,{
             method:"PATCH",
             headers:{
                 "Content-Type":"application/json",
