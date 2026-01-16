@@ -35,7 +35,7 @@ const Home = () => {
                 <Reviews></Reviews>
                 <Stats></Stats>
                 <Partners></Partners>
-                <Trust></Trust>
+                {/* <Trust></Trust> */}
                 <FAQ></FAQ>
             </div>
         </>
