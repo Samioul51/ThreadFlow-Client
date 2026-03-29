@@ -28,7 +28,7 @@ const ProfileDashboard = () => {
         const fetchOrders = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/orders", {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -58,7 +58,7 @@ const ProfileDashboard = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/products");
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`);
                 const data = await response.json();
                 setAllProducts(data.data);
                 const products = data.data.filter(product => product.email === user.email);
@@ -79,7 +79,7 @@ const ProfileDashboard = () => {
         const fetchOrders = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/orders", {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -114,7 +114,7 @@ const ProfileDashboard = () => {
             const fetchUsers = async () => {
                 setLoading(true);
                 try {
-                    const res = await fetch("https://thread-flow-server51.vercel.app/users", {
+                    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
                         headers: {
                             Authorization: `Bearer ${userToken}`
                         }

@@ -17,7 +17,7 @@ const PendingOrders = () => {
         const fetchOrders = async () => {
             setLoading(true);
             try {
-                const res = await fetch("https://thread-flow-server51.vercel.app/orders", {
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -74,7 +74,7 @@ const PendingOrders = () => {
 
         // console.log(selectedOrder);
 
-        const res = await fetch(`https://thread-flow-server51.vercel.app/orders/${selectedOrder._id}`, {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${selectedOrder._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

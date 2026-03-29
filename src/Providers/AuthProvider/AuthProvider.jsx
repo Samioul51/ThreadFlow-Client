@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
 
             const token=await firebaseUser.getIdToken();
 
-            const res=await fetch(`https://thread-flow-server51.vercel.app/users/${firebaseUser.email}`,{
+            const res=await fetch(`${import.meta.env.VITE_SERVER_URL}/users/${firebaseUser.email}`,{
                 headers:{
                     Authorization:`Bearer ${token}`
                 }
@@ -92,7 +92,7 @@ const AuthProvider = ({ children }) => {
 
     const checkUserExists=async(email)=>{
         try{
-            const res=await fetch(`https://thread-flow-server51.vercel.app/users/${email}`);
+            const res=await fetch(`${import.meta.env.VITE_SERVER_URL}/users/${email}`);
             const result=await res.json();
             return result.success && result.data;
         }catch(error){
@@ -101,7 +101,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const createUserInDb=async (userData)=>{
-        const res=await fetch("https://thread-flow-server51.vercel.app/users",{
+        const res=await fetch(`${import.meta.env.VITE_SERVER_URL}/users`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

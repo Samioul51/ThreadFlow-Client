@@ -34,7 +34,7 @@ const Products = () => {
         if(sort)
             params.append("sort",sort);
 
-        fetch(`https://thread-flow-server51.vercel.app/products?${params}`)
+        fetch(`${import.meta.env.VITE_SERVER_URL}/products?${params}`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.data);

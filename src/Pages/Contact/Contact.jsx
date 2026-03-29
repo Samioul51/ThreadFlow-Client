@@ -23,7 +23,7 @@ const Contact = () => {
             sent: new Date()
         };
 
-        const res = await fetch("https://thread-flow-server51.vercel.app/contact", {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/contact`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

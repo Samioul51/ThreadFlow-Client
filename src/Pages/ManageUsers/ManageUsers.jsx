@@ -19,7 +19,7 @@ const ManageUsers = () => {
         const fetchUsers = async () => {
             setLoading(true);
             try {
-                const res = await fetch("https://thread-flow-server51.vercel.app/users", {
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -95,7 +95,7 @@ const ManageUsers = () => {
             feedback: feedback
         };
 
-        const res = await fetch(`https://thread-flow-server51.vercel.app/users/${selectedUser._id}`, {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users/${selectedUser._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

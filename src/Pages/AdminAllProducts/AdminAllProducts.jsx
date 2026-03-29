@@ -21,7 +21,7 @@ const AdminAllProducts = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/products");
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`);
                 const data = await response.json();
                 const allProducts = data.data;
                 setProducts(allProducts);
@@ -41,7 +41,7 @@ const AdminAllProducts = () => {
             return;
         const fetchUsers = async () => {
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/users", {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -63,7 +63,7 @@ const AdminAllProducts = () => {
         const newStatus = !product.showOnHome;
 
         try {
-            const response = await fetch(`https://thread-flow-server51.vercel.app/products/${product._id}/toggle-home`, {
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/${product._id}/toggle-home`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -115,7 +115,7 @@ const AdminAllProducts = () => {
         if (!selectedProduct)
             return;
 
-        const response = await fetch(`https://thread-flow-server51.vercel.app/products/${selectedProduct._id}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/${selectedProduct._id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${userToken}`
@@ -247,7 +247,7 @@ const AdminAllProducts = () => {
             images: updatedImages
         };
 
-        const res = await fetch(`https://thread-flow-server51.vercel.app/products/${selectedProduct._id}`, {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/${selectedProduct._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

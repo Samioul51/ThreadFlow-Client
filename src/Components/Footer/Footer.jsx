@@ -146,7 +146,7 @@ const Footer = () => {
             </div>
             <div className="flex flex-col justify-center pt-5 pb-10 border-t border-deep-purple-accent-200 sm:flex-row mx-10">
                 <p className="text-center text-sm text-gray-100">
-                    © 2025 A. K. M Samioul Islam. All rights reserved.
+                    © {new Date().getFullYear()} A. K. M Samioul Islam. All rights reserved.
                 </p>
             </div>
         </div>

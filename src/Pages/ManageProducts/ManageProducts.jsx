@@ -19,7 +19,7 @@ const ManageProducts = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/products");
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`);
                 const data = await response.json();
                 const products = data.data.filter(product => product.email === user.email);
                 setMyProducts(products);
@@ -58,7 +58,7 @@ const ManageProducts = () => {
     const handleProductDelete = async () => {
         if (!selectedProduct)
             return;
-        const response = await fetch(`https://thread-flow-server51.vercel.app/products/${selectedProduct._id}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/${selectedProduct._id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${userToken}`
@@ -201,7 +201,7 @@ const ManageProducts = () => {
         };
 
         // console.log(updatedProduct);
-        const res = await fetch(`https://thread-flow-server51.vercel.app/products/${selectedProduct._id}`, {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/${selectedProduct._id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

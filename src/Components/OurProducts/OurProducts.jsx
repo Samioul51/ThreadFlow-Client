@@ -13,7 +13,7 @@ const OurProducts = () => {
         const fetchHomeProducts = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/products/home");
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/home`);
                 const data = await response.json();
                 setHomeProducts(data.data);
             } catch (error) {

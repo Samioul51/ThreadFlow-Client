@@ -30,7 +30,7 @@ const CheckoutForm = ({ newOrder,availableQuantity,navigate }) => {
         if (paymentIntent && paymentIntent.status === "succeeded") {
             const order = { ...newOrder, paymentStatus: "paid", transactionID: paymentIntent.id, paidAmount: paymentIntent.amount / 100 };
 
-            fetch("https://thread-flow-server51.vercel.app/orders", {
+            fetch(`${import.meta.env.VITE_SERVER_URL}/orders`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const CheckoutForm = ({ newOrder,availableQuantity,navigate }) => {
                 },
                 body: JSON.stringify(order)
             }).then(() => {
-                fetch(`https://thread-flow-server51.vercel.app/products/${newOrder.productID}/stock`, {
+                fetch(`${import.meta.env.VITE_SERVER_URL}/products/${newOrder.productID}/stock`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",

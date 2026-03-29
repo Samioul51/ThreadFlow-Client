@@ -67,7 +67,7 @@ const AddProduct = () => {
 
             // const token = await user.getIdToken();
 
-            const res = await fetch("https://thread-flow-server51.vercel.app/products", {
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

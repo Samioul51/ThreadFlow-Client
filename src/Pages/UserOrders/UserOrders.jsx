@@ -16,7 +16,7 @@ const UserOrders = () => {
         const fetchOrders = async () => {
             setLoading(true);
             try {
-                const response = await fetch("https://thread-flow-server51.vercel.app/orders", {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
@@ -68,7 +68,7 @@ const UserOrders = () => {
     const handleDelete = async () => {
         if (!id)
             return;
-        const response = await fetch(`https://thread-flow-server51.vercel.app/orders/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${userToken}`

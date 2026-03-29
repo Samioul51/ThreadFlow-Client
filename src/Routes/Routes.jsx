@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         Component:ProductDetails,
-        loader: ({ params }) => fetch(`https://thread-flow-server51.vercel.app/products/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_SERVER_URL}/products/${params.id}`)
       },
       {
 
@@ -121,7 +121,7 @@ const router = createBrowserRouter([
 
           const token = await user.getIdToken();
 
-          const res = await fetch(`https://thread-flow-server51.vercel.app/orders/${params.id}`, {
+          const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${params.id}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -188,7 +188,7 @@ const router = createBrowserRouter([
 
           const token = await user.getIdToken();
 
-          const res = await fetch(`https://thread-flow-server51.vercel.app/orders/${params.id}`, {
+          const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${params.id}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }

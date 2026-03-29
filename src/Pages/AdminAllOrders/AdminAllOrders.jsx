@@ -18,7 +18,7 @@ const AdminAllOrders = () => {
         const fetchOrders = async () => {
             setLoading(true);
             try {
-                const res = await fetch("https://thread-flow-server51.vercel.app/orders", {
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders`, {
                     headers: {
                         Authorization: `Bearer ${userToken}`
                     }
