@@ -90,7 +90,7 @@ const Dashboard = () => {
             </div>
 
             {/* Sidebar */}
-            <div className="drawer-side">
+            <div className="drawer-side z-51">
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
                 <ul className="bg-black menu p-4 w-64 min-h-full">
